@@ -2,6 +2,8 @@ package tech4good.cruds.beneficiario;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import tech4good.cruds.endereco.Endereco;
 
 import java.time.LocalDate;
@@ -14,8 +16,6 @@ public class Beneficiario {
     private String telefone;
     private LocalDate dtNasc;
     private LocalDate dtCadastro;
-    // Preferi manter o erro em Endereco por hora e depois perguntar para o professor.
-    private Endereco endereco;
 
     public String getCpf() {
         return cpf;
@@ -57,11 +57,4 @@ public class Beneficiario {
         this.dtCadastro = dtCadastro;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
 }
