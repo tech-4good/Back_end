@@ -1,7 +1,9 @@
-package tech4good.cruds.cesta;
+package tech4good.cruds.cesta.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech4good.cruds.cesta.repository.CestaRepository;
+import tech4good.cruds.entity.Cesta;
 
 import java.util.List;
 

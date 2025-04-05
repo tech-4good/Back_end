@@ -1,7 +1,9 @@
-package tech4good.cruds.beneficiario;
+package tech4good.cruds.beneficiario.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech4good.cruds.beneficiario.repository.BeneficiarioRepository;
+import tech4good.cruds.entity.Beneficiario;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class BeneficiarioController {
 
     @GetMapping
     public ResponseEntity<List<Beneficiario>> listar() {
-        List<tech4good.cruds.beneficiario.Beneficiario> beneficiarios = repository.findAll();
+        List<Beneficiario> beneficiarios = repository.findAll();
 
         if (beneficiarios.isEmpty()) {
             return ResponseEntity.status(204).build();

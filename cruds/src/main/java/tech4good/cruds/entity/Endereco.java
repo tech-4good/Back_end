@@ -1,4 +1,4 @@
-package tech4good.cruds.endereco;
+package tech4good.cruds.endereco.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
