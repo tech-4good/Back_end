@@ -1,4 +1,4 @@
-package tech4good.cruds.entrega.repository;
+package tech4good.cruds.repository;
 
 public interface EntregaRepository {
 }

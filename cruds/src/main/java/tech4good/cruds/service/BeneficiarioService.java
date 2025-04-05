@@ -1,4 +1,4 @@
-package tech4good.cruds.beneficiario.service;
+package tech4good.cruds.service;
 
 public class BeneficiarioService {
 }

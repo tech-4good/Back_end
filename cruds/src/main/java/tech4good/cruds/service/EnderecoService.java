@@ -1,4 +1,4 @@
-package tech4good.cruds.endereco.service;
+package tech4good.cruds.service;
 
 public class EnderecoService {
 }

@@ -1,4 +1,4 @@
-package tech4good.cruds.entrega.model;
+package tech4good.cruds.entity;
 
 public class Entrega {
 }

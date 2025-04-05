@@ -1,8 +1,8 @@
-package tech4good.cruds.endereco.controller;
+package tech4good.cruds.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech4good.cruds.endereco.repository.EnderecoRepository;
+import tech4good.cruds.repository.EnderecoRepository;
 import tech4good.cruds.entity.Endereco;
 
 import java.util.List;

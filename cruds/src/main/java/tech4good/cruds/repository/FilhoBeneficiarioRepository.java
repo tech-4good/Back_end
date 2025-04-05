@@ -1,4 +1,4 @@
-package tech4good.cruds.beneficiario.repository;
+package tech4good.cruds.repository;
 
 public interface FilhoBeneficiarioRepository {
 }

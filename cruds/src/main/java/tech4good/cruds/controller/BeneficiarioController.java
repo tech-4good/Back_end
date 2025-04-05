@@ -1,8 +1,8 @@
-package tech4good.cruds.beneficiario.controller;
+package tech4good.cruds.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech4good.cruds.beneficiario.repository.BeneficiarioRepository;
+import tech4good.cruds.repository.BeneficiarioRepository;
 import tech4good.cruds.entity.Beneficiario;
 
 import java.util.List;

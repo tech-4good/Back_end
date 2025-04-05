@@ -1,4 +1,4 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.response;
 
 public class EntregaResponseDto {
 }

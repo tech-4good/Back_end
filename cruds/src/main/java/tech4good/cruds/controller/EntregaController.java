@@ -1,4 +1,4 @@
-package tech4good.cruds.entrega.controller;
+package tech4good.cruds.controller;
 
 public class EntregaController {
 }

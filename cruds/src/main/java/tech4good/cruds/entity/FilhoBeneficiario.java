@@ -1,4 +1,4 @@
-package tech4good.cruds.beneficiario.model;
+package tech4good.cruds.entity;
 
 public class FilhoBeneficiario {
 }
