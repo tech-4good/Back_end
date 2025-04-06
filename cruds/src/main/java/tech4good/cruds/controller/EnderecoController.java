@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.repository.EnderecoRepository;
 import tech4good.cruds.entity.Endereco;
+import tech4good.cruds.service.EnderecoService;
 
 import java.util.List;
 
@@ -11,14 +12,17 @@ import java.util.List;
 @RequestMapping("/enderecos")
 public class EnderecoController {
 
-    private final EnderecoRepository repository;
+    private final EnderecoService enderecoService;
 
-    public EnderecoController(EnderecoRepository repository) {
-        this.repository = repository;
+    public EnderecoController(EnderecoService enderecoService) {
+        this.enderecoService = enderecoService;
     }
 
+    /*
     @PostMapping
-    public ResponseEntity<Endereco> cadastrar(@RequestBody Endereco enderecoParaCadastrar) {
+    public ResponseEntity<Endereco> cadastrar(
+            @RequestBody Endereco enderecoParaCadastrar
+    ) {
         Endereco enderecoRegistrado = repository.save(enderecoParaCadastrar);
         return ResponseEntity.status(201).body(enderecoRegistrado);
     }
@@ -35,9 +39,11 @@ public class EnderecoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Endereco> atualizar(@RequestBody Endereco enderecoNovo, @PathVariable Integer id) {
+    public ResponseEntity<Endereco> atualizar(
+            @RequestBody Endereco enderecoNovo, @PathVariable Integer id
+    ) {
         if (repository.existsById(id)) {
-            enderecoNovo.setId(id);
+            enderecoNovo.setIdEndereco(id);
             Endereco enderecoAlterado = repository.save(enderecoNovo);
             return ResponseEntity.status(200).body(enderecoAlterado);
         }
@@ -46,7 +52,9 @@ public class EnderecoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletar(
+            @PathVariable Integer id
+    ) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
             return ResponseEntity.status(204).build();
@@ -54,4 +62,5 @@ public class EnderecoController {
 
         return ResponseEntity.status(404).build();
     }
+    */
 }

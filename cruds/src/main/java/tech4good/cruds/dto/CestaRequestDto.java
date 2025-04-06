@@ -1,30 +1,13 @@
-package tech4good.cruds.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package tech4good.cruds.dto;
 
 import java.time.LocalDate;
 
-@Entity
-public class Cesta {
+public class CestaRequestDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCesta;
     private String tipo;
     private Double pesoKg;
     private LocalDate dataEntradaEstoque;
     private Integer quantidadeCestas;
-
-    public Integer getIdCesta() {
-        return idCesta;
-    }
-
-    public void setIdCesta(Integer idCesta) {
-        this.idCesta = idCesta;
-    }
 
     public String getTipo() {
         return tipo;
@@ -58,4 +41,3 @@ public class Cesta {
         this.quantidadeCestas = quantidadeCestas;
     }
 }
-

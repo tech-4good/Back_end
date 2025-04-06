@@ -1,18 +1,9 @@
-package tech4good.cruds.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package tech4good.cruds.dto;
 
 import java.time.LocalDate;
 
-@Entity
-public class Endereco {
+public class EnderecoRequestDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idEndereco;
     private String logradouro;
     private Integer numero;
     private String complemento;
@@ -26,14 +17,6 @@ public class Endereco {
     private String moradia;
     private String tipoMoradia;
     private String status;
-
-    public Integer getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(Integer idEndereco) {
-        this.idEndereco = idEndereco;
-    }
 
     public String getLogradouro() {
         return logradouro;

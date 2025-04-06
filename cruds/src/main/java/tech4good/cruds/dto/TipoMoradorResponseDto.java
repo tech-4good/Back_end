@@ -1,15 +1,7 @@
-package tech4good.cruds.entity;
+package tech4good.cruds.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+public class TipoMoradorResponseDto {
 
-@Entity
-public class TipoMorador {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTipoMorador;
     private String quantidadeCrianca;
     private String quantidadeAdolescente;

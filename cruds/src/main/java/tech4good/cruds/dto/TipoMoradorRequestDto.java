@@ -1,16 +1,7 @@
-package tech4good.cruds.entity;
+package tech4good.cruds.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+public class TipoMoradorRequestDto {
 
-@Entity
-public class TipoMorador {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTipoMorador;
     private String quantidadeCrianca;
     private String quantidadeAdolescente;
     private String quantidadeJovem;
@@ -18,14 +9,6 @@ public class TipoMorador {
     private String quantidadeGestante;
     private String quantidadeDeficiente;
     private String quantidadeOutros;
-
-    public Integer getIdTipoMorador() {
-        return idTipoMorador;
-    }
-
-    public void setIdTipoMorador(Integer idTipoMorador) {
-        this.idTipoMorador = idTipoMorador;
-    }
 
     public String getQuantidadeCrianca() {
         return quantidadeCrianca;

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.repository.CestaRepository;
 import tech4good.cruds.entity.Cesta;
+import tech4good.cruds.service.CestaService;
 
 import java.util.List;
 
@@ -11,14 +12,17 @@ import java.util.List;
 @RequestMapping("/cestas")
 public class CestaController {
 
-    private final CestaRepository repository;
+    private final CestaService cestaService;
 
-    public CestaController(CestaRepository repository) {
-        this.repository = repository;
+    public CestaController(CestaService cestaService) {
+        this.cestaService = cestaService;
     }
 
+    /*
     @PostMapping
-    public ResponseEntity<Cesta> cadastrar(@RequestBody Cesta cestaParaCadastrar) {
+    public ResponseEntity<Cesta> cadastrar(
+            @RequestBody Cesta cestaParaCadastrar
+    ) {
         Cesta cestaCadastrada = repository.save(cestaParaCadastrar);
 
         return ResponseEntity.status(201).body(cestaCadastrada);
@@ -36,9 +40,11 @@ public class CestaController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Cesta> atualizar(@RequestBody Cesta cestaNova, @PathVariable Integer id) {
+    public ResponseEntity<Cesta> atualizar(
+            @RequestBody Cesta cestaNova, @PathVariable Integer id
+    ) {
         if (repository.existsById(id)) {
-            cestaNova.setId(id);
+            cestaNova.setIdCesta(id);
             Cesta cestaAlterada = repository.save(cestaNova);
 
             return ResponseEntity.status(200).body(cestaAlterada);
@@ -48,7 +54,9 @@ public class CestaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletar(
+            @PathVariable Integer id
+    ) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
 
@@ -57,5 +65,6 @@ public class CestaController {
 
         return ResponseEntity.status(404).build();
     }
+    */
 }
 
