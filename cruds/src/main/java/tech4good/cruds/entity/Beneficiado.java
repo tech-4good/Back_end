@@ -1,9 +1,6 @@
 package tech4good.cruds.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.sql.Blob;
 import java.time.LocalDate;
@@ -11,6 +8,9 @@ import java.time.LocalDate;
 @Entity
 public class Beneficiado {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idBeneficiado;
     @Id
     private String cpf;
     private String nome;
@@ -27,6 +27,14 @@ public class Beneficiado {
     private String religiao;
     private Integer quantidadeDependentes;
     private Blob fotoBeneficiado;
+
+    public Integer getIdBeneficiado() {
+        return idBeneficiado;
+    }
+
+    public void setIdBeneficiado(Integer idBeneficiado) {
+        this.idBeneficiado = idBeneficiado;
+    }
 
     public String getCpf() {
         return cpf;
