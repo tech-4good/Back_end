@@ -11,7 +11,6 @@ public class Beneficiado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idBeneficiado;
-    @Id
     private String cpf;
     private String nome;
     private String rg;
