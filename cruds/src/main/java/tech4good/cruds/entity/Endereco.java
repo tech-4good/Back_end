@@ -1,9 +1,6 @@
 package tech4good.cruds.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -12,6 +9,7 @@ public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_endereco")
     private Integer idEndereco;
     private String logradouro;
     private Integer numero;
@@ -20,10 +18,14 @@ public class Endereco {
     private String cidade;
     private String estado;
     private String cep;
+    @Column(name = "tipo_cesta")
     private String tipoCesta;
+    @Column(name = "data_entrada")
     private LocalDate dataEntrada;
+    @Column(name = "data_saida")
     private LocalDate dataSaida;
     private String moradia;
+    @Column(name = "tipo_moradia")
     private String tipoMoradia;
     private String status;
 

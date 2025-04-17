@@ -1,15 +1,14 @@
 package tech4good.cruds.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "auxilio_governamental")
 public class AuxilioGovernamental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_auxilio")
     private Integer idAuxilio;
     private String tipo;
 

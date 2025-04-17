@@ -8,39 +8,52 @@ import java.time.LocalDate;
 @Entity
 public class Beneficiado {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idBeneficiado;
-    private String cpf;
+    @EmbeddedId
+    private BeneficiadoId id;
+
     private String nome;
     private String rg;
+
+    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
     private String naturalidade;
     private String telefone;
+
+    @Column(name = "estado_civil")
     private String estadoCivil;
     private String escolaridade;
     private String profissao;
+
+    @Column(name = "renda_mensal")
     private Double rendaMensal;
     private String empresa;
     private String cargo;
     private String religiao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
+
+    @Column(name = "quantidade_dependentes")
     private Integer quantidadeDependentes;
+
+    @Column(name = "foto_beneficiado")
     private Blob fotoBeneficiado;
 
-    public Integer getIdBeneficiado() {
-        return idBeneficiado;
+    public BeneficiadoId getId() {
+        return id;
     }
 
-    public void setIdBeneficiado(Integer idBeneficiado) {
-        this.idBeneficiado = idBeneficiado;
+    public void setId(BeneficiadoId id) {
+        this.id = id;
     }
 
-    public String getCpf() {
-        return cpf;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public String getNome() {

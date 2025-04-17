@@ -1,21 +1,48 @@
 package tech4good.cruds.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "filho_beneficiado")
 public class FilhoBeneficiado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_filho_beneficiado")
     private Integer idFilhoBeneficiado;
+    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
-    private String isEstudante;
-    private String hasCreche;
+    @Column(name = "is_estudante")
+    private Boolean isEstudante;
+    @Column(name = "has_creche")
+    private Boolean hasCreche;
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "id_beneficiado", referencedColumnName = "id_beneficiado"),
+            @JoinColumn(name = "cpf", referencedColumnName = "cpf")
+    })
+    private Beneficiado beneficiado;
+    @ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public Beneficiado getBeneficiado() {
+        return beneficiado;
+    }
+
+    public void setBeneficiado(Beneficiado beneficiado) {
+        this.beneficiado = beneficiado;
+    }
 
     public Integer getIdFilhoBeneficiado() {
         return idFilhoBeneficiado;
@@ -33,19 +60,19 @@ public class FilhoBeneficiado {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getIsEstudante() {
+    public Boolean getIsEstudante() {
         return isEstudante;
     }
 
-    public void setIsEstudante(String isEstudante) {
+    public void setIsEstudante(Boolean isEstudante) {
         this.isEstudante = isEstudante;
     }
 
-    public String getHasCreche() {
+    public Boolean getHasCreche() {
         return hasCreche;
     }
 
-    public void setHasCreche(String hasCreche) {
+    public void setHasCreche(Boolean hasCreche) {
         this.hasCreche = hasCreche;
     }
 }

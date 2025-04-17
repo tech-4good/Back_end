@@ -2,7 +2,6 @@ package tech4good.cruds.service;
 
 import org.springframework.stereotype.Service;
 import tech4good.cruds.entity.BeneficiadoHasAuxilio;
-import tech4good.cruds.entity.Entrega;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.BeneficiadoHasAuxilioRepository;
 
@@ -31,12 +30,12 @@ public class BeneficiadoHasAuxilioService {
     }
 
     public BeneficiadoHasAuxilio atualizarBeneficiadoHasAuxilio(BeneficiadoHasAuxilio beneficiadoHasAuxilio){
-        if(beneficiadoHasAuxilioRepository.existsById(beneficiadoHasAuxilio.getBeneficiadoHasAuxilio())){
-            beneficiadoHasAuxilio.setBeneficiadoHasAuxilio(beneficiadoHasAuxilio.getBeneficiadoHasAuxilio());
+        if(beneficiadoHasAuxilioRepository.existsById(beneficiadoHasAuxilio.getIdBeneficiadoHasAuxilio())){
+            beneficiadoHasAuxilio.setIdBeneficiadoHasAuxilio(beneficiadoHasAuxilio.getIdBeneficiadoHasAuxilio());
             return beneficiadoHasAuxilioRepository.save(beneficiadoHasAuxilio);
         } else {
             throw new EntidadeNaoEncontradaException("BeneficiadoHasAuxilio de id %d não encontrado".
-                    formatted(beneficiadoHasAuxilio.getBeneficiadoHasAuxilio()));
+                    formatted(beneficiadoHasAuxilio.getIdBeneficiadoHasAuxilio()));
         }
     }
 

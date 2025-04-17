@@ -1,20 +1,32 @@
 package tech4good.cruds.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "fila_espera")
 public class FilaEspera {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_fila")
     private Integer idFila;
+    @Column(name = "data_entrada")
     private LocalDate dataEntradaFila;
+    @Column(name = "data_saida")
     private LocalDate dataSaidaFila;
+    @ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
     public Integer getIdFila() {
         return idFila;

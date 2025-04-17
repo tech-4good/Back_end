@@ -1,9 +1,6 @@
 package tech4good.cruds.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -12,10 +9,14 @@ public class Cesta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cesta")
     private Integer idCesta;
     private String tipo;
+    @Column(name = "peso_kg")
     private Double pesoKg;
+    @Column(name = "data_entrada")
     private LocalDate dataEntradaEstoque;
+    @Column(name = "quantidade_cestas")
     private Integer quantidadeCestas;
 
     public Integer getIdCesta() {
