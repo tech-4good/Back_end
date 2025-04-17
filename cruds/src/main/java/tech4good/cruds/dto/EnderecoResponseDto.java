@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class EnderecoResponseDto {
 
-    private Integer idEndereco;
     private String logradouro;
     private Integer numero;
     private String complemento;
@@ -19,13 +18,25 @@ public class EnderecoResponseDto {
     private String tipoMoradia;
     private String status;
 
-    public Integer getIdEndereco() {
-        return idEndereco;
+    public EnderecoResponseDto() {
     }
 
-    public void setIdEndereco(Integer idEndereco) {
-        this.idEndereco = idEndereco;
+    public EnderecoResponseDto(String logradouro, Integer numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, String tipoMoradia, String status) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+        this.tipoCesta = tipoCesta;
+        this.dataEntrada = dataEntrada;
+        this.dataSaida = dataSaida;
+        this.moradia = moradia;
+        this.tipoMoradia = tipoMoradia;
+        this.status = status;
     }
+
 
     public String getLogradouro() {
         return logradouro;

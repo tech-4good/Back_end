@@ -1,25 +1,45 @@
 package tech4good.cruds.dto;
 
-import java.sql.Blob;
+import jakarta.persistence.Lob;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Type;
+import tech4good.cruds.entity.Endereco;
 import java.time.LocalDate;
 
 public class BeneficiadoRequestDto {
 
+    @NotBlank
+    @Size(min = 11, max = 11)
     private String cpf;
+    @NotBlank
     private String nome;
+    @NotBlank
     private String rg;
+    @NotBlank
     private LocalDate dataNascimento;
+    @NotBlank
     private String naturalidade;
+    @NotBlank
     private String telefone;
+    @NotBlank
     private String estadoCivil;
+    @NotBlank
     private String escolaridade;
+    @NotBlank
     private String profissao;
+    @NotBlank
     private Double rendaMensal;
     private String empresa;
     private String cargo;
+    @NotBlank
     private String religiao;
+    @NotBlank
+    private Endereco endereco;
+    @NotBlank
     private Integer quantidadeDependentes;
-    private Blob fotoBeneficiado;
+    @Lob
+    private byte[] fotoBeneficiado;
 
     public String getCpf() {
         return cpf;
@@ -133,11 +153,19 @@ public class BeneficiadoRequestDto {
         this.quantidadeDependentes = quantidadeDependentes;
     }
 
-    public Blob getFotoBeneficiado() {
+    public byte[] getFotoBeneficiado() {
         return fotoBeneficiado;
     }
 
-    public void setFotoBeneficiado(Blob fotoBeneficiado) {
+    public void setFotoBeneficiado(byte[] fotoBeneficiado) {
         this.fotoBeneficiado = fotoBeneficiado;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }

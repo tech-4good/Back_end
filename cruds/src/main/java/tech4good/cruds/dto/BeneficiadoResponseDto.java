@@ -1,6 +1,5 @@
 package tech4good.cruds.dto;
 
-import java.sql.Blob;
 import java.time.LocalDate;
 
 public class BeneficiadoResponseDto {
@@ -18,8 +17,31 @@ public class BeneficiadoResponseDto {
     private String empresa;
     private String cargo;
     private String religiao;
+    private EnderecoResponseDto endereco;
     private Integer quantidadeDependentes;
-    private Blob fotoBeneficiado;
+    private byte[] fotoBeneficiado;
+
+    public BeneficiadoResponseDto() {
+    }
+
+    public BeneficiadoResponseDto(String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, EnderecoResponseDto endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.rg = rg;
+        this.dataNascimento = dataNascimento;
+        this.naturalidade = naturalidade;
+        this.telefone = telefone;
+        this.estadoCivil = estadoCivil;
+        this.escolaridade = escolaridade;
+        this.profissao = profissao;
+        this.rendaMensal = rendaMensal;
+        this.empresa = empresa;
+        this.cargo = cargo;
+        this.religiao = religiao;
+        this.endereco = endereco;
+        this.quantidadeDependentes = quantidadeDependentes;
+        this.fotoBeneficiado = fotoBeneficiado;
+    }
 
     public String getCpf() {
         return cpf;
@@ -133,11 +155,19 @@ public class BeneficiadoResponseDto {
         this.quantidadeDependentes = quantidadeDependentes;
     }
 
-    public Blob getFotoBeneficiado() {
+    public byte[] getFotoBeneficiado() {
         return fotoBeneficiado;
     }
 
-    public void setFotoBeneficiado(Blob fotoBeneficiado) {
+    public void setFotoBeneficiado(byte[] fotoBeneficiado) {
         this.fotoBeneficiado = fotoBeneficiado;
+    }
+
+    public EnderecoResponseDto getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(EnderecoResponseDto endereco) {
+        this.endereco = endereco;
     }
 }
