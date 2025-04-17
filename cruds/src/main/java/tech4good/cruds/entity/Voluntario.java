@@ -14,7 +14,7 @@ public class Voluntario {
     private String telefone;
     private String senha;
     private String email;
-    private String cargo;
+    private Integer administrador;
 
     public Integer getIdVoluntario() {
         return idVoluntario;
@@ -64,11 +64,11 @@ public class Voluntario {
         this.email = email;
     }
 
-    public String getCargo() {
-        return cargo;
+    public Integer getAdministrador() {
+        return administrador;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setAdministrador(Integer administrador) {
+        this.administrador = administrador;
     }
 }
