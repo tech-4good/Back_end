@@ -15,9 +15,9 @@ public class FilhoBeneficiado {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
     @Column(name = "is_estudante")
-    private Boolean isEstudante;
+    private Integer isEstudante;
     @Column(name = "has_creche")
-    private Boolean hasCreche;
+    private Integer hasCreche;
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "id_beneficiado", referencedColumnName = "id_beneficiado"),
@@ -60,19 +60,19 @@ public class FilhoBeneficiado {
         this.dataNascimento = dataNascimento;
     }
 
-    public Boolean getIsEstudante() {
+    public Integer getIsEstudante() {
         return isEstudante;
     }
 
-    public void setIsEstudante(Boolean isEstudante) {
+    public void setIsEstudante(Integer isEstudante) {
         this.isEstudante = isEstudante;
     }
 
-    public Boolean getHasCreche() {
+    public Integer getHasCreche() {
         return hasCreche;
     }
 
-    public void setHasCreche(Boolean hasCreche) {
+    public void setHasCreche(Integer hasCreche) {
         this.hasCreche = hasCreche;
     }
 }
