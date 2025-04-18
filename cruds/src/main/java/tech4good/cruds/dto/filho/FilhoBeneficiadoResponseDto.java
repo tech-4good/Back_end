@@ -9,12 +9,12 @@ public class FilhoBeneficiadoResponseDto {
 
     private Integer idFilhoBeneficiado;
     private LocalDate dataNascimento;
-    private String isEstudante;
-    private String hasCreche;
+    private Integer isEstudante;
+    private Integer hasCreche;
     private FilhoBeneficiadoEnderecoResponseDto endereco;
     private FilhoBeneficiadoBeneficiadoResponseDto beneficiado;
 
-    public FilhoBeneficiadoResponseDto(Integer idFilhoBeneficiado, LocalDate dataNascimento, String isEstudante, String hasCreche, FilhoBeneficiadoEnderecoResponseDto endereco, FilhoBeneficiadoBeneficiadoResponseDto beneficiado) {
+    public FilhoBeneficiadoResponseDto(Integer idFilhoBeneficiado, LocalDate dataNascimento, Integer isEstudante, Integer hasCreche, FilhoBeneficiadoEnderecoResponseDto endereco, FilhoBeneficiadoBeneficiadoResponseDto beneficiado) {
         this.idFilhoBeneficiado = idFilhoBeneficiado;
         this.dataNascimento = dataNascimento;
         this.isEstudante = isEstudante;
@@ -42,19 +42,19 @@ public class FilhoBeneficiadoResponseDto {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getIsEstudante() {
+    public Integer getIsEstudante() {
         return isEstudante;
     }
 
-    public void setIsEstudante(String isEstudante) {
+    public void setIsEstudante(Integer isEstudante) {
         this.isEstudante = isEstudante;
     }
 
-    public String getHasCreche() {
+    public Integer getHasCreche() {
         return hasCreche;
     }
 
-    public void setHasCreche(String hasCreche) {
+    public void setHasCreche(Integer hasCreche) {
         this.hasCreche = hasCreche;
     }
 

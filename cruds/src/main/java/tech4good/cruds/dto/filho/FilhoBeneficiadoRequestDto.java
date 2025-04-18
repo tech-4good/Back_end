@@ -11,9 +11,9 @@ public class FilhoBeneficiadoRequestDto {
     @PastOrPresent
     private LocalDate dataNascimento;
     @NotNull
-    private String isEstudante;
+    private Integer isEstudante;
     @NotNull
-    private String hasCreche;
+    private Integer hasCreche;
 
     public LocalDate getDataNascimento() {
         return dataNascimento;
@@ -23,19 +23,19 @@ public class FilhoBeneficiadoRequestDto {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getIsEstudante() {
+    public @NotNull Integer getIsEstudante() {
         return isEstudante;
     }
 
-    public void setIsEstudante(String isEstudante) {
+    public void setIsEstudante(@NotNull Integer isEstudante) {
         this.isEstudante = isEstudante;
     }
 
-    public String getHasCreche() {
+    public @NotNull Integer getHasCreche() {
         return hasCreche;
     }
 
-    public void setHasCreche(String hasCreche) {
+    public void setHasCreche(@NotNull Integer hasCreche) {
         this.hasCreche = hasCreche;
     }
 }
