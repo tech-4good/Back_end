@@ -1,9 +1,17 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.auxiliogovernamental;
 
 public class AuxilioGovernamentalResponseDto {
 
     private Integer idAuxilio;
     private String tipo;
+
+    public AuxilioGovernamentalResponseDto(Integer idAuxilio, String tipo) {
+        this.idAuxilio = idAuxilio;
+        this.tipo = tipo;
+    }
+
+    public AuxilioGovernamentalResponseDto() {
+    }
 
     public Integer getIdAuxilio() {
         return idAuxilio;

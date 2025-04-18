@@ -1,12 +1,24 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.cesta;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
 public class CestaRequestDto {
 
+    @NotBlank
     private String tipo;
+    @NotNull
+    @Positive
     private Double pesoKg;
+    @NotNull
+    @PastOrPresent
     private LocalDate dataEntradaEstoque;
+    @NotNull
+    @Positive
     private Integer quantidadeCestas;
 
     public String getTipo() {

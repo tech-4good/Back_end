@@ -1,12 +1,31 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.voluntario;
 
-public class VoluntarioRequestDto {
+public class VoluntarioResponseDto {
 
+    private Integer idVoluntario;
     private String nome;
     private String cpf;
     private String telefone;
-    private String senha;
     private String email;
+
+    public VoluntarioResponseDto(Integer idVoluntario, String nome, String cpf, String telefone, String email) {
+        this.idVoluntario = idVoluntario;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+    public VoluntarioResponseDto() {
+    }
+
+    public Integer getIdVoluntario() {
+        return idVoluntario;
+    }
+
+    public void setIdVoluntario(Integer idVoluntario) {
+        this.idVoluntario = idVoluntario;
+    }
 
     public String getNome() {
         return nome;
@@ -30,14 +49,6 @@ public class VoluntarioRequestDto {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getEmail() {

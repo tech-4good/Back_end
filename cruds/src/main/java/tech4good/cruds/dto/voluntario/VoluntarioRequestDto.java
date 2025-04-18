@@ -1,21 +1,21 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.voluntario;
 
-public class VoluntarioResponseDto {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-    private Integer idVoluntario;
+public class VoluntarioRequestDto {
+
+    @NotBlank
     private String nome;
+    @NotBlank
+    @Size(min = 11, max = 11)
     private String cpf;
+    @NotBlank
     private String telefone;
+    @NotBlank
     private String senha;
+    @NotBlank
     private String email;
-
-    public Integer getIdVoluntario() {
-        return idVoluntario;
-    }
-
-    public void setIdVoluntario(Integer idVoluntario) {
-        this.idVoluntario = idVoluntario;
-    }
 
     public String getNome() {
         return nome;

@@ -1,8 +1,8 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.auxiliares;
 
 import java.time.LocalDate;
 
-public class EnderecoResponseDto {
+public class EnderecoBeneficiadoResponseDto {
 
     private String logradouro;
     private Integer numero;
@@ -18,10 +18,10 @@ public class EnderecoResponseDto {
     private String tipoMoradia;
     private String status;
 
-    public EnderecoResponseDto() {
+    public EnderecoBeneficiadoResponseDto() {
     }
 
-    public EnderecoResponseDto(String logradouro, Integer numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, String tipoMoradia, String status) {
+    public EnderecoBeneficiadoResponseDto(String logradouro, Integer numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, String tipoMoradia, String status) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -36,7 +36,6 @@ public class EnderecoResponseDto {
         this.tipoMoradia = tipoMoradia;
         this.status = status;
     }
-
 
     public String getLogradouro() {
         return logradouro;

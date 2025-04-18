@@ -1,11 +1,15 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.fila;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
 public class FilaEsperaRequestDto {
 
+    @NotNull
+    @PastOrPresent
     private LocalDate dataEntradaFila;
-    private LocalDate dataSaidaFila;
 
     public LocalDate getDataEntradaFila() {
         return dataEntradaFila;
@@ -15,11 +19,4 @@ public class FilaEsperaRequestDto {
         this.dataEntradaFila = dataEntradaFila;
     }
 
-    public LocalDate getDataSaidaFila() {
-        return dataSaidaFila;
-    }
-
-    public void setDataSaidaFila(LocalDate dataSaidaFila) {
-        this.dataSaidaFila = dataSaidaFila;
-    }
 }

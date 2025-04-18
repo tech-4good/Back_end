@@ -1,21 +1,19 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.filho;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
-public class FilhoBeneficiadoResponseDto {
+public class FilhoBeneficiadoRequestDto {
 
-    private Integer idFilhoBeneficiado;
+    @NotNull
+    @PastOrPresent
     private LocalDate dataNascimento;
+    @NotNull
     private String isEstudante;
+    @NotNull
     private String hasCreche;
-
-    public Integer getIdFilhoBeneficiado() {
-        return idFilhoBeneficiado;
-    }
-
-    public void setIdFilhoBeneficiado(Integer idFilhoBeneficiado) {
-        this.idFilhoBeneficiado = idFilhoBeneficiado;
-    }
 
     public LocalDate getDataNascimento() {
         return dataNascimento;

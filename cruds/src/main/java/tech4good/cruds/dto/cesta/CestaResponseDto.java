@@ -1,4 +1,4 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.cesta;
 
 import java.time.LocalDate;
 
@@ -6,9 +6,18 @@ public class CestaResponseDto {
 
     private Integer idCesta;
     private String tipo;
-    private Double pesoKg;
     private LocalDate dataEntradaEstoque;
     private Integer quantidadeCestas;
+
+    public CestaResponseDto(Integer idCesta, String tipo, LocalDate dataEntradaEstoque, Integer quantidadeCestas) {
+        this.idCesta = idCesta;
+        this.tipo = tipo;
+        this.dataEntradaEstoque = dataEntradaEstoque;
+        this.quantidadeCestas = quantidadeCestas;
+    }
+
+    public CestaResponseDto() {
+    }
 
     public Integer getIdCesta() {
         return idCesta;
@@ -24,14 +33,6 @@ public class CestaResponseDto {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public Double getPesoKg() {
-        return pesoKg;
-    }
-
-    public void setPesoKg(Double pesoKg) {
-        this.pesoKg = pesoKg;
     }
 
     public LocalDate getDataEntradaEstoque() {

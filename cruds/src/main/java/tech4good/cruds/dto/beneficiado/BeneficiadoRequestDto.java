@@ -1,47 +1,46 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.beneficiado;
 
+import jakarta.persistence.Lob;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
+import tech4good.cruds.entity.Endereco;
 import java.time.LocalDate;
 
-public class BeneficiadoResponseDto {
+public class BeneficiadoRequestDto {
 
+    @NotBlank
+    @Size(min = 11, max = 11)
     private String cpf;
+    @NotBlank
     private String nome;
+    @NotBlank
     private String rg;
+    @NotBlank
+    @PastOrPresent
     private LocalDate dataNascimento;
+    @NotBlank
     private String naturalidade;
+    @NotBlank
     private String telefone;
+    @NotBlank
     private String estadoCivil;
+    @NotBlank
     private String escolaridade;
+    @NotBlank
     private String profissao;
+    @NotBlank
     private Double rendaMensal;
     private String empresa;
     private String cargo;
+    @NotBlank
     private String religiao;
-    private EnderecoResponseDto endereco;
+    @NotBlank
+    private Endereco endereco;
+    @NotBlank
     private Integer quantidadeDependentes;
+    @Lob
     private byte[] fotoBeneficiado;
-
-    public BeneficiadoResponseDto() {
-    }
-
-    public BeneficiadoResponseDto(String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, EnderecoResponseDto endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.rg = rg;
-        this.dataNascimento = dataNascimento;
-        this.naturalidade = naturalidade;
-        this.telefone = telefone;
-        this.estadoCivil = estadoCivil;
-        this.escolaridade = escolaridade;
-        this.profissao = profissao;
-        this.rendaMensal = rendaMensal;
-        this.empresa = empresa;
-        this.cargo = cargo;
-        this.religiao = religiao;
-        this.endereco = endereco;
-        this.quantidadeDependentes = quantidadeDependentes;
-        this.fotoBeneficiado = fotoBeneficiado;
-    }
 
     public String getCpf() {
         return cpf;
@@ -163,11 +162,11 @@ public class BeneficiadoResponseDto {
         this.fotoBeneficiado = fotoBeneficiado;
     }
 
-    public EnderecoResponseDto getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(EnderecoResponseDto endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 }

@@ -1,7 +1,10 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.auxiliogovernamental;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class AuxilioGovernamentalRequestDto {
 
+    @NotBlank
     private String tipo;
 
     public String getTipo() {

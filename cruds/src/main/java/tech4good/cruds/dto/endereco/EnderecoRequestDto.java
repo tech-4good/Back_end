@@ -1,21 +1,34 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.endereco;
+
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
 public class EnderecoRequestDto {
 
+    @NotBlank
     private String logradouro;
+    @NotNull
+    @Positive
     private Integer numero;
     private String complemento;
+    @NotBlank
     private String bairro;
+    @NotBlank
     private String cidade;
+    @NotBlank
     private String estado;
+    @NotBlank
+    @Size(min = 8, max = 8)
     private String cep;
+    @NotBlank
     private String tipoCesta;
+    @NotNull
+    @PastOrPresent
     private LocalDate dataEntrada;
-    private LocalDate dataSaida;
     private String moradia;
     private String tipoMoradia;
+    @NotBlank
     private String status;
 
     public String getLogradouro() {
@@ -88,14 +101,6 @@ public class EnderecoRequestDto {
 
     public void setDataEntrada(LocalDate dataEntrada) {
         this.dataEntrada = dataEntrada;
-    }
-
-    public LocalDate getDataSaida() {
-        return dataSaida;
-    }
-
-    public void setDataSaida(LocalDate dataSaida) {
-        this.dataSaida = dataSaida;
     }
 
     public String getMoradia() {

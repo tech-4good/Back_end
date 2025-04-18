@@ -1,4 +1,4 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.beneficiadohasauxilio;
 
 public class BeneficiadoHasAuxilioResponseDto {
 

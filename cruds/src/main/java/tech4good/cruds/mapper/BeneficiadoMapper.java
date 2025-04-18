@@ -1,8 +1,8 @@
 package tech4good.cruds.mapper;
 
-import tech4good.cruds.dto.BeneficiadoRequestDto;
-import tech4good.cruds.dto.BeneficiadoResponseDto;
-import tech4good.cruds.dto.EnderecoResponseDto;
+import tech4good.cruds.dto.beneficiado.BeneficiadoRequestDto;
+import tech4good.cruds.dto.beneficiado.BeneficiadoResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoBeneficiadoResponseDto;
 import tech4good.cruds.entity.Beneficiado;
 import tech4good.cruds.entity.BeneficiadoId;
 
@@ -45,8 +45,8 @@ public class BeneficiadoMapper {
 
         BeneficiadoId id = beneficiado.getId();
 
-        EnderecoResponseDto enderecoResponseDto = beneficiado.getEndereco() != null
-                ? new EnderecoResponseDto(
+        EnderecoBeneficiadoResponseDto enderecoBeneficiadoResponseDto = beneficiado.getEndereco() != null
+                ? new EnderecoBeneficiadoResponseDto(
                     beneficiado.getEndereco().getLogradouro(),
                     beneficiado.getEndereco().getNumero(),
                     beneficiado.getEndereco().getComplemento(),
@@ -77,7 +77,7 @@ public class BeneficiadoMapper {
                 beneficiado.getEmpresa(),
                 beneficiado.getCargo(),
                 beneficiado.getReligiao(),
-                enderecoResponseDto,
+                enderecoBeneficiadoResponseDto,
                 beneficiado.getQuantidadeDependentes(),
                 beneficiado.getFotoBeneficiado()
         );

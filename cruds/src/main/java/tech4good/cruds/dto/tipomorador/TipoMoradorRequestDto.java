@@ -1,8 +1,7 @@
-package tech4good.cruds.dto;
+package tech4good.cruds.dto.tipomorador;
 
-public class TipoMoradorResponseDto {
+public class TipoMoradorRequestDto {
 
-    private Integer idTipoMorador;
     private String quantidadeCrianca;
     private String quantidadeAdolescente;
     private String quantidadeJovem;
@@ -10,14 +9,6 @@ public class TipoMoradorResponseDto {
     private String quantidadeGestante;
     private String quantidadeDeficiente;
     private String quantidadeOutros;
-
-    public Integer getIdTipoMorador() {
-        return idTipoMorador;
-    }
-
-    public void setIdTipoMorador(Integer idTipoMorador) {
-        this.idTipoMorador = idTipoMorador;
-    }
 
     public String getQuantidadeCrianca() {
         return quantidadeCrianca;
