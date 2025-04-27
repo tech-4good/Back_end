@@ -44,7 +44,8 @@ public class AuxilioGovernamentalService {
         if(auxilioGovernamentalRepository.existsById(id)){
             auxilioGovernamentalRepository.deleteById(id);
         } else {
-            throw new EntidadeNaoEncontradaException("AuxilioGovernamental de id %d não encontrado".formatted(id));
+            throw new EntidadeNaoEncontradaException("AuxilioGovernamental de id %d não encontrado".
+                    formatted(id));
         }
     }
 
