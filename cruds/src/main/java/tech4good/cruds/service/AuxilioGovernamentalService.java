@@ -39,7 +39,7 @@ public class AuxilioGovernamentalService {
         }
     }
 
-    public void removerBeneficiadoPorId(Integer id){
+    public void removerAuxilioGovernamentalPorId(Integer id){
         if(auxilioGovernamentalRepository.existsById(id)){
             auxilioGovernamentalRepository.deleteById(id);
         } else {

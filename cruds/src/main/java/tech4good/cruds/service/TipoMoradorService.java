@@ -40,8 +40,7 @@ public class TipoMoradorService {
         }
     }
 
-    //Verificar se não deveria ser removerTipoMoradorPorId
-    public void removerBeneficiadoPorId(Integer id){
+    public void removerTipoMoradorPorId(Integer id){
         if(tipoMoradorRepository.existsById(id)){
             tipoMoradorRepository.deleteById(id);
         } else {

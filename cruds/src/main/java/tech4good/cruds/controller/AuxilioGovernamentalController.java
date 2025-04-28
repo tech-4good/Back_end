@@ -48,7 +48,7 @@ public class AuxilioGovernamentalController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Integer id) {
-        auxilioGovernamentalService.removerBeneficiadoPorId(id);
+        auxilioGovernamentalService.removerAuxilioGovernamentalPorId(id);
         return ResponseEntity.noContent().build();
     }
 }

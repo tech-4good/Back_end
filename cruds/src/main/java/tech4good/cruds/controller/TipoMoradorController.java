@@ -48,7 +48,7 @@ public class TipoMoradorController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Integer id) {
-        tipoMoradorService.removerBeneficiadoPorId(id);
+        tipoMoradorService.removerTipoMoradorPorId(id);
         return ResponseEntity.noContent().build();
     }
 }

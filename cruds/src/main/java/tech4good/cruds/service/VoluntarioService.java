@@ -38,8 +38,8 @@ public class VoluntarioService {
                     formatted(voluntario.getIdVoluntario()));
         }
     }
-    //Verificar se não deveria ser removerVoluntarioPorId
-    public void removerBeneficiadoPorId(Integer id){
+
+    public void removerVoluntarioPorId(Integer id){
         if(voluntarioRepository.existsById(id)){
             voluntarioRepository.deleteById(id);
         } else {

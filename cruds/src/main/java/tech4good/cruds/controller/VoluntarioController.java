@@ -48,7 +48,7 @@ public class VoluntarioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Integer id) {
-        voluntarioService.removerBeneficiadoPorId(id);
+        voluntarioService.removerVoluntarioPorId(id);
         return ResponseEntity.noContent().build();
     }
 }
