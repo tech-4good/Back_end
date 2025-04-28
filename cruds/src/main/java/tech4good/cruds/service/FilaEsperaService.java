@@ -12,6 +12,4 @@ public class FilaEsperaService {
         this.filaEsperaRepository = filaEsperaRepository;
     }
 
-
-
 }

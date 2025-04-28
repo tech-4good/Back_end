@@ -38,8 +38,8 @@ public class FilhoBeneficiadoService {
                     formatted(filhoBeneficiado.getIdFilhoBeneficiado()));
         }
     }
-
-    public void removerBeneficiadoPorId(Integer id){
+     //Renomeei removerBeneficiadoPorId para removerFilhoBeneficiadoPorId para manter a semântica
+    public void removerFilhoBeneficiadoPorId(Integer id){
         if(filhoBeneficiadoRepository.existsById(id)){
             filhoBeneficiadoRepository.deleteById(id);
         } else {
