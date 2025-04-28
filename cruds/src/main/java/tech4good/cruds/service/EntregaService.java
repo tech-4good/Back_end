@@ -39,8 +39,8 @@ public class EntregaService {
                     formatted(entrega.getIdEntrega()));
         }
     }
-
-    public void removerBeneficiadoPorId(Integer id){
+//Alterei o nome de removerBeneficiadoPorId para removerEntregaPorId
+    public void removerEntregaPorId(Integer id){
         if(entregaRepository.existsById(id)){
             entregaRepository.deleteById(id);
         } else {
