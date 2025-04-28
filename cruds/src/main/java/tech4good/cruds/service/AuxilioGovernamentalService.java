@@ -2,7 +2,6 @@ package tech4good.cruds.service;
 
 import org.springframework.stereotype.Service;
 import tech4good.cruds.entity.AuxilioGovernamental;
-import tech4good.cruds.entity.Entrega;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.AuxilioGovernamentalRepository;
 

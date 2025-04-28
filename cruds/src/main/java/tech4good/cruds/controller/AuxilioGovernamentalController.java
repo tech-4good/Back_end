@@ -19,8 +19,8 @@ public class AuxilioGovernamentalController {
 
     @PostMapping
     public ResponseEntity<AuxilioGovernamental> cadastrar(@RequestBody AuxilioGovernamental auxilio) {
-        AuxilioGovernamental salvo = auxilioGovernamentalService.cadastrarAuxilioGovernamental(auxilio);
-        return ResponseEntity.status(201).body(salvo);
+        AuxilioGovernamental novoAuxilio = auxilioGovernamentalService.cadastrarAuxilioGovernamental(auxilio);
+        return ResponseEntity.status(201).body(novoAuxilio);
     }
 
     @GetMapping("/{id}")
@@ -31,14 +31,14 @@ public class AuxilioGovernamentalController {
 
     @GetMapping
     public ResponseEntity<List<AuxilioGovernamental>> listar() {
-        List<AuxilioGovernamental> lista = auxilioGovernamentalService.listarAuxilioGovernamentals();
-        if (lista.isEmpty()) {
+        List<AuxilioGovernamental> auxilios = auxilioGovernamentalService.listarAuxilioGovernamentals();
+        if (auxilios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(lista);
+        return ResponseEntity.ok(auxilios);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<AuxilioGovernamental> atualizar(@PathVariable Integer id,
                                                           @RequestBody AuxilioGovernamental auxilio) {
         auxilio.setIdAuxilio(id);
