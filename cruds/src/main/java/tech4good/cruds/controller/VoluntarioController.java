@@ -2,7 +2,10 @@ package tech4good.cruds.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech4good.cruds.dto.voluntario.VoluntarioRequestDto;
+import tech4good.cruds.dto.voluntario.VoluntarioResponseDto;
 import tech4good.cruds.entity.Voluntario;
+import tech4good.cruds.mapper.VoluntarioMapper;
 import tech4good.cruds.service.VoluntarioService;
 
 import java.util.List;
@@ -18,32 +21,38 @@ public class VoluntarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Voluntario> cadastrar(@RequestBody Voluntario voluntario) {
+    public ResponseEntity<VoluntarioResponseDto> cadastrar(@RequestBody VoluntarioRequestDto dto) {
+        Voluntario voluntario = VoluntarioMapper.toEntity(dto);
         Voluntario novoVoluntario = voluntarioService.cadastrarVoluntario(voluntario);
-        return ResponseEntity.status(201).body(novoVoluntario);
+        VoluntarioResponseDto dtoSalvo = VoluntarioMapper.toResponseDto(novoVoluntario);
+        return ResponseEntity.status(201).body(dtoSalvo);
+
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Voluntario> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<VoluntarioResponseDto> buscarPorId(@PathVariable Integer id) {
         Voluntario voluntario = voluntarioService.buscarVoluntarioPorId(id);
-        return ResponseEntity.ok(voluntario);
+        VoluntarioResponseDto voluntarioSalvo = VoluntarioMapper.toResponseDto(voluntario);
+        return ResponseEntity.ok(voluntarioSalvo);
     }
 
     @GetMapping
-    public ResponseEntity<List<Voluntario>> listar() {
+    public ResponseEntity<List<VoluntarioResponseDto>> listar() {
         List<Voluntario> voluntarios = voluntarioService.listarVoluntarios();
+        List<VoluntarioResponseDto> voluntarioListagem = voluntarios.stream().map(VoluntarioMapper::toResponseDto).toList();
         return voluntarios.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(voluntarios);
+                ResponseEntity.ok(voluntarioListagem);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Voluntario> atualizar(
+    public ResponseEntity<VoluntarioResponseDto> atualizar(
             @PathVariable Integer id,
             @RequestBody Voluntario voluntario) {
         voluntario.setIdVoluntario(id);
         Voluntario voluntarioAtualizado = voluntarioService.atualizarVoluntario(voluntario);
-        return ResponseEntity.ok(voluntarioAtualizado);
+        VoluntarioResponseDto voluntarioDto = VoluntarioMapper.toResponseDto(voluntarioAtualizado);
+        return ResponseEntity.ok(voluntarioDto);
     }
 
     @DeleteMapping("/{id}")

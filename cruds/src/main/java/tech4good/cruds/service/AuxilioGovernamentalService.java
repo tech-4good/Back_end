@@ -20,7 +20,7 @@ public class AuxilioGovernamentalService {
         return auxilioGovernamentalRepository.save(auxilioGovernamental);
     }
 
-    public AuxilioGovernamental buscarAuxilioGovernamentalPorId(Integer id){
+    public AuxilioGovernamental buscarAuxilioGovernamentalPorId(Integer id) {
         return auxilioGovernamentalRepository.findById(id).
                 orElseThrow(() -> new EntidadeNaoEncontradaException("AuxilioGovernamental de id %d não encontrado".formatted(id)));
     }

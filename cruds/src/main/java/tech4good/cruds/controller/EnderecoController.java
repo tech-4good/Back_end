@@ -2,7 +2,10 @@ package tech4good.cruds.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech4good.cruds.dto.endereco.EnderecoRequestDto;
+import tech4good.cruds.dto.endereco.EnderecoResponseDto;
 import tech4good.cruds.entity.Endereco;
+import tech4good.cruds.mapper.EnderecoMapper;
 import tech4good.cruds.service.EnderecoService;
 
 import java.util.List;
@@ -18,36 +21,41 @@ public class EnderecoController {
     }
 
     @PostMapping
-    public ResponseEntity<Endereco> cadastrar(
-            @RequestBody Endereco enderecoParaCadastrar
+    public ResponseEntity<EnderecoResponseDto> cadastrar(
+            @RequestBody EnderecoRequestDto dto
     ) {
-        Endereco enderecoRegistrado = enderecoService.cadastrarEndereco(enderecoParaCadastrar);
-        return ResponseEntity.status(201).body(enderecoRegistrado);
+        Endereco endereco = EnderecoMapper.toEntity(dto);
+        Endereco enderecoRegistrado = enderecoService.cadastrarEndereco(endereco);
+        EnderecoResponseDto dtoSalvo = EnderecoMapper.toResponseDto(enderecoRegistrado);
+        return ResponseEntity.status(201).body(dtoSalvo);
     }
 
     @GetMapping
-    public ResponseEntity<List<Endereco>> listar() {
+    public ResponseEntity<List<EnderecoResponseDto>> listar() {
         List<Endereco> enderecos = enderecoService.listarEnderecos();
+        List<EnderecoResponseDto> enderecoListagem = enderecos.stream().map(EnderecoMapper::toResponseDto).toList();
         if (enderecos.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
-        return ResponseEntity.status(200).body(enderecos);
+        return ResponseEntity.status(200).body(enderecoListagem);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Endereco> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<EnderecoResponseDto> buscarPorId(@PathVariable Integer id) {
         Endereco enderecoEncontrado = enderecoService.listarEnderecoPorId(id);
-        return ResponseEntity.status(200).body(enderecoEncontrado);
+        EnderecoResponseDto enderecoDto = EnderecoMapper.toResponseDto(enderecoEncontrado);
+        return ResponseEntity.status(200).body(enderecoDto);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Endereco> atualizar(
+    public ResponseEntity<EnderecoResponseDto> atualizar(
             @RequestBody Endereco enderecoNovo,
             @PathVariable Integer id
     ) {
         enderecoNovo.setIdEndereco(id);
         Endereco enderecoAlterado = enderecoService.atualizarEndereco(enderecoNovo);
-        return ResponseEntity.status(200).body(enderecoAlterado);
+        EnderecoResponseDto enderecoDto = EnderecoMapper.toResponseDto(enderecoAlterado);
+        return ResponseEntity.status(200).body(enderecoDto);
     }
 
     @DeleteMapping("/{id}")

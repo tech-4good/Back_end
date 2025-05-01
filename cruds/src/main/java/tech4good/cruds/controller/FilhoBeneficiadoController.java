@@ -2,7 +2,10 @@ package tech4good.cruds.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech4good.cruds.dto.filho.FilhoBeneficiadoRequestDto;
+import tech4good.cruds.dto.filho.FilhoBeneficiadoResponseDto;
 import tech4good.cruds.entity.FilhoBeneficiado;
+import tech4good.cruds.mapper.FilhoBeneficiarioMapper;
 import tech4good.cruds.service.FilhoBeneficiadoService;
 
 import java.util.List;
@@ -18,33 +21,38 @@ public class FilhoBeneficiadoController {
     }
 
     @PostMapping
-    public ResponseEntity<FilhoBeneficiado> cadastrar(
-            @RequestBody FilhoBeneficiado filhoBeneficiado) {
-        FilhoBeneficiado novoFilho = filhoBeneficiadoService.cadastrarFilhoBeneficiado(filhoBeneficiado);
-        return ResponseEntity.status(201).body(novoFilho);
+    public ResponseEntity<FilhoBeneficiadoResponseDto> cadastrar(
+            @RequestBody FilhoBeneficiadoRequestDto dto) {
+        FilhoBeneficiado filho = FilhoBeneficiarioMapper.toEntity(dto);
+        FilhoBeneficiado novoFilho = filhoBeneficiadoService.cadastrarFilhoBeneficiado(filho);
+        FilhoBeneficiadoResponseDto dtoSalvo = FilhoBeneficiarioMapper.toResponseDto(novoFilho);
+        return ResponseEntity.status(201).body(dtoSalvo);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FilhoBeneficiado> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<FilhoBeneficiadoResponseDto> buscarPorId(@PathVariable Integer id) {
         FilhoBeneficiado filho = filhoBeneficiadoService.buscarFilhoBeneficiadoPorId(id);
-        return ResponseEntity.ok(filho);
+        FilhoBeneficiadoResponseDto filhoDto = FilhoBeneficiarioMapper.toResponseDto(filho);
+        return ResponseEntity.ok(filhoDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<FilhoBeneficiado>> listar() {
+    public ResponseEntity<List<FilhoBeneficiadoResponseDto>> listar() {
         List<FilhoBeneficiado> filhos = filhoBeneficiadoService.listarFilhosBeneficiados();
+        List<FilhoBeneficiadoResponseDto> filhoListagem = filhos.stream().map(FilhoBeneficiarioMapper::toResponseDto).toList();
         return filhos.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(filhos);
+                ResponseEntity.ok(filhoListagem);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<FilhoBeneficiado> atualizar(
+    public ResponseEntity<FilhoBeneficiadoResponseDto> atualizar(
             @PathVariable Integer id,
             @RequestBody FilhoBeneficiado filhoBeneficiado) {
         filhoBeneficiado.setIdFilhoBeneficiado(id);
         FilhoBeneficiado filhoAtualizado = filhoBeneficiadoService.atualizarFilhoBeneficiado(filhoBeneficiado);
-        return ResponseEntity.ok(filhoAtualizado);
+        FilhoBeneficiadoResponseDto filhoDto = FilhoBeneficiarioMapper.toResponseDto(filhoAtualizado);
+        return ResponseEntity.ok(filhoDto);
     }
 
     @DeleteMapping("/{id}")
