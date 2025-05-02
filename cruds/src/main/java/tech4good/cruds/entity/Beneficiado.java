@@ -46,7 +46,7 @@ public class Beneficiado {
     private String religiao;
 
     @ManyToOne
-    @JoinColumn(name = "id_endereco")
+    @JoinColumn(name = "fk_endereco")
     private Endereco endereco;
 
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
