@@ -28,7 +28,7 @@ public class BeneficiadoRequestDto {
     @Schema(description = "Naturalidade do beneficiado", example = "Brasileiro")
     @NotBlank
     private String naturalidade;
-    @Schema(description = "Telefone para contato com DDD", example = "(11)91234-5678")
+    @Schema(description = "Telefone para contato com DDD", example = "11912345678")
     @NotBlank
     private String telefone;
     @Schema(description = "Estado civil do beneficiado", example = "Divorciado")
