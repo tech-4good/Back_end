@@ -14,7 +14,6 @@ public class BeneficiadoMapper {
 
         BeneficiadoId beneficiadoId = new BeneficiadoId();
         beneficiadoId.setCpf(requestDto.getCpf());
-        beneficiadoId.setIdBeneficiado(null);
 
         Beneficiado entity = new Beneficiado(
                 beneficiadoId,
