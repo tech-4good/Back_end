@@ -1,21 +1,27 @@
 package tech4good.cruds.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@Schema(description = "Objeto de entidade para filhos dos beneficiados")
 @Entity
 @Table(name = "filho_beneficiado")
 public class FilhoBeneficiado {
 
+    @Schema(description = "Identificador único do filho do beneficiado", example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_filho_beneficiado")
     private Integer idFilhoBeneficiado;
+    @Schema(description = "Data de nascimento do filho", example = "2005/02/15")
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+    @Schema(description = "O filho está estudaando?", example = "1")
     @Column(name = "is_estudante")
     private Integer isEstudante;
+    @Schema(description = "O filho está em uma creche?", example = "0")
     @Column(name = "has_creche")
     private Integer hasCreche;
     @ManyToOne

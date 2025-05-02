@@ -1,15 +1,20 @@
 package tech4good.cruds.dto.entrega;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import tech4good.cruds.dto.auxiliares.CestaEntregaResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoBeneficiadoResponseDto;
 import tech4good.cruds.dto.auxiliares.VoluntarioEntregaResponseDto;
 
 import java.time.LocalDate;
 
+@Schema(description = "Objeto de resposta para entregas de kits e cestas básicas")
 public class EntregaResponseDto {
 
+    @Schema(description = "Identificador único da entrega", example = "1")
     private Integer idEntrega;
+    @Schema(description = "Data de retirada da doação", example = "2025/02/10")
     private LocalDate dataRetirada;
+    @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025/02/25")
     private LocalDate proximaRetirada;
     private EnderecoBeneficiadoResponseDto endereco;
     private CestaEntregaResponseDto cesta;

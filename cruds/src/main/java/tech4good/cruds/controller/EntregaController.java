@@ -1,5 +1,6 @@
 package tech4good.cruds.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.entrega.EntregaRequestDto;
@@ -11,6 +12,7 @@ import tech4good.cruds.service.EntregaService;
 
 import java.util.List;
 
+@Tag(name = "Controller - Entrega", description = "Operações relacionadas as doações das cestas básicas ou kits.")
 @RestController
 @RequestMapping("/entregas")
 public class EntregaController {

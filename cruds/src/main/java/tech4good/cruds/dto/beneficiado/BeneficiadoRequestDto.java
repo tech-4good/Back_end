@@ -1,5 +1,6 @@
 package tech4good.cruds.dto.beneficiado;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
@@ -7,38 +8,54 @@ import jakarta.validation.constraints.Size;
 import tech4good.cruds.entity.Endereco;
 import java.time.LocalDate;
 
+@Schema(description = "Objeto de requisição para beneficiado da ASA")
 public class BeneficiadoRequestDto {
 
+    @Schema(description = "CPF do beneficiado (somente números)", example = "12345678901")
     @NotBlank
     @Size(min = 11, max = 11)
     private String cpf;
+    @Schema(description = "Nome completo do beneficiado", example = "Lucas Alves Matos")
     @NotBlank
     private String nome;
+    @Schema(description = "RG do beneficiado (somente números)", example = "5583567")
     @NotBlank
     private String rg;
+    @Schema(description = "Data de nascimento do beneficiado", example = "1978/03/21")
     @NotBlank
     @PastOrPresent
     private LocalDate dataNascimento;
+    @Schema(description = "Naturalidade do beneficiado", example = "Brasileiro")
     @NotBlank
     private String naturalidade;
+    @Schema(description = "Telefone para contato com DDD", example = "(11)91234-5678")
     @NotBlank
     private String telefone;
+    @Schema(description = "Estado civil do beneficiado", example = "Divorciado")
     @NotBlank
     private String estadoCivil;
+    @Schema(description = "Nível de escolaridade do beneficiado", example = "Ensino médio completo")
     @NotBlank
     private String escolaridade;
+    @Schema(description = "Profissão do beneficiado", example = "Técnico de Limpeza")
     @NotBlank
     private String profissao;
+    @Schema(description = "Renda mensal do beneficiado", example = "2000,0")
     @NotBlank
     private Double rendaMensal;
+    @Schema(description = "Nome da empresa em que o beneficiado trabalha", example = "Limpeza Total")
     private String empresa;
+    @Schema(description = "Cargo profissional do beneficiado", example = "Auxiliar")
     private String cargo;
+    @Schema(description = "Religião do beneficiado", example = "Evangélico")
     @NotBlank
     private String religiao;
     @NotBlank
     private Endereco endereco;
+    @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     @NotBlank
     private Integer quantidadeDependentes;
+    @Schema(description = "Foto do beneficiado")
     @Lob
     private byte[] fotoBeneficiado;
 

@@ -1,42 +1,59 @@
 package tech4good.cruds.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.sql.Blob;
 import java.time.LocalDate;
 
+@Schema(description = "Objeto de entidade para beneficiado da ASA")
 @Entity
 public class Beneficiado {
 
+    @Schema(description = "CPF do beneficiado (somente números)", example = "12345678901")
     @EmbeddedId
     private BeneficiadoId id;
 
+    @Schema(description = "Nome completo do beneficiado", example = "Lucas Alves Matos")
     private String nome;
+    @Schema(description = "RG do beneficiado (somente números)", example = "5583567")
     private String rg;
 
+    @Schema(description = "Data de nascimento do beneficiado", example = "1978/03/21")
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+    @Schema(description = "Naturalidade do beneficiado", example = "Brasileiro")
     private String naturalidade;
+    @Schema(description = "Telefone para contato com DDD", example = "(11)91234-5678")
     private String telefone;
 
+    @Schema(description = "Estado civil do beneficiado", example = "Divorciado")
     @Column(name = "estado_civil")
     private String estadoCivil;
+    @Schema(description = "Nível de escolaridade do beneficiado", example = "Ensino médio completo")
     private String escolaridade;
+    @Schema(description = "Profissão do beneficiado", example = "Técnico de Limpeza")
     private String profissao;
 
+    @Schema(description = "Renda mensal do beneficiado", example = "2000,0")
     @Column(name = "renda_mensal")
     private Double rendaMensal;
+    @Schema(description = "Nome da empresa em que o beneficiado trabalha", example = "Limpeza Total")
     private String empresa;
+    @Schema(description = "Cargo profissional do beneficiado", example = "Auxiliar")
     private String cargo;
+    @Schema(description = "Religião do beneficiado", example = "Evangélico")
     private String religiao;
 
     @ManyToOne
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
+    @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     @Column(name = "quantidade_dependentes")
     private Integer quantidadeDependentes;
 
+    @Schema(description = "Foto do beneficiado")
     @Column(name = "foto_beneficiado")
     private byte[] fotoBeneficiado;
 

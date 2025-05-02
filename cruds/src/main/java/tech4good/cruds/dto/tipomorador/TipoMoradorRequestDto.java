@@ -1,13 +1,23 @@
 package tech4good.cruds.dto.tipomorador;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Objeto de requisição para cadastro de tipos de moradores")
 public class TipoMoradorRequestDto {
 
+    @Schema(description = "Quantidade de Crianças", example = "0")
     private String quantidadeCrianca;
+    @Schema(description = "Quantidade de Adolescentes", example = "1")
     private String quantidadeAdolescente;
+    @Schema(description = "Quantidade de Jovens", example = "4")
     private String quantidadeJovem;
+    @Schema(description = "Quantidade de Idosos", example = "0")
     private String quantidadeIdoso;
+    @Schema(description = "Quantidade de Gestantes", example = "0")
     private String quantidadeGestante;
+    @Schema(description = "Quantidade de Deficientes", example = "1")
     private String quantidadeDeficiente;
+    @Schema(description = "Quantidade de Outros", example = "2")
     private String quantidadeOutros;
 
     public String getQuantidadeCrianca() {

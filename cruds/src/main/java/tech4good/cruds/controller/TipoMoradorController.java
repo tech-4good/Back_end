@@ -1,5 +1,6 @@
 package tech4good.cruds.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.tipomorador.TipoMoradorRequestDto;
@@ -10,6 +11,7 @@ import tech4good.cruds.service.TipoMoradorService;
 
 import java.util.List;
 
+@Tag(name = "Controller - Tipo de Morador", description = "Operações relacionadas aos tipos de moradores que residem nos endereços.")
 @RestController
 @RequestMapping("/tipo-moradores")
 public class TipoMoradorController {

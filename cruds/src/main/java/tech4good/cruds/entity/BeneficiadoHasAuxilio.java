@@ -1,11 +1,14 @@
 package tech4good.cruds.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+@Schema(description = "Objeto de entidade para auxiliar entre beneficiado e auxilio governamental")
 @Entity
 @Table(name = "beneficiado_has_auxilio")
 public class BeneficiadoHasAuxilio {
 
+    @Schema(description = "Identificador único de auxiliar entre beneficiado e auxilio governamental", example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_beneficiado_has_auxilio")

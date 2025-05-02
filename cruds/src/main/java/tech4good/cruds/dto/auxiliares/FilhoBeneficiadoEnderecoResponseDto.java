@@ -1,14 +1,25 @@
 package tech4good.cruds.dto.auxiliares;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Objeto de resposta para auxiliar entre filhos e endereços")
 public class FilhoBeneficiadoEnderecoResponseDto {
 
+    @Schema(description = "Identificador único do endereço", example = "1")
     private Integer idEndereco;
+    @Schema(description = "Rua ou Avenida", example = "Avenida Marechal Tito")
     private String logradouro;
+    @Schema(description = "Número da residência", example = "234")
     private Integer numero;
+    @Schema(description = "Complemento do número da residência", example = "A")
     private String complemento;
+    @Schema(description = "Nome do bairro", example = "São Miguel Paulista")
     private String bairro;
+    @Schema(description = "Nome da cidade", example = "São Paulo")
     private String cidade;
+    @Schema(description = "Nome do estado", example = "São Paulo")
     private String estado;
+    @Schema(description = "CEP da região onde se encontra a residência", example = "08356723")
     private String cep;
 
     public FilhoBeneficiadoEnderecoResponseDto(Integer idEndereco, String logradouro, Integer numero, String complemento, String bairro, String cidade, String estado, String cep) {

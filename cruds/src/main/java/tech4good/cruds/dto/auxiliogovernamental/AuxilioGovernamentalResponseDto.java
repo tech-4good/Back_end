@@ -1,8 +1,13 @@
 package tech4good.cruds.dto.auxiliogovernamental;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Objeto de resposta para auxílios governamentais")
 public class AuxilioGovernamentalResponseDto {
 
+    @Schema(description = "Identificador único do auxílio governamental", example = "1")
     private Integer idAuxilio;
+    @Schema(description = "Nome do tipo de auxílio", example = "Bolsa Família")
     private String tipo;
 
     public AuxilioGovernamentalResponseDto(Integer idAuxilio, String tipo) {

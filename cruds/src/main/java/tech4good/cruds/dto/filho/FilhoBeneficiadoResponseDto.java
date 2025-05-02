@@ -1,15 +1,21 @@
 package tech4good.cruds.dto.filho;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoBeneficiadoResponseDto;
 import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoEnderecoResponseDto;
 
 import java.time.LocalDate;
 
+@Schema(description = "Objeto de resposta para filhos dos beneficiados")
 public class FilhoBeneficiadoResponseDto {
 
+    @Schema(description = "Identificador único do filho do beneficiado", example = "1")
     private Integer idFilhoBeneficiado;
+    @Schema(description = "Data de nascimento do filho", example = "2005/02/15")
     private LocalDate dataNascimento;
+    @Schema(description = "O filho está estudaando?", example = "1")
     private Integer isEstudante;
+    @Schema(description = "O filho está em uma creche?", example = "0")
     private Integer hasCreche;
     private FilhoBeneficiadoEnderecoResponseDto endereco;
     private FilhoBeneficiadoBeneficiadoResponseDto beneficiado;

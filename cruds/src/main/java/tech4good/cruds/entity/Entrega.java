@@ -1,18 +1,23 @@
 package tech4good.cruds.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@Schema(description = "Objeto de entidade para entregas de kits e cestas básicas")
 @Entity
 public class Entrega {
 
+    @Schema(description = "Identificador único da entrega", example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_entrega")
     private Integer idEntrega;
+    @Schema(description = "Data de retirada da doação", example = "2025/02/10")
     @Column(name = "data_retirada")
     private LocalDate dataRetirada;
+    @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025/02/25")
     @Column(name = "proxima_retirada")
     private LocalDate proximaRetirada;
     @ManyToOne

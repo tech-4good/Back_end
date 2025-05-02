@@ -1,5 +1,6 @@
 package tech4good.cruds.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import tech4good.cruds.service.AuxilioGovernamentalService;
 
 import java.util.List;
 
+@Tag(name = "Controller - Auxílio Governamental", description = "Operações relacionadas aos auxílios disponibilizados pelo governo.")
 @RestController
 @RequestMapping("/auxilio-governamentais")
 public class AuxilioGovernamentalController {

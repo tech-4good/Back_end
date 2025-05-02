@@ -1,8 +1,13 @@
 package tech4good.cruds.dto.auxiliares;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Objeto de resposta para auxiliar entre filhos e beneficiados")
 public class FilhoBeneficiadoBeneficiadoResponseDto {
 
+    @Schema(description = "CPF do beneficiado (somente números)", example = "12345678901")
     private String cpf;
+    @Schema(description = "Nome completo do beneficiado", example = "Lucas Alves Matos")
     private String nome;
 
     public FilhoBeneficiadoBeneficiadoResponseDto(String cpf, String nome) {

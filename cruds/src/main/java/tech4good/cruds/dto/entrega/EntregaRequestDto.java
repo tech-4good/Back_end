@@ -1,15 +1,19 @@
 package tech4good.cruds.dto.entrega;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
+@Schema(description = "Objeto de requisição para entregas de kits e cestas básicas")
 public class EntregaRequestDto {
 
+    @Schema(description = "Data de retirada da doação", example = "2025/02/10")
     @NotNull
     @PastOrPresent
     private LocalDate dataRetirada;
+    @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025/02/25")
     @NotNull
     private LocalDate proximaRetirada;
 

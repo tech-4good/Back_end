@@ -1,5 +1,6 @@
 package tech4good.cruds.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.filho.FilhoBeneficiadoRequestDto;
@@ -10,6 +11,7 @@ import tech4good.cruds.service.FilhoBeneficiadoService;
 
 import java.util.List;
 
+@Tag(name = "Controller - Filho", description = "Operações relacionadas aos filhos dos beneficiados pela ASA.")
 @RestController
 @RequestMapping("/filhos-beneficiados")
 public class FilhoBeneficiadoController {

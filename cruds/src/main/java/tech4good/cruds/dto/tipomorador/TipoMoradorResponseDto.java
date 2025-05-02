@@ -1,17 +1,27 @@
 package tech4good.cruds.dto.tipomorador;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoBeneficiadoResponseDto;
 import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoEnderecoResponseDto;
 
+@Schema(description = "Objeto de resposta para cadastro de voluntários")
 public class TipoMoradorResponseDto {
 
+    @Schema(description = "Identificador único do tipo do morador", example = "1")
     private Integer idTipoMorador;
+    @Schema(description = "Quantidade de Crianças", example = "0")
     private String quantidadeCrianca;
+    @Schema(description = "Quantidade de Adolescentes", example = "1")
     private String quantidadeAdolescente;
+    @Schema(description = "Quantidade de Jovens", example = "4")
     private String quantidadeJovem;
+    @Schema(description = "Quantidade de Idosos", example = "0")
     private String quantidadeIdoso;
+    @Schema(description = "Quantidade de Gestantes", example = "0")
     private String quantidadeGestante;
+    @Schema(description = "Quantidade de Deficientes", example = "1")
     private String quantidadeDeficiente;
+    @Schema(description = "Quantidade de Outros", example = "2")
     private String quantidadeOutros;
     private FilhoBeneficiadoEnderecoResponseDto endereco;
     private FilhoBeneficiadoBeneficiadoResponseDto beneficiado;

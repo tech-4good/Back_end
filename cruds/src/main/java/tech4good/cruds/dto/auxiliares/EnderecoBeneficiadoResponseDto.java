@@ -1,21 +1,37 @@
 package tech4good.cruds.dto.auxiliares;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDate;
 
+@Schema(description = "Objeto de resposta para auxiliar entre endereços e beneficiados")
 public class EnderecoBeneficiadoResponseDto {
 
+    @Schema(description = "Rua ou Avenida", example = "Avenida Marechal Tito")
     private String logradouro;
+    @Schema(description = "Número da residência", example = "234")
     private Integer numero;
+    @Schema(description = "Complemento do número da residência", example = "A")
     private String complemento;
+    @Schema(description = "Nome do bairro", example = "São Miguel Paulista")
     private String bairro;
+    @Schema(description = "Nome da cidade", example = "São Paulo")
     private String cidade;
+    @Schema(description = "Nome do estado", example = "São Paulo")
     private String estado;
+    @Schema(description = "CEP da região onde se encontra a residência", example = "08356723")
     private String cep;
+    @Schema(description = "Tipo de cesta que o endereço pode receber atualmente", example = "Kit")
     private String tipoCesta;
+    @Schema(description = "Data de entrada no projeto ASA", example = "2025/02/10")
     private LocalDate dataEntrada;
+    @Schema(description = "Data de saída no projeto ASA", example = "2025/06/22")
     private LocalDate dataSaida;
+    @Schema(description = "Tipo de obtenção da moradia", example = "Alugada")
     private String moradia;
+    @Schema(description = "Nome do tipo da moradia", example = "Apartamento")
     private String tipoMoradia;
+    @Schema(description = "Controle para saber se ainda está participando da ASA", example = "Aberto")
     private String status;
 
     public EnderecoBeneficiadoResponseDto() {
