@@ -55,7 +55,7 @@ public class BeneficiadoRequestDto {
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     @NotBlank
     private Integer quantidadeDependentes;
-    @Schema(description = "Foto do beneficiado")
+    @Schema(description = "Foto do beneficiado", example = "iVBORw0KGgoAAAANSUhEUgAAAAUA")
     @Lob
     private byte[] fotoBeneficiado;
 
