@@ -1,10 +1,11 @@
 package tech4good.cruds.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech4good.cruds.dto.voluntario.VoluntarioRequestDto;
-import tech4good.cruds.dto.voluntario.VoluntarioResponseDto;
+import tech4good.cruds.dto.voluntario.*;
 import tech4good.cruds.entity.Voluntario;
 import tech4good.cruds.mapper.VoluntarioMapper;
 import tech4good.cruds.service.VoluntarioService;
@@ -23,12 +24,20 @@ public class VoluntarioController {
     }
 
     @PostMapping
-    public ResponseEntity<VoluntarioResponseDto> cadastrar(@RequestBody VoluntarioRequestDto dto) {
-        Voluntario voluntario = VoluntarioMapper.toEntity(dto);
-        Voluntario novoVoluntario = voluntarioService.cadastrarVoluntario(voluntario);
-        VoluntarioResponseDto dtoSalvo = VoluntarioMapper.toResponseDto(novoVoluntario);
-        return ResponseEntity.status(201).body(dtoSalvo);
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<Void> cadastrar(@RequestBody @Valid VoluntarioRequestDto dto) {
 
+        final Voluntario novoVoluntario = VoluntarioMapper.toEntity(dto);
+        this.voluntarioService.cadastrarVoluntario(novoVoluntario);
+        return ResponseEntity.status(201).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<VoluntarioTokenDto> login(@RequestBody VoluntarioLoginDto voluntarioLoginDto) {
+        final Voluntario voluntario = VoluntarioMapper.toEntity(voluntarioLoginDto);
+        VoluntarioTokenDto voluntarioTokenDto = this.voluntarioService.autenticar(voluntario);
+
+        return ResponseEntity.status(200).body(voluntarioTokenDto);
     }
 
     @GetMapping("/{id}")
@@ -39,12 +48,12 @@ public class VoluntarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<VoluntarioResponseDto>> listar() {
-        List<Voluntario> voluntarios = voluntarioService.listarVoluntarios();
-        List<VoluntarioResponseDto> voluntarioListagem = voluntarios.stream().map(VoluntarioMapper::toResponseDto).toList();
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<List<VoluntarioListarDto>> listar() {
+        List<VoluntarioListarDto> voluntarios = voluntarioService.listarVoluntarios();
         return voluntarios.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(voluntarioListagem);
+                ResponseEntity.ok(voluntarios);
     }
 
     @PatchMapping("/{id}")
