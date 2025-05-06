@@ -4,7 +4,6 @@ import tech4good.cruds.dto.beneficiado.BeneficiadoRequestDto;
 import tech4good.cruds.dto.beneficiado.BeneficiadoResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoBeneficiadoResponseDto;
 import tech4good.cruds.entity.Beneficiado;
-import tech4good.cruds.entity.BeneficiadoId;
 
 public class BeneficiadoMapper {
     public static Beneficiado toEntity(BeneficiadoRequestDto requestDto) {
@@ -12,11 +11,9 @@ public class BeneficiadoMapper {
             return null;
         }
 
-        BeneficiadoId beneficiadoId = new BeneficiadoId();
-        beneficiadoId.setCpf(requestDto.getCpf());
-
         Beneficiado entity = new Beneficiado(
-                beneficiadoId,
+                null,
+                requestDto.getCpf(),
                 requestDto.getNome(),
                 requestDto.getRg(),
                 requestDto.getDataNascimento(),
@@ -42,8 +39,6 @@ public class BeneficiadoMapper {
             return null;
         }
 
-        BeneficiadoId id = beneficiado.getId();
-
         EnderecoBeneficiadoResponseDto enderecoBeneficiadoResponseDto = beneficiado.getEndereco() != null
                 ? new EnderecoBeneficiadoResponseDto(
                     beneficiado.getEndereco().getLogradouro(),
@@ -63,7 +58,8 @@ public class BeneficiadoMapper {
 
 
         BeneficiadoResponseDto responseDto = new BeneficiadoResponseDto(
-                id.getCpf(),
+                beneficiado.getId(),
+                beneficiado.getCpf(),
                 beneficiado.getNome(),
                 beneficiado.getRg(),
                 beneficiado.getDataNascimento(),

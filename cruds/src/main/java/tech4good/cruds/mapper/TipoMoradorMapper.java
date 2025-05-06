@@ -4,7 +4,6 @@ import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoBeneficiadoResponseDto;
 import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoEnderecoResponseDto;
 import tech4good.cruds.dto.tipomorador.TipoMoradorRequestDto;
 import tech4good.cruds.dto.tipomorador.TipoMoradorResponseDto;
-import tech4good.cruds.entity.BeneficiadoId;
 import tech4good.cruds.entity.TipoMorador;
 
 public class TipoMoradorMapper {
@@ -43,15 +42,14 @@ public class TipoMoradorMapper {
                 tipoMorador.getEndereco().getCep()
         ) : null;
 
-        BeneficiadoId id = tipoMorador.getBeneficiado().getId();
 
         FilhoBeneficiadoBeneficiadoResponseDto filhoBeneficiadoBeneficiadoResponseDto = tipoMorador.getBeneficiado() != null
                 ? new FilhoBeneficiadoBeneficiadoResponseDto(
-                id.getCpf(),
+                tipoMorador.getBeneficiado().getCpf(),
                 tipoMorador.getBeneficiado().getNome()
         ) : null;
 
-        TipoMoradorResponseDto responseDto = new TipoMoradorResponseDto(
+        return new TipoMoradorResponseDto(
                 tipoMorador.getIdTipoMorador(),
                 tipoMorador.getQuantidadeCrianca(),
                 tipoMorador.getQuantidadeAdolescente(),
@@ -63,6 +61,5 @@ public class TipoMoradorMapper {
                 filhoBeneficiadoEnderecoResponseDto,
                 filhoBeneficiadoBeneficiadoResponseDto
         );
-        return responseDto;
     }
 }

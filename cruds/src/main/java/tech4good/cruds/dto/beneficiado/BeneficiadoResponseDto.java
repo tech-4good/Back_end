@@ -8,6 +8,8 @@ import java.time.LocalDate;
 @Schema(description = "Objeto de resposta para beneficiado da ASA")
 public class BeneficiadoResponseDto {
 
+    @Schema(description = "ID do beneficiado ", example = "1")
+    private Integer id;
     @Schema(description = "CPF do beneficiado (somente números)", example = "12345678901")
     private String cpf;
     @Schema(description = "Nome completo do beneficiado", example = "Lucas Alves Matos")
@@ -43,7 +45,8 @@ public class BeneficiadoResponseDto {
     public BeneficiadoResponseDto() {
     }
 
-    public BeneficiadoResponseDto(String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, EnderecoBeneficiadoResponseDto endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
+    public BeneficiadoResponseDto(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, EnderecoBeneficiadoResponseDto endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
+        this.id = id;
         this.cpf = cpf;
         this.nome = nome;
         this.rg = rg;
@@ -60,6 +63,14 @@ public class BeneficiadoResponseDto {
         this.endereco = endereco;
         this.quantidadeDependentes = quantidadeDependentes;
         this.fotoBeneficiado = fotoBeneficiado;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCpf() {

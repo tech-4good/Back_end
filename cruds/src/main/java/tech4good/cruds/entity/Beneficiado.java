@@ -10,9 +10,13 @@ import java.time.LocalDate;
 @Entity
 public class Beneficiado {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_beneficiado")
+    private Integer id;
+
     @Schema(description = "CPF do beneficiado (somente números)", example = "12345678901")
-    @EmbeddedId
-    private BeneficiadoId id;
+    private String cpf;
 
     @Schema(description = "Nome completo do beneficiado", example = "Lucas Alves Matos")
     private String nome;
@@ -60,8 +64,9 @@ public class Beneficiado {
     public Beneficiado() {
     }
 
-    public Beneficiado(BeneficiadoId id, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, Endereco endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
+    public Beneficiado(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, Endereco endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
         this.id = id;
+        this.cpf = cpf;
         this.nome = nome;
         this.rg = rg;
         this.dataNascimento = dataNascimento;
@@ -79,12 +84,20 @@ public class Beneficiado {
         this.fotoBeneficiado = fotoBeneficiado;
     }
 
-    public BeneficiadoId getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BeneficiadoId id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Endereco getEndereco() {

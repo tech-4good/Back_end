@@ -24,8 +24,8 @@ public class BeneficiadoService {
     }
 
     public Beneficiado buscarBeneficiadoPorCpf(String cpf){
-        if(beneficiadoRepository.existsByIdCpf(cpf)){
-            return beneficiadoRepository.findByIdCpf(cpf);
+        if(beneficiadoRepository.existsByCpf(cpf)){
+            return beneficiadoRepository.findByCpf(cpf);
         } else {
             throw new EntidadeNaoEncontradaException("Beneficiado com CPF %s não encontrado".formatted(cpf));
         }
@@ -42,12 +42,12 @@ public class BeneficiadoService {
     }
 
     public Beneficiado atualizarBeneficiado(Beneficiado beneficiado){
-        if(beneficiadoRepository.existsById(beneficiado.getId().getIdBeneficiado())){
+        if(beneficiadoRepository.existsById(beneficiado.getId())){
             beneficiado.setId(beneficiado.getId());
             return beneficiadoRepository.save(beneficiado);
         } else {
             throw new EntidadeNaoEncontradaException("Beneficiado de id %d não encontrado"
-                    .formatted(beneficiado.getId().getIdBeneficiado()));
+                    .formatted(beneficiado.getId()));
         }
     }
 
