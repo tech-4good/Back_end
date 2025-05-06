@@ -1,5 +1,6 @@
 package tech4good.cruds.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @Tag(name = "Controller - Entrega", description = "Operações relacionadas as doações das cestas básicas ou kits.")
 @RestController
 @RequestMapping("/entregas")
+@SecurityRequirement(name = "Bearer")
 public class EntregaController {
 
     private final EntregaService entregaService;

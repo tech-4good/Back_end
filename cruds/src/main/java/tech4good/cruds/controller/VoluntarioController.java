@@ -24,7 +24,6 @@ public class VoluntarioController {
     }
 
     @PostMapping
-    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> cadastrar(@RequestBody @Valid VoluntarioRequestDto dto) {
 
         final Voluntario novoVoluntario = VoluntarioMapper.toEntity(dto);
@@ -41,6 +40,7 @@ public class VoluntarioController {
     }
 
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<VoluntarioResponseDto> buscarPorId(@PathVariable Integer id) {
         Voluntario voluntario = voluntarioService.buscarVoluntarioPorId(id);
         VoluntarioResponseDto voluntarioSalvo = VoluntarioMapper.toResponseDto(voluntario);
@@ -57,6 +57,7 @@ public class VoluntarioController {
     }
 
     @PatchMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<VoluntarioResponseDto> atualizar(
             @PathVariable Integer id,
             @RequestBody Voluntario voluntario) {
@@ -67,6 +68,7 @@ public class VoluntarioController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> remover(@PathVariable Integer id) {
         voluntarioService.removerVoluntarioPorId(id);
         return ResponseEntity.noContent().build();

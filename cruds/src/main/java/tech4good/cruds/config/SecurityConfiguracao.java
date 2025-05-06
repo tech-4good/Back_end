@@ -51,14 +51,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/voluntarios/login/**"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/h2-console/**/**"),
-            new AntPathRequestMatcher("/error/**"),
-            new AntPathRequestMatcher("/beneficiados/**"),
-            new AntPathRequestMatcher("/enderecos/**"),
-            new AntPathRequestMatcher("/cestas/**"),
-            new AntPathRequestMatcher("/entregas/**"),
-            new AntPathRequestMatcher("/auxilio-governamentais/**"),
-            new AntPathRequestMatcher("/filhos-beneficiados/**"),
-            new AntPathRequestMatcher("/tipo-moradores/**")
+            new AntPathRequestMatcher("/error/**")
     };
 
     @Bean
@@ -72,7 +65,11 @@ public class SecurityConfiguracao {
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/voluntarios/login")
                         .permitAll()
-                        .requestMatchers("/voluntarios/**")
+                        .requestMatchers(HttpMethod.POST, "/voluntarios")
+                        .permitAll()
+                        .requestMatchers("/voluntarios/**", "/beneficiados/**",
+                                "/enderecos/**", "/cestas/**", "/auxilio-governamentais/**",
+                                "/filhos-beneficiados/**", "/tipo-moradores/**")
                         .authenticated()
                         .anyRequest()
                         .authenticated()

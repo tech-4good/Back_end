@@ -1,5 +1,6 @@
 package tech4good.cruds.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 @Tag(name = "Controller - Auxílio Governamental", description = "Operações relacionadas aos auxílios disponibilizados pelo governo.")
 @RestController
 @RequestMapping("/auxilio-governamentais")
+@SecurityRequirement(name = "Bearer")
 public class AuxilioGovernamentalController {
 
     private final AuxilioGovernamentalService auxilioGovernamentalService;
