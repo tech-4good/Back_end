@@ -1,5 +1,6 @@
 package tech4good.cruds.mapper;
 
+import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.CestaSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.VoluntarioSummarizedResponseDto;
@@ -53,13 +54,20 @@ public class EntregaMapper {
                         entrega.getVoluntario().getNome()
         ): null;
 
+        BeneficiadoSummarizedResponseDto beneficiadoSummarizedResponseDto = entrega.getBeneficiado() != null
+                ? new BeneficiadoSummarizedResponseDto(
+                entrega.getBeneficiado().getCpf(),
+                entrega.getBeneficiado().getNome()
+        ) : null;
+
         EntregaResponseDto responseDto = new EntregaResponseDto(
                 entrega.getIdEntrega(),
                 entrega.getDataRetirada(),
                 entrega.getProximaRetirada(),
                 enderecoBeneficiadoResponseDto,
                 cestaEntregaResponseDto,
-                voluntarioEntregaResponseDto
+                voluntarioEntregaResponseDto,
+                beneficiadoSummarizedResponseDto
         );
         return responseDto;
     }

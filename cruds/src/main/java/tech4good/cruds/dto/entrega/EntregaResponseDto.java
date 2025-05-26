@@ -1,6 +1,7 @@
 package tech4good.cruds.dto.entrega;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.CestaSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.VoluntarioSummarizedResponseDto;
@@ -19,17 +20,32 @@ public class EntregaResponseDto {
     private EnderecoSummarizedResponseDto endereco;
     private CestaSummarizedResponseDto cesta;
     private VoluntarioSummarizedResponseDto voluntario;
+    private BeneficiadoSummarizedResponseDto beneficiado;
 
-    public EntregaResponseDto(Integer idEntrega, LocalDate dataRetirada, LocalDate proximaRetirada, EnderecoSummarizedResponseDto endereco, CestaSummarizedResponseDto cesta, VoluntarioSummarizedResponseDto voluntario) {
+    public EntregaResponseDto(Integer idEntrega, LocalDate dataRetirada,
+                              LocalDate proximaRetirada,
+                              EnderecoSummarizedResponseDto endereco,
+                              CestaSummarizedResponseDto cesta,
+                              VoluntarioSummarizedResponseDto voluntario,
+                              BeneficiadoSummarizedResponseDto beneficiado) {
         this.idEntrega = idEntrega;
         this.dataRetirada = dataRetirada;
         this.proximaRetirada = proximaRetirada;
         this.endereco = endereco;
         this.cesta = cesta;
         this.voluntario = voluntario;
+        this.beneficiado = beneficiado;
     }
 
     public EntregaResponseDto() {
+    }
+
+    public BeneficiadoSummarizedResponseDto getBeneficiado() {
+        return beneficiado;
+    }
+
+    public void setBeneficiado(BeneficiadoSummarizedResponseDto beneficiado) {
+        this.beneficiado = beneficiado;
     }
 
     public Integer getIdEntrega() {
