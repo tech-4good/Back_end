@@ -1,7 +1,7 @@
 package tech4good.cruds.dto.beneficiado;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech4good.cruds.dto.auxiliares.EnderecoBeneficiadoResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
 
 import java.time.LocalDate;
 
@@ -36,7 +36,7 @@ public class BeneficiadoResponseDto {
     private String cargo;
     @Schema(description = "Religião do beneficiado", example = "Evangélico")
     private String religiao;
-    private EnderecoBeneficiadoResponseDto endereco;
+    private EnderecoSummarizedResponseDto endereco;
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     private Integer quantidadeDependentes;
     @Schema(description = "Foto do beneficiado")
@@ -45,7 +45,7 @@ public class BeneficiadoResponseDto {
     public BeneficiadoResponseDto() {
     }
 
-    public BeneficiadoResponseDto(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, EnderecoBeneficiadoResponseDto endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
+    public BeneficiadoResponseDto(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, EnderecoSummarizedResponseDto endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
@@ -193,11 +193,11 @@ public class BeneficiadoResponseDto {
         this.fotoBeneficiado = fotoBeneficiado;
     }
 
-    public EnderecoBeneficiadoResponseDto getEndereco() {
+    public EnderecoSummarizedResponseDto getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(EnderecoBeneficiadoResponseDto endereco) {
+    public void setEndereco(EnderecoSummarizedResponseDto endereco) {
         this.endereco = endereco;
     }
 }

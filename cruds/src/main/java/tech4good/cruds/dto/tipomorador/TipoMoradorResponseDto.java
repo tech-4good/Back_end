@@ -1,8 +1,8 @@
 package tech4good.cruds.dto.tipomorador;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoBeneficiadoResponseDto;
-import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoEnderecoResponseDto;
+import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 
 @Schema(description = "Objeto de resposta para cadastro de voluntários")
 public class TipoMoradorResponseDto {
@@ -23,10 +23,10 @@ public class TipoMoradorResponseDto {
     private String quantidadeDeficiente;
     @Schema(description = "Quantidade de Outros", example = "2")
     private String quantidadeOutros;
-    private FilhoBeneficiadoEnderecoResponseDto endereco;
-    private FilhoBeneficiadoBeneficiadoResponseDto beneficiado;
+    private EnderecoSummarizedFilhoBeneficiadoResponseDto endereco;
+    private BeneficiadoSummarizedResponseDto beneficiado;
 
-    public TipoMoradorResponseDto(Integer idTipoMorador, String quantidadeCrianca, String quantidadeAdolescente, String quantidadeJovem, String quantidadeIdoso, String quantidadeGestante, String quantidadeDeficiente, String quantidadeOutros, FilhoBeneficiadoEnderecoResponseDto endereco, FilhoBeneficiadoBeneficiadoResponseDto beneficiado) {
+    public TipoMoradorResponseDto(Integer idTipoMorador, String quantidadeCrianca, String quantidadeAdolescente, String quantidadeJovem, String quantidadeIdoso, String quantidadeGestante, String quantidadeDeficiente, String quantidadeOutros, EnderecoSummarizedFilhoBeneficiadoResponseDto endereco, BeneficiadoSummarizedResponseDto beneficiado) {
         this.idTipoMorador = idTipoMorador;
         this.quantidadeCrianca = quantidadeCrianca;
         this.quantidadeAdolescente = quantidadeAdolescente;
@@ -106,19 +106,19 @@ public class TipoMoradorResponseDto {
         this.quantidadeOutros = quantidadeOutros;
     }
 
-    public FilhoBeneficiadoEnderecoResponseDto getEndereco() {
+    public EnderecoSummarizedFilhoBeneficiadoResponseDto getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(FilhoBeneficiadoEnderecoResponseDto endereco) {
+    public void setEndereco(EnderecoSummarizedFilhoBeneficiadoResponseDto endereco) {
         this.endereco = endereco;
     }
 
-    public FilhoBeneficiadoBeneficiadoResponseDto getBeneficiado() {
+    public BeneficiadoSummarizedResponseDto getBeneficiado() {
         return beneficiado;
     }
 
-    public void setBeneficiado(FilhoBeneficiadoBeneficiadoResponseDto beneficiado) {
+    public void setBeneficiado(BeneficiadoSummarizedResponseDto beneficiado) {
         this.beneficiado = beneficiado;
     }
 }

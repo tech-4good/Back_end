@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 
 @Schema(description = "Objeto de resposta para auxiliar entre endereços e beneficiados")
-public class EnderecoBeneficiadoResponseDto {
+public class EnderecoSummarizedResponseDto {
 
     @Schema(description = "Rua ou Avenida", example = "Avenida Marechal Tito")
     private String logradouro;
@@ -34,10 +34,10 @@ public class EnderecoBeneficiadoResponseDto {
     @Schema(description = "Controle para saber se ainda está participando da ASA", example = "Aberto")
     private String status;
 
-    public EnderecoBeneficiadoResponseDto() {
+    public EnderecoSummarizedResponseDto() {
     }
 
-    public EnderecoBeneficiadoResponseDto(String logradouro, Integer numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, String tipoMoradia, String status) {
+    public EnderecoSummarizedResponseDto(String logradouro, Integer numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, String tipoMoradia, String status) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;

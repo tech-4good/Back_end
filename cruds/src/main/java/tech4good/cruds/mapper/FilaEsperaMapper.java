@@ -1,6 +1,6 @@
 package tech4good.cruds.mapper;
 
-import tech4good.cruds.dto.auxiliares.EnderecoBeneficiadoResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
 import tech4good.cruds.dto.fila.FilaEsperaRequestDto;
 import tech4good.cruds.dto.fila.FilaEsperaResponseDto;
 import tech4good.cruds.entity.FilaEspera;
@@ -22,8 +22,8 @@ public class FilaEsperaMapper {
             return null;
         }
 
-        EnderecoBeneficiadoResponseDto enderecoBeneficiadoResponseDto = filaEspera.getEndereco() != null
-                ? new EnderecoBeneficiadoResponseDto(
+        EnderecoSummarizedResponseDto enderecoBeneficiadoResponseDto = filaEspera.getEndereco() != null
+                ? new EnderecoSummarizedResponseDto(
                 filaEspera.getEndereco().getLogradouro(),
                 filaEspera.getEndereco().getNumero(),
                 filaEspera.getEndereco().getComplemento(),

@@ -3,7 +3,7 @@ package tech4good.cruds.dto.auxiliares;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Objeto de resposta para auxiliar entre filhos e endereços")
-public class FilhoBeneficiadoEnderecoResponseDto {
+public class EnderecoSummarizedFilhoBeneficiadoResponseDto {
 
     @Schema(description = "Identificador único do endereço", example = "1")
     private Integer idEndereco;
@@ -22,7 +22,7 @@ public class FilhoBeneficiadoEnderecoResponseDto {
     @Schema(description = "CEP da região onde se encontra a residência", example = "08356723")
     private String cep;
 
-    public FilhoBeneficiadoEnderecoResponseDto(Integer idEndereco, String logradouro, Integer numero, String complemento, String bairro, String cidade, String estado, String cep) {
+    public EnderecoSummarizedFilhoBeneficiadoResponseDto(Integer idEndereco, String logradouro, Integer numero, String complemento, String bairro, String cidade, String estado, String cep) {
         this.idEndereco = idEndereco;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -33,7 +33,7 @@ public class FilhoBeneficiadoEnderecoResponseDto {
         this.cep = cep;
     }
 
-    public FilhoBeneficiadoEnderecoResponseDto() {
+    public EnderecoSummarizedFilhoBeneficiadoResponseDto() {
     }
 
     public String getCep() {

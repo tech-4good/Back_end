@@ -1,8 +1,8 @@
 package tech4good.cruds.mapper;
 
-import tech4good.cruds.dto.auxiliares.CestaEntregaResponseDto;
-import tech4good.cruds.dto.auxiliares.EnderecoBeneficiadoResponseDto;
-import tech4good.cruds.dto.auxiliares.VoluntarioEntregaResponseDto;
+import tech4good.cruds.dto.auxiliares.CestaSummarizedResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
+import tech4good.cruds.dto.auxiliares.VoluntarioSummarizedResponseDto;
 import tech4good.cruds.dto.entrega.EntregaRequestDto;
 import tech4good.cruds.dto.entrega.EntregaResponseDto;
 import tech4good.cruds.entity.Entrega;
@@ -25,8 +25,8 @@ public class EntregaMapper {
             return null;
         }
 
-        EnderecoBeneficiadoResponseDto enderecoBeneficiadoResponseDto = entrega.getEndereco() != null
-                ? new EnderecoBeneficiadoResponseDto(
+        EnderecoSummarizedResponseDto enderecoBeneficiadoResponseDto = entrega.getEndereco() != null
+                ? new EnderecoSummarizedResponseDto(
                 entrega.getEndereco().getLogradouro(),
                 entrega.getEndereco().getNumero(),
                 entrega.getEndereco().getComplemento(),
@@ -42,13 +42,13 @@ public class EntregaMapper {
                 entrega.getEndereco().getStatus()
         ): null;
 
-        CestaEntregaResponseDto cestaEntregaResponseDto = entrega.getCesta() != null
-                ? new CestaEntregaResponseDto(
+        CestaSummarizedResponseDto cestaEntregaResponseDto = entrega.getCesta() != null
+                ? new CestaSummarizedResponseDto(
                         entrega.getCesta().getTipo()
         ): null;
 
-        VoluntarioEntregaResponseDto voluntarioEntregaResponseDto = entrega.getVoluntario() != null
-                ? new VoluntarioEntregaResponseDto(
+        VoluntarioSummarizedResponseDto voluntarioEntregaResponseDto = entrega.getVoluntario() != null
+                ? new VoluntarioSummarizedResponseDto(
                         entrega.getVoluntario().getIdVoluntario(),
                         entrega.getVoluntario().getNome()
         ): null;

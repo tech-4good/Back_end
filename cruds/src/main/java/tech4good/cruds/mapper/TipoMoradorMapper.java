@@ -1,7 +1,7 @@
 package tech4good.cruds.mapper;
 
-import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoBeneficiadoResponseDto;
-import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoEnderecoResponseDto;
+import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 import tech4good.cruds.dto.tipomorador.TipoMoradorRequestDto;
 import tech4good.cruds.dto.tipomorador.TipoMoradorResponseDto;
 import tech4good.cruds.entity.TipoMorador;
@@ -30,8 +30,8 @@ public class TipoMoradorMapper {
             return null;
         }
 
-        FilhoBeneficiadoEnderecoResponseDto filhoBeneficiadoEnderecoResponseDto = tipoMorador.getEndereco() != null
-                ? new FilhoBeneficiadoEnderecoResponseDto(
+        EnderecoSummarizedFilhoBeneficiadoResponseDto filhoBeneficiadoEnderecoResponseDto = tipoMorador.getEndereco() != null
+                ? new EnderecoSummarizedFilhoBeneficiadoResponseDto(
                 tipoMorador.getEndereco().getIdEndereco(),
                 tipoMorador.getEndereco().getLogradouro(),
                 tipoMorador.getEndereco().getNumero(),
@@ -43,8 +43,8 @@ public class TipoMoradorMapper {
         ) : null;
 
 
-        FilhoBeneficiadoBeneficiadoResponseDto filhoBeneficiadoBeneficiadoResponseDto = tipoMorador.getBeneficiado() != null
-                ? new FilhoBeneficiadoBeneficiadoResponseDto(
+        BeneficiadoSummarizedResponseDto filhoBeneficiadoBeneficiadoResponseDto = tipoMorador.getBeneficiado() != null
+                ? new BeneficiadoSummarizedResponseDto(
                 tipoMorador.getBeneficiado().getCpf(),
                 tipoMorador.getBeneficiado().getNome()
         ) : null;

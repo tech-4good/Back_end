@@ -1,8 +1,8 @@
 package tech4good.cruds.dto.filho;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoBeneficiadoResponseDto;
-import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoEnderecoResponseDto;
+import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 
 import java.time.LocalDate;
 
@@ -17,10 +17,10 @@ public class FilhoBeneficiadoResponseDto {
     private Integer isEstudante;
     @Schema(description = "O filho está em uma creche?", example = "0")
     private Integer hasCreche;
-    private FilhoBeneficiadoEnderecoResponseDto endereco;
-    private FilhoBeneficiadoBeneficiadoResponseDto beneficiado;
+    private EnderecoSummarizedFilhoBeneficiadoResponseDto endereco;
+    private BeneficiadoSummarizedResponseDto beneficiado;
 
-    public FilhoBeneficiadoResponseDto(Integer idFilhoBeneficiado, LocalDate dataNascimento, Integer isEstudante, Integer hasCreche, FilhoBeneficiadoEnderecoResponseDto endereco, FilhoBeneficiadoBeneficiadoResponseDto beneficiado) {
+    public FilhoBeneficiadoResponseDto(Integer idFilhoBeneficiado, LocalDate dataNascimento, Integer isEstudante, Integer hasCreche, EnderecoSummarizedFilhoBeneficiadoResponseDto endereco, BeneficiadoSummarizedResponseDto beneficiado) {
         this.idFilhoBeneficiado = idFilhoBeneficiado;
         this.dataNascimento = dataNascimento;
         this.isEstudante = isEstudante;
@@ -64,19 +64,19 @@ public class FilhoBeneficiadoResponseDto {
         this.hasCreche = hasCreche;
     }
 
-    public FilhoBeneficiadoEnderecoResponseDto getEndereco() {
+    public EnderecoSummarizedFilhoBeneficiadoResponseDto getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(FilhoBeneficiadoEnderecoResponseDto endereco) {
+    public void setEndereco(EnderecoSummarizedFilhoBeneficiadoResponseDto endereco) {
         this.endereco = endereco;
     }
 
-    public FilhoBeneficiadoBeneficiadoResponseDto getBeneficiado() {
+    public BeneficiadoSummarizedResponseDto getBeneficiado() {
         return beneficiado;
     }
 
-    public void setBeneficiado(FilhoBeneficiadoBeneficiadoResponseDto beneficiado) {
+    public void setBeneficiado(BeneficiadoSummarizedResponseDto beneficiado) {
         this.beneficiado = beneficiado;
     }
 }

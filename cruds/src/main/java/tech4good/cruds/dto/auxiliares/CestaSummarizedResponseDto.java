@@ -3,15 +3,15 @@ package tech4good.cruds.dto.auxiliares;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Objeto de resposta para auxiliar entre cestas e entregas")
-public class CestaEntregaResponseDto {
+public class CestaSummarizedResponseDto {
 
     @Schema(description = "Nome do tipo de cesta", example = "Cesta básica")
     private String tipo;
 
-    public CestaEntregaResponseDto(String tipo) {
+    public CestaSummarizedResponseDto(String tipo) {
         this.tipo = tipo;
     }
-    public CestaEntregaResponseDto() {
+    public CestaSummarizedResponseDto() {
     }
 
     public String getTipo() {

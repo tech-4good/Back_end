@@ -1,9 +1,9 @@
 package tech4good.cruds.dto.entrega;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech4good.cruds.dto.auxiliares.CestaEntregaResponseDto;
-import tech4good.cruds.dto.auxiliares.EnderecoBeneficiadoResponseDto;
-import tech4good.cruds.dto.auxiliares.VoluntarioEntregaResponseDto;
+import tech4good.cruds.dto.auxiliares.CestaSummarizedResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
+import tech4good.cruds.dto.auxiliares.VoluntarioSummarizedResponseDto;
 
 import java.time.LocalDate;
 
@@ -16,11 +16,11 @@ public class EntregaResponseDto {
     private LocalDate dataRetirada;
     @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025/02/25")
     private LocalDate proximaRetirada;
-    private EnderecoBeneficiadoResponseDto endereco;
-    private CestaEntregaResponseDto cesta;
-    private VoluntarioEntregaResponseDto voluntario;
+    private EnderecoSummarizedResponseDto endereco;
+    private CestaSummarizedResponseDto cesta;
+    private VoluntarioSummarizedResponseDto voluntario;
 
-    public EntregaResponseDto(Integer idEntrega, LocalDate dataRetirada, LocalDate proximaRetirada, EnderecoBeneficiadoResponseDto endereco, CestaEntregaResponseDto cesta, VoluntarioEntregaResponseDto voluntario) {
+    public EntregaResponseDto(Integer idEntrega, LocalDate dataRetirada, LocalDate proximaRetirada, EnderecoSummarizedResponseDto endereco, CestaSummarizedResponseDto cesta, VoluntarioSummarizedResponseDto voluntario) {
         this.idEntrega = idEntrega;
         this.dataRetirada = dataRetirada;
         this.proximaRetirada = proximaRetirada;
@@ -56,27 +56,27 @@ public class EntregaResponseDto {
         this.proximaRetirada = proximaRetirada;
     }
 
-    public EnderecoBeneficiadoResponseDto getEndereco() {
+    public EnderecoSummarizedResponseDto getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(EnderecoBeneficiadoResponseDto endereco) {
+    public void setEndereco(EnderecoSummarizedResponseDto endereco) {
         this.endereco = endereco;
     }
 
-    public CestaEntregaResponseDto getCesta() {
+    public CestaSummarizedResponseDto getCesta() {
         return cesta;
     }
 
-    public void setCesta(CestaEntregaResponseDto cesta) {
+    public void setCesta(CestaSummarizedResponseDto cesta) {
         this.cesta = cesta;
     }
 
-    public VoluntarioEntregaResponseDto getVoluntario() {
+    public VoluntarioSummarizedResponseDto getVoluntario() {
         return voluntario;
     }
 
-    public void setVoluntario(VoluntarioEntregaResponseDto voluntario) {
+    public void setVoluntario(VoluntarioSummarizedResponseDto voluntario) {
         this.voluntario = voluntario;
     }
 }

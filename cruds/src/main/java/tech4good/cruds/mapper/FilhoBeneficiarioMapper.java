@@ -1,7 +1,7 @@
 package tech4good.cruds.mapper;
 
-import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoBeneficiadoResponseDto;
-import tech4good.cruds.dto.auxiliares.FilhoBeneficiadoEnderecoResponseDto;
+import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
+import tech4good.cruds.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 import tech4good.cruds.dto.filho.FilhoBeneficiadoRequestDto;
 import tech4good.cruds.dto.filho.FilhoBeneficiadoResponseDto;
 import tech4good.cruds.entity.FilhoBeneficiado;
@@ -26,8 +26,8 @@ public class FilhoBeneficiarioMapper {
             return null;
         }
 
-        FilhoBeneficiadoEnderecoResponseDto filhoBeneficiadoEnderecoResponseDto = filhoBeneficiado.getEndereco() != null
-                ? new FilhoBeneficiadoEnderecoResponseDto(
+        EnderecoSummarizedFilhoBeneficiadoResponseDto filhoBeneficiadoEnderecoResponseDto = filhoBeneficiado.getEndereco() != null
+                ? new EnderecoSummarizedFilhoBeneficiadoResponseDto(
                         filhoBeneficiado.getEndereco().getIdEndereco(),
                         filhoBeneficiado.getEndereco().getLogradouro(),
                         filhoBeneficiado.getEndereco().getNumero(),
@@ -39,8 +39,8 @@ public class FilhoBeneficiarioMapper {
         ) : null;
 
 
-        FilhoBeneficiadoBeneficiadoResponseDto filhoBeneficiadoBeneficiadoResponseDto = filhoBeneficiado.getBeneficiado() != null
-                ? new FilhoBeneficiadoBeneficiadoResponseDto(
+        BeneficiadoSummarizedResponseDto filhoBeneficiadoBeneficiadoResponseDto = filhoBeneficiado.getBeneficiado() != null
+                ? new BeneficiadoSummarizedResponseDto(
                         filhoBeneficiado.getBeneficiado().getCpf(),
                         filhoBeneficiado.getBeneficiado().getNome()
         ) : null;
