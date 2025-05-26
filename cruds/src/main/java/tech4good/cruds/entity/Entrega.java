@@ -29,6 +29,20 @@ public class Entrega {
     @ManyToOne
     @JoinColumn(name = "id_cesta")
     private Cesta cesta;
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "id_beneficiado", referencedColumnName = "id_beneficiado"),
+            @JoinColumn(name = "cpf", referencedColumnName = "cpf")
+    })
+    private Beneficiado beneficiado;
+
+    public Beneficiado getBeneficiado() {
+        return beneficiado;
+    }
+
+    public void setBeneficiado(Beneficiado beneficiado) {
+        this.beneficiado = beneficiado;
+    }
 
     public Cesta getCesta() {
         return cesta;
