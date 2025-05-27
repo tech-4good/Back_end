@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech4good.cruds.dto.endereco.EnderecoApiCepDto;
 import tech4good.cruds.dto.endereco.EnderecoRequestDto;
 import tech4good.cruds.dto.endereco.EnderecoResponseDto;
 import tech4good.cruds.entity.Endereco;
@@ -66,5 +67,11 @@ public class EnderecoController {
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         enderecoService.removerEnderecoPorId(id);
         return ResponseEntity.status(204).build();
+    }
+
+    @GetMapping("/cep/{cep}")
+    public ResponseEntity<EnderecoApiCepDto> buscarPorCep(@PathVariable String cep){
+        EnderecoApiCepDto enderecoDto = enderecoService.buscarPorCep(cep);
+        return ResponseEntity.ok(enderecoDto);
     }
 }
