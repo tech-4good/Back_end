@@ -9,6 +9,7 @@ public class EnderecoApiCepDto {
     private String bairro;
     @JsonProperty("localidade")
     private String cidade;
+    @JsonProperty("uf")
     private String estado;
     private String cep;
 
