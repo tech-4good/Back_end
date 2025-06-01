@@ -21,7 +21,7 @@ public class EnderecoResponseDto {
     private String cidade;
     @Schema(description = "Nome do estado", example = "São Paulo")
     private String estado;
-    @Schema(description = "CEP da região onde se encontra a residência", example = "08356723")
+    @Schema(description = "CEP da região onde se encontra a residência", example = "01001-000")
     private String cep;
     @Schema(description = "Tipo de cesta que o endereço pode receber atualmente", example = "Kit")
     private String tipoCesta;
