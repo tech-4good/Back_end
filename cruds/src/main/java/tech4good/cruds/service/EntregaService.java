@@ -1,23 +1,59 @@
 package tech4good.cruds.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech4good.cruds.entity.Entrega;
-import tech4good.cruds.entity.Voluntario;
+import tech4good.cruds.entity.*;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
+import tech4good.cruds.repository.EnderecoRepository;
 import tech4good.cruds.repository.EntregaRepository;
 
 import java.util.List;
 
 @Service
+
 public class EntregaService {
 
     private final EntregaRepository entregaRepository;
+    private final EnderecoService enderecoService;
+    private final VoluntarioService voluntarioService;
+    private final CestaService cestaService;
+    private final BeneficiadoService beneficiadoService;
 
-    public EntregaService(EntregaRepository entregaRepository) {
+    @Autowired
+    public EntregaService(EntregaRepository entregaRepository, EnderecoService enderecoService, VoluntarioService voluntarioService, CestaService cestaService, BeneficiadoService beneficiadoService) {
         this.entregaRepository = entregaRepository;
+        this.enderecoService = enderecoService;
+        this.voluntarioService = voluntarioService;
+        this.cestaService = cestaService;
+        this.beneficiadoService = beneficiadoService;
     }
 
-    public Entrega cadastrarEntrega(Entrega entrega){
+
+    public Entrega cadastrarEntrega(Entrega entrega, Integer enderecoId, Integer voluntarioId, Integer cestaId, Integer beneficiadoId){
+        Endereco endereco = enderecoService.listarEnderecoPorId(enderecoId);
+        if (endereco == null){
+            throw new EntidadeNaoEncontradaException("Endereco de id %d nao encontrada".formatted(enderecoId));
+        }
+        entrega.setEndereco(endereco);
+
+        Voluntario voluntario = voluntarioService.buscarVoluntarioPorId(voluntarioId);
+        if (voluntario == null){
+            throw new EntidadeNaoEncontradaException("Voluntario de id %d nao encontrado".formatted(voluntarioId));
+        }
+        entrega.setVoluntario(voluntario);
+
+        Cesta cesta = cestaService.buscarCestaPorId(cestaId);
+        if (cesta == null){
+            throw new EntidadeNaoEncontradaException("Cesta de id %d nao encontrada".formatted(cestaId));
+        }
+        entrega.setCesta(cesta);
+
+        Beneficiado beneficiado = beneficiadoService.buscarBeneficiadoPorId(beneficiadoId);
+        if (beneficiado == null){
+            throw new EntidadeNaoEncontradaException("Beneficiado de id %d nao encontrado".formatted(beneficiadoId));
+        }
+        entrega.setBeneficiado(beneficiado);
+
         return entregaRepository.save(entrega);
     }
 
