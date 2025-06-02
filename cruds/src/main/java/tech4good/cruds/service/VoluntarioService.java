@@ -91,4 +91,14 @@ public class VoluntarioService {
             throw new EntidadeNaoEncontradaException("Voluntário de id %d não encontrado".formatted(id));
         }
     }
+
+    public void redefinirSenha(String email, String senhaAtual, String novaSenha) {
+        Voluntario voluntario = voluntarioRepository.findByEmail(email)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Voluntário com e-mail %s não encontrado".formatted(email)));
+        if (!passwordEncoder.matches(senhaAtual, voluntario.getSenha())) {
+            throw new RuntimeException("Senha atual incorreta");
+        }
+        voluntario.setSenha(passwordEncoder.encode(novaSenha));
+        voluntarioRepository.save(voluntario);
+    }
 }

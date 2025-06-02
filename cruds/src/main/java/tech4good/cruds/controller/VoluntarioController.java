@@ -73,4 +73,11 @@ public class VoluntarioController {
         voluntarioService.removerVoluntarioPorId(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/redefinir-senha")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<Void> redefinirSenha(@RequestBody @Valid VoluntarioRedefinirSenhaDto dto) {
+        voluntarioService.redefinirSenha(dto.getEmail(), dto.getSenhaAtual(), dto.getNovaSenha());
+        return ResponseEntity.ok().build();
+    }
 }
