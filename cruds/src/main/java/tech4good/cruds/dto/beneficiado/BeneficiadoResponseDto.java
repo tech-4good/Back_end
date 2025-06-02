@@ -39,7 +39,10 @@ public class BeneficiadoResponseDto {
     private EnderecoSummarizedResponseDto endereco;
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     private Integer quantidadeDependentes;
-    @Schema(description = "Foto do beneficiado")
+    @Schema( description = "Foto do beneficiado codificada",
+            type = "string",
+            format = "byte",
+            example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=")
     private byte[] fotoBeneficiado;
 
     public BeneficiadoResponseDto() {

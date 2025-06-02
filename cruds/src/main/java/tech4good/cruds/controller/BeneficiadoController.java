@@ -61,7 +61,10 @@ public class BeneficiadoController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<BeneficiadoResponseDto> atualizar(
-            @RequestBody Beneficiado beneficiadoNovo, @PathVariable Integer id) {
+            @RequestBody BeneficiadoRequestDto dto,
+            @PathVariable Integer id
+    ) {
+        Beneficiado beneficiadoNovo = BeneficiadoMapper.toEntity(dto);
         beneficiadoNovo.setId(id);
         Beneficiado beneficiadoAlterado = beneficiadoService.atualizarBeneficiado(beneficiadoNovo);
         BeneficiadoResponseDto beneficiadoDto = BeneficiadoMapper.toResponseDto(beneficiadoAlterado);
