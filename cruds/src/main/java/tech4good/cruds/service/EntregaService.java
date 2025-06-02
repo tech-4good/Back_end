@@ -66,14 +66,19 @@ public class EntregaService {
         return entregaRepository.findAll();
     }
 
-    public Entrega atualizarEntrega(Entrega entrega){
-        if(entregaRepository.existsById(entrega.getIdEntrega())){
-            entrega.setIdEntrega(entrega.getIdEntrega());
-            return entregaRepository.save(entrega);
-        } else {
-            throw new EntidadeNaoEncontradaException("Entrega de id %d não encontrado".
-                    formatted(entrega.getIdEntrega()));
+    public Entrega atualizarEntrega(Entrega entrega, Integer id){
+        Entrega entregaExistente = entregaRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Entrega com id %d não encontrada".formatted(id)));
+
+        if (entrega.getDataRetirada() != null){
+            entregaExistente.setDataRetirada(entrega.getDataRetirada());
         }
+
+        if (entrega.getProximaRetirada() != null){
+            entregaExistente.setProximaRetirada(entrega.getProximaRetirada());
+        }
+
+        return entregaRepository.save(entregaExistente);
     }
 
     public void removerEntregaPorId(Integer id){

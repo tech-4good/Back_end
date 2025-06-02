@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.entrega.EntregaRequestDto;
 import tech4good.cruds.dto.entrega.EntregaResponseDto;
+import tech4good.cruds.dto.entrega.EntregaUpdateDto;
 import tech4good.cruds.entity.Entrega;
 import tech4good.cruds.mapper.EnderecoMapper;
 import tech4good.cruds.mapper.EntregaMapper;
@@ -53,9 +54,9 @@ public class EntregaController {
     @PatchMapping("/{id}")
     public ResponseEntity<EntregaResponseDto> atualizar(
             @PathVariable Integer id,
-            @RequestBody Entrega entrega) {
-        entrega.setIdEntrega(id);
-        Entrega entregaAtualizada = entregaService.atualizarEntrega(entrega);
+            @RequestBody EntregaUpdateDto dto) {
+        Entrega entrega = EntregaMapper.toUpdate(dto, id);
+        Entrega entregaAtualizada = entregaService.atualizarEntrega(entrega, id);
         EntregaResponseDto entregaDto = EntregaMapper.toResponseDto(entregaAtualizada);
         return ResponseEntity.ok(entregaDto);
     }

@@ -6,6 +6,7 @@ import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.VoluntarioSummarizedResponseDto;
 import tech4good.cruds.dto.entrega.EntregaRequestDto;
 import tech4good.cruds.dto.entrega.EntregaResponseDto;
+import tech4good.cruds.dto.entrega.EntregaUpdateDto;
 import tech4good.cruds.entity.Entrega;
 
 public class EntregaMapper {
@@ -70,5 +71,17 @@ public class EntregaMapper {
                 beneficiadoSummarizedResponseDto
         );
         return responseDto;
+    }
+
+    public static Entrega toUpdate(EntregaUpdateDto dto, Integer idEntrega){
+        if (dto == null){
+            return null;
+        }
+
+        Entrega entrega = new Entrega();
+        entrega.setIdEntrega(idEntrega);
+        entrega.setDataRetirada(dto.getDataRetirada());
+        entrega.setProximaRetirada(dto.getProximaRetirada());
+        return entrega;
     }
 }
