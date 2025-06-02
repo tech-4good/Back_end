@@ -4,16 +4,22 @@ import org.springframework.stereotype.Service;
 import tech4good.cruds.entity.Cesta;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.CestaRepository;
+import tech4good.cruds.repository.EntregaRepository;
+import tech4good.cruds.entity.Entrega;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 @Service
 public class CestaService {
 
     private final CestaRepository cestaRepository;
+    private final EntregaRepository entregaRepository;
 
-    public CestaService(CestaRepository cestaRepository) {
+    public CestaService(CestaRepository cestaRepository, EntregaRepository entregaRepository) {
         this.cestaRepository = cestaRepository;
+        this.entregaRepository = entregaRepository;
     }
 
     public Cesta cadastrarCesta(Cesta cesta){
@@ -47,4 +53,12 @@ public class CestaService {
         }
     }
 
+    public List<Cesta> listarCestasEntreguesPorBeneficiadoComFiltro(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, String tipo) {
+        List<Entrega> entregas = entregaRepository.findByFiltro(idBeneficiado, dataInicio, dataFim, tipo);
+        return entregas.stream()
+                .map(Entrega::getCesta)
+                .collect(Collectors.toList());
+    }
+
 }
+

@@ -9,6 +9,7 @@ import tech4good.cruds.dto.cesta.CestaResponseDto;
 import tech4good.cruds.entity.Cesta;
 import tech4good.cruds.mapper.CestaMapper;
 import tech4good.cruds.service.CestaService;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
 
@@ -52,6 +53,21 @@ public class CestaController {
         return ResponseEntity.status(200).body(cestaDto);
     }
 
+    @GetMapping("/historico/{idBeneficiado}")
+    public ResponseEntity<List<CestaResponseDto>> listarHistoricoCestasPorBeneficiado(
+            @PathVariable Integer idBeneficiado,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.time.LocalDate dataInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.time.LocalDate dataFim,
+            @RequestParam(required = false) String tipo
+    ) {
+        List<Cesta> cestas = cestaService.listarCestasEntreguesPorBeneficiadoComFiltro(idBeneficiado, dataInicio, dataFim, tipo);
+        if (cestas.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        List<CestaResponseDto> resposta = cestas.stream().map(CestaMapper::toResponseDto).toList();
+        return ResponseEntity.status(200).body(resposta);
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<CestaResponseDto> atualizar(
             @RequestBody Cesta cestaNova,
@@ -69,3 +85,4 @@ public class CestaController {
         return ResponseEntity.status(204).build();
     }
 }
+
