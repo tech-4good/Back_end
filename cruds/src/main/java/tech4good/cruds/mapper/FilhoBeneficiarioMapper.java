@@ -4,6 +4,7 @@ import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 import tech4good.cruds.dto.filho.FilhoBeneficiadoRequestDto;
 import tech4good.cruds.dto.filho.FilhoBeneficiadoResponseDto;
+import tech4good.cruds.dto.filho.FilhoBeneficiadoUpdateDto;
 import tech4good.cruds.entity.FilhoBeneficiado;
 
 public class FilhoBeneficiarioMapper {
@@ -52,5 +53,18 @@ public class FilhoBeneficiarioMapper {
                 filhoBeneficiado.getHasCreche(),
                 filhoBeneficiadoEnderecoResponseDto,
                 filhoBeneficiadoBeneficiadoResponseDto);
+    }
+
+    public static FilhoBeneficiado toUpdate(FilhoBeneficiadoUpdateDto dto, Integer idFilhoBeneficiado){
+        if(dto == null){
+            return null;
+        }
+
+        FilhoBeneficiado filhoBeneficiado = new FilhoBeneficiado();
+        filhoBeneficiado.setIdFilhoBeneficiado(idFilhoBeneficiado);
+        filhoBeneficiado.setIsEstudante(dto.getIsEstudante());
+        filhoBeneficiado.setHasCreche(dto.getHasCreche());
+
+        return filhoBeneficiado;
     }
 }

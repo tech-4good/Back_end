@@ -48,14 +48,19 @@ public class FilhoBeneficiadoService {
         return filhoBeneficiadoRepository.findAll();
     }
 
-    public FilhoBeneficiado atualizarFilhoBeneficiado(FilhoBeneficiado filhoBeneficiado){
-        if(filhoBeneficiadoRepository.existsById(filhoBeneficiado.getIdFilhoBeneficiado())){
-            filhoBeneficiado.setIdFilhoBeneficiado(filhoBeneficiado.getIdFilhoBeneficiado());
-            return filhoBeneficiadoRepository.save(filhoBeneficiado);
-        } else {
-            throw new EntidadeNaoEncontradaException("FilhoBeneficiado de id %d não encontrado".
-                    formatted(filhoBeneficiado.getIdFilhoBeneficiado()));
+    public FilhoBeneficiado atualizarFilhoBeneficiado(FilhoBeneficiado filhoBeneficiado, Integer id){
+        FilhoBeneficiado filhoBeneficiadoExistente = filhoBeneficiadoRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("FilhoBeneficiado de id %d não encontrado".formatted(id)));
+
+        if (filhoBeneficiado.getIsEstudante() != null){
+            filhoBeneficiadoExistente.setIsEstudante(filhoBeneficiado.getIsEstudante());
         }
+
+        if (filhoBeneficiado.getHasCreche() != null){
+            filhoBeneficiadoExistente.setHasCreche(filhoBeneficiado.getHasCreche());
+        }
+
+        return filhoBeneficiadoRepository.save(filhoBeneficiadoExistente);
     }
 
     public void removerFilhoBeneficiadoPorId(Integer id){
