@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.auxiliogovernamental.AuxilioGovernamentalRequestDto;
 import tech4good.cruds.dto.auxiliogovernamental.AuxilioGovernamentalResponseDto;
+import tech4good.cruds.dto.auxiliogovernamental.AuxilioGovernamentalUpdatoDto;
 import tech4good.cruds.entity.AuxilioGovernamental;
 import tech4good.cruds.mapper.AuxilioGovernamentalMapper;
 import tech4good.cruds.service.AuxilioGovernamentalService;
@@ -52,9 +53,9 @@ public class AuxilioGovernamentalController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<AuxilioGovernamentalResponseDto> atualizar(@PathVariable Integer id,
-                                                          @RequestBody AuxilioGovernamental auxilio) {
-        auxilio.setIdAuxilio(id);
-        AuxilioGovernamental atualizado = auxilioGovernamentalService.atualizarAuxilioGovernamental(auxilio);
+                                                          @RequestBody AuxilioGovernamentalUpdatoDto dto) {
+        AuxilioGovernamental auxilio = AuxilioGovernamentalMapper.toUpdate(dto, id);
+        AuxilioGovernamental atualizado = auxilioGovernamentalService.atualizarAuxilioGovernamental(auxilio, id);
         AuxilioGovernamentalResponseDto auxilioDto = AuxilioGovernamentalMapper.toResponseDto(atualizado);
         return ResponseEntity.ok(auxilioDto);
     }

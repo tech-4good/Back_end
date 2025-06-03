@@ -29,14 +29,15 @@ public class AuxilioGovernamentalService {
         return auxilioGovernamentalRepository.findAll();
     }
 
-    public AuxilioGovernamental atualizarAuxilioGovernamental(AuxilioGovernamental auxilioGovernamental){
-        if(auxilioGovernamentalRepository.existsById(auxilioGovernamental.getIdAuxilio())){
-            auxilioGovernamental.setIdAuxilio(auxilioGovernamental.getIdAuxilio());
-            return auxilioGovernamentalRepository.save(auxilioGovernamental);
-        } else {
-            throw new EntidadeNaoEncontradaException("AuxilioGovernamental de id %d não encontrado".
-                    formatted(auxilioGovernamental.getIdAuxilio()));
+    public AuxilioGovernamental atualizarAuxilioGovernamental(AuxilioGovernamental auxilioGovernamental, Integer idAuxilioGovernamental){
+        AuxilioGovernamental auxilioGovernamentalExistente = auxilioGovernamentalRepository.findById(idAuxilioGovernamental)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("AuxilioGovernamental de id %d não encontrado".formatted(idAuxilioGovernamental)));
+
+        if (auxilioGovernamental.getTipo() != null){
+            auxilioGovernamentalExistente.setTipo(auxilioGovernamental.getTipo());
         }
+
+        return auxilioGovernamentalRepository.save(auxilioGovernamentalExistente);
     }
 
     public void removerAuxilioGovernamentalPorId(Integer id){
