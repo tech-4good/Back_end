@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.beneficiado.BeneficiadoRequestDto;
 import tech4good.cruds.dto.beneficiado.BeneficiadoResponseDto;
+import tech4good.cruds.dto.beneficiado.BeneficiadoUpdateDto;
 import tech4good.cruds.entity.Beneficiado;
 import tech4good.cruds.mapper.BeneficiadoMapper;
 import tech4good.cruds.service.BeneficiadoService;
@@ -61,13 +62,12 @@ public class BeneficiadoController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<BeneficiadoResponseDto> atualizar(
-            @RequestBody BeneficiadoRequestDto dto,
+            @RequestBody BeneficiadoUpdateDto dto,
             @PathVariable Integer id
     ) {
-        Beneficiado beneficiadoNovo = BeneficiadoMapper.toEntity(dto);
-        beneficiadoNovo.setId(id);
-        Beneficiado beneficiadoAlterado = beneficiadoService.atualizarBeneficiado(beneficiadoNovo);
-        BeneficiadoResponseDto beneficiadoDto = BeneficiadoMapper.toResponseDto(beneficiadoAlterado);
+        Beneficiado beneficiado = BeneficiadoMapper.toUpdate(dto, id);
+        Beneficiado beneficiadoAtualizado = beneficiadoService.atualizarBeneficiado(beneficiado, id);
+        BeneficiadoResponseDto beneficiadoDto = BeneficiadoMapper.toResponseDto(beneficiadoAtualizado);
         return ResponseEntity.status(200).body(beneficiadoDto);
     }
 

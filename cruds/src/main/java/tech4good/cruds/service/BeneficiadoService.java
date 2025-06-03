@@ -41,14 +41,42 @@ public class BeneficiadoService {
         return beneficiadoRepository.findAll();
     }
 
-    public Beneficiado atualizarBeneficiado(Beneficiado beneficiado){
-        if(beneficiadoRepository.existsById(beneficiado.getId())){
-            beneficiado.setId(beneficiado.getId());
-            return beneficiadoRepository.save(beneficiado);
-        } else {
-            throw new EntidadeNaoEncontradaException("Beneficiado de id %d não encontrado"
-                    .formatted(beneficiado.getId()));
+    public Beneficiado atualizarBeneficiado(Beneficiado beneficiado, Integer idBeneficiado){
+        Beneficiado beneficiadoExistente = beneficiadoRepository.findById(idBeneficiado)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Beneficiado de id %d não encontrado".formatted(idBeneficiado)));
+
+        if (beneficiado.getNaturalidade() != null) {
+            beneficiadoExistente.setNaturalidade(beneficiado.getNaturalidade());
         }
+        if (beneficiado.getTelefone() != null) {
+            beneficiadoExistente.setTelefone(beneficiado.getTelefone());
+        }
+        if (beneficiado.getEstadoCivil() != null) {
+            beneficiadoExistente.setEstadoCivil(beneficiado.getEstadoCivil());
+        }
+        if (beneficiado.getEscolaridade() != null) {
+            beneficiadoExistente.setEscolaridade(beneficiado.getEscolaridade());
+        }
+        if (beneficiado.getProfissao() != null) {
+            beneficiadoExistente.setProfissao(beneficiado.getProfissao());
+        }
+        if (beneficiado.getRendaMensal() != null) {
+            beneficiadoExistente.setRendaMensal(beneficiado.getRendaMensal());
+        }
+        if (beneficiado.getEmpresa() != null) {
+            beneficiadoExistente.setEmpresa(beneficiado.getEmpresa());
+        }
+        if (beneficiado.getCargo() != null) {
+            beneficiadoExistente.setCargo(beneficiado.getCargo());
+        }
+        if (beneficiado.getReligiao() != null) {
+            beneficiadoExistente.setReligiao(beneficiado.getReligiao());
+        }
+        if (beneficiado.getEndereco() != null) {
+            beneficiadoExistente.setEndereco(beneficiado.getEndereco());
+        }
+
+        return beneficiadoRepository.save(beneficiadoExistente);
     }
 
     public void removerBeneficiadoPorId(Integer id){

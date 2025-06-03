@@ -3,6 +3,7 @@ package tech4good.cruds.mapper;
 import tech4good.cruds.dto.beneficiado.BeneficiadoRequestDto;
 import tech4good.cruds.dto.beneficiado.BeneficiadoResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
+import tech4good.cruds.dto.beneficiado.BeneficiadoUpdateDto;
 import tech4good.cruds.entity.Beneficiado;
 
 public class BeneficiadoMapper {
@@ -78,5 +79,25 @@ public class BeneficiadoMapper {
         );
 
         return responseDto;
+    }
+
+    public static Beneficiado toUpdate(BeneficiadoUpdateDto dto, Integer idBeneficiado){
+        if (dto == null){
+            return null;
+        }
+
+        Beneficiado beneficiado = new Beneficiado();
+        beneficiado.setId(idBeneficiado);
+        beneficiado.setNaturalidade(dto.getNaturalidade());
+        beneficiado.setTelefone(dto.getTelefone());
+        beneficiado.setEstadoCivil(dto.getEstadoCivil());
+        beneficiado.setEscolaridade(dto.getEscolaridade());
+        beneficiado.setProfissao(dto.getProfissao());
+        beneficiado.setRendaMensal(dto.getRendaMensal());
+        beneficiado.setEmpresa(dto.getEmpresa());
+        beneficiado.setCargo(dto.getCargo());
+        beneficiado.setEndereco(dto.getEndereco());
+
+        return beneficiado;
     }
 }
