@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.tipomorador.TipoMoradorRequestDto;
 import tech4good.cruds.dto.tipomorador.TipoMoradorResponseDto;
+import tech4good.cruds.dto.tipomorador.TipoMoradorUpdateDto;
 import tech4good.cruds.entity.TipoMorador;
 import tech4good.cruds.mapper.TipoMoradorMapper;
 import tech4good.cruds.service.TipoMoradorService;
@@ -51,9 +52,9 @@ public class TipoMoradorController {
     @PatchMapping("/{id}")
     public ResponseEntity<TipoMoradorResponseDto> atualizar(
             @PathVariable Integer id,
-            @RequestBody TipoMorador tipoMorador) {
-        tipoMorador.setIdTipoMorador(id);
-        TipoMorador tipoMoradorAtualizado = tipoMoradorService.atualizarTipoMorador(tipoMorador);
+            @RequestBody TipoMoradorUpdateDto dto) {
+        TipoMorador tipoMorador = TipoMoradorMapper.toUpdate(dto, id);
+        TipoMorador tipoMoradorAtualizado = tipoMoradorService.atualizarTipoMorador(tipoMorador, id);
         TipoMoradorResponseDto tipoMoradorDto = TipoMoradorMapper.toResponseDto(tipoMoradorAtualizado);
         return ResponseEntity.ok(tipoMoradorDto);
     }

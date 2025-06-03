@@ -4,6 +4,7 @@ import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 import tech4good.cruds.dto.tipomorador.TipoMoradorRequestDto;
 import tech4good.cruds.dto.tipomorador.TipoMoradorResponseDto;
+import tech4good.cruds.dto.tipomorador.TipoMoradorUpdateDto;
 import tech4good.cruds.entity.TipoMorador;
 
 public class TipoMoradorMapper {
@@ -61,5 +62,22 @@ public class TipoMoradorMapper {
                 filhoBeneficiadoEnderecoResponseDto,
                 filhoBeneficiadoBeneficiadoResponseDto
         );
+    }
+
+    public static TipoMorador toUpdate(TipoMoradorUpdateDto dto, Integer idTipoMorador){
+        if(dto == null){
+            return null;
+        }
+
+        TipoMorador tipoMorador = new TipoMorador();
+        tipoMorador.setIdTipoMorador(idTipoMorador);
+        tipoMorador.setQuantidadeCrianca(dto.getQuantidadeCrianca());
+        tipoMorador.setQuantidadeAdolescente(dto.getQuantidadeAdolescente());
+        tipoMorador.setQuantidadeJovem(dto.getQuantidadeJovem());
+        tipoMorador.setQuantidadeIdoso(dto.getQuantidadeIdoso());
+        tipoMorador.setQuantidadeGestante(dto.getQuantidadeGestante());
+        tipoMorador.setQuantidadeDeficiente(dto.getQuantidadeDeficiente());
+        tipoMorador.setQuantidadeOutros(dto.getQuantidadeOutros());
+        return tipoMorador;
     }
 }

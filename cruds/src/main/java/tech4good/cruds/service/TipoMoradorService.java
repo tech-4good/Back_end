@@ -49,14 +49,33 @@ public class TipoMoradorService {
         return tipoMoradorRepository.findAll();
     }
 
-    public TipoMorador atualizarTipoMorador(TipoMorador tipoMorador){
-        if(tipoMoradorRepository.existsById(tipoMorador.getIdTipoMorador())){
-            tipoMorador.setIdTipoMorador(tipoMorador.getIdTipoMorador());
-            return tipoMoradorRepository.save(tipoMorador);
-        } else {
-            throw new EntidadeNaoEncontradaException("TipoMorador de id %d não encontrado".
-                    formatted(tipoMorador.getIdTipoMorador()));
-        }
+    public TipoMorador atualizarTipoMorador(TipoMorador tipoMorador, Integer id){
+       TipoMorador tipoMoradorExistente = tipoMoradorRepository.findById(id)
+               .orElseThrow(() -> new EntidadeNaoEncontradaException("TipoMorador de id %d não encontrado".formatted(id)));
+
+       if (tipoMorador.getQuantidadeCrianca() != null){
+           tipoMoradorExistente.setQuantidadeCrianca(tipoMorador.getQuantidadeCrianca());
+       }
+       if (tipoMorador.getQuantidadeAdolescente() != null){
+           tipoMoradorExistente.setQuantidadeAdolescente(tipoMorador.getQuantidadeAdolescente());
+       }
+       if (tipoMorador.getQuantidadeJovem() != null){
+           tipoMoradorExistente.setQuantidadeJovem(tipoMorador.getQuantidadeJovem());
+       }
+       if (tipoMorador.getQuantidadeIdoso() != null){
+           tipoMoradorExistente.setQuantidadeIdoso(tipoMorador.getQuantidadeIdoso());
+       }
+       if (tipoMorador.getQuantidadeGestante() != null){
+           tipoMoradorExistente.setQuantidadeGestante(tipoMorador.getQuantidadeGestante());
+       }
+       if (tipoMorador.getQuantidadeDeficiente() != null){
+           tipoMoradorExistente.setQuantidadeDeficiente(tipoMorador.getQuantidadeDeficiente());
+       }
+       if (tipoMorador.getQuantidadeOutros() != null){
+           tipoMoradorExistente.setQuantidadeOutros(tipoMorador.getQuantidadeOutros());
+       }
+
+       return tipoMoradorRepository.save(tipoMoradorExistente);
     }
 
     public void removerTipoMoradorPorId(Integer id){
