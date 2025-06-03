@@ -92,7 +92,7 @@ class VoluntarioServiceTest {
     void atualizarVoluntarioPorIdQuandoAcionadoComIdValidoDeveAtualizarVoluntarioTest() {
         when(repository.existsById(anyInt())).thenReturn(true);
 
-        service.atualizarVoluntario(new Voluntario());
+        service.atualizarVoluntario(new Voluntario(), anyInt());
 
         verify(repository, times(1)).existsById(anyInt());
         verify(repository, times(1)).save(new Voluntario());
@@ -103,7 +103,7 @@ class VoluntarioServiceTest {
     void atualizarVoluntarioPorIdQuandoAcionadoComIdInvalidoDeveLancarEntidadeNaoEncontradaExceptionTest() {
         when(repository.existsById(anyInt())).thenReturn(false);
 
-        assertThrows(EntidadeNaoEncontradaException.class, () -> service.atualizarVoluntario(new Voluntario()));
+        assertThrows(EntidadeNaoEncontradaException.class, () -> service.atualizarVoluntario(new Voluntario(), anyInt()));
 
         verify(repository, times(1)).existsById(anyInt());
     }

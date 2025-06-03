@@ -74,14 +74,19 @@ public class VoluntarioService {
         return voluntariosEncontrados.stream().map(VoluntarioMapper::toVoluntarioListarDto).toList();
     }
 
-    public Voluntario atualizarVoluntario(Voluntario voluntario){
-        if(voluntarioRepository.existsById(voluntario.getIdVoluntario())){
-            voluntario.setIdVoluntario(voluntario.getIdVoluntario());
-            return voluntarioRepository.save(voluntario);
-        } else {
-            throw new EntidadeNaoEncontradaException("Voluntário de id %d não encontrado".
-                    formatted(voluntario.getIdVoluntario()));
+    public Voluntario atualizarVoluntario(Voluntario voluntario, Integer id){
+        Voluntario voluntarioExistente = voluntarioRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Voluntario de id %d não encontrado".formatted(id)));
+
+        if (voluntario.getTelefone() != null){
+            voluntarioExistente.setTelefone(voluntario.getTelefone());
         }
+
+        if (voluntario.getEmail() != null){
+            voluntarioExistente.setEmail(voluntario.getEmail());
+        }
+
+       return voluntarioRepository.save(voluntarioExistente);
     }
 
     public void removerVoluntarioPorId(Integer id){

@@ -73,4 +73,16 @@ public class VoluntarioMapper {
 
         return responseDto;
     }
+
+    public static Voluntario toUpdate(VoluntarioUpdateDto dto, Integer idVoluntario){
+        if (dto == null){
+            return null;
+        }
+
+        Voluntario voluntario = new Voluntario();
+        voluntario.setIdVoluntario(idVoluntario);
+        voluntario.setTelefone(dto.getTelefone());
+        voluntario.setEmail(dto.getEmail());
+        return voluntario;
+    }
 }

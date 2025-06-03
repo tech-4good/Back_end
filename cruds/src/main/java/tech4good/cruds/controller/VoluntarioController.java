@@ -60,9 +60,9 @@ public class VoluntarioController {
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<VoluntarioResponseDto> atualizar(
             @PathVariable Integer id,
-            @RequestBody Voluntario voluntario) {
-        voluntario.setIdVoluntario(id);
-        Voluntario voluntarioAtualizado = voluntarioService.atualizarVoluntario(voluntario);
+            @RequestBody VoluntarioUpdateDto dto) {
+        Voluntario voluntario = VoluntarioMapper.toUpdate(dto, id);
+        Voluntario voluntarioAtualizado = voluntarioService.atualizarVoluntario(voluntario, id);
         VoluntarioResponseDto voluntarioDto = VoluntarioMapper.toResponseDto(voluntarioAtualizado);
         return ResponseEntity.ok(voluntarioDto);
     }
