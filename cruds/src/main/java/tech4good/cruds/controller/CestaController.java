@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.cesta.CestaRequestDto;
 import tech4good.cruds.dto.cesta.CestaResponseDto;
+import tech4good.cruds.dto.cesta.CestaUpdateDto;
 import tech4good.cruds.entity.Cesta;
 import tech4good.cruds.mapper.CestaMapper;
 import tech4good.cruds.service.CestaService;
@@ -70,11 +71,11 @@ public class CestaController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<CestaResponseDto> atualizar(
-            @RequestBody Cesta cestaNova,
+            @RequestBody CestaUpdateDto dto,
             @PathVariable Integer id
     ) {
-        cestaNova.setIdCesta(id);
-        Cesta cestaAlterada = cestaService.atualizarCestaPorId(cestaNova);
+        Cesta cesta = CestaMapper.toUpdate(dto, id);
+        Cesta cestaAlterada = cestaService.atualizarCestaPorId(cesta, id);
         CestaResponseDto cestoDto = CestaMapper.toResponseDto(cestaAlterada);
         return ResponseEntity.status(200).body(cestoDto);
     }

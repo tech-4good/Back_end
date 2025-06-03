@@ -2,6 +2,7 @@ package tech4good.cruds.mapper;
 
 import tech4good.cruds.dto.cesta.CestaRequestDto;
 import tech4good.cruds.dto.cesta.CestaResponseDto;
+import tech4good.cruds.dto.cesta.CestaUpdateDto;
 import tech4good.cruds.entity.Cesta;
 
 public class CestaMapper {
@@ -31,5 +32,16 @@ public class CestaMapper {
                 cesta.getQuantidadeCestas()
         );
         return responseDto;
+    }
+
+    public static Cesta toUpdate(CestaUpdateDto dto, Integer idCesta){
+        if (dto == null){
+            return null;
+        }
+
+        Cesta cesta = new Cesta();
+        cesta.setIdCesta(idCesta);
+        cesta.setQuantidadeCestas(dto.getQuantidadeCestas());
+        return cesta;
     }
 }

@@ -35,14 +35,15 @@ public class CestaService {
         return cestaRepository.findAll();
     }
 
-    public Cesta atualizarCestaPorId(Cesta cesta){
-        if(cestaRepository.existsById(cesta.getIdCesta())){
-            cesta.setIdCesta(cesta.getIdCesta());
-            return cestaRepository.save(cesta);
-        } else {
-            throw new EntidadeNaoEncontradaException("Curso de id %d não encontrado"
-                    .formatted(cesta.getIdCesta()));
+    public Cesta atualizarCestaPorId(Cesta cesta, Integer id){
+        Cesta cestaExistente = cestaRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Cesta de id %d não encontrada".formatted(id)));
+
+        if (cesta.getQuantidadeCestas() != null){
+            cestaExistente.setQuantidadeCestas(cesta.getQuantidadeCestas());
         }
+
+        return cestaRepository.save(cestaExistente);
     }
 
     public void removerCesta(Integer id){

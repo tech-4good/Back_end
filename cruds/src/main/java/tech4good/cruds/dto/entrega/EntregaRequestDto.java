@@ -20,12 +20,16 @@ public class EntregaRequestDto {
     @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025/02/25")
     @NotNull
     private LocalDate proximaRetirada;
+    @Schema(description = "Chave estrangeira do endereço associado", example = "1")
     @NotNull
     private Integer enderecoId;
+    @Schema(description = "Chave estrangeira da cesta associado", example = "1")
     @NotNull
     private Integer cestaId;
+    @Schema(description = "Chave estrangeira do voluntario associado", example = "1")
     @NotNull
     private Integer voluntarioId;
+    @Schema(description = "Chave estrangeira do beneficiado associado", example = "1")
     @NotNull
     private Integer beneficiadoId;
 
