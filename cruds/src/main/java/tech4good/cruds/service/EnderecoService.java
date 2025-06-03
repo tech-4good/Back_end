@@ -38,14 +38,16 @@ public class EnderecoService {
         return enderecoRepository.findAll();
     }
 
-    public Endereco atualizarEndereco(Endereco endereco){
-        if(enderecoRepository.existsById(endereco.getIdEndereco())){
-            endereco.setIdEndereco(endereco.getIdEndereco());
-            return enderecoRepository.save(endereco);
-        } else {
-            throw new EntidadeNaoEncontradaException("Endereço de id %d não encontrado"
-                    .formatted(endereco.getIdEndereco()));
+    public Endereco atualizarEndereco(Endereco endereco, Integer idEndereco){
+        Endereco enderecoExistente = enderecoRepository.findById(idEndereco)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Endereço de id %d não encontrado"
+                .formatted(idEndereco)));
+
+        if (endereco.getStatus() != null){
+            enderecoExistente.setStatus(endereco.getStatus());
         }
+
+        return enderecoRepository.save(enderecoExistente);
     }
 
     public void removerEnderecoPorId(Integer id){

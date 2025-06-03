@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.endereco.EnderecoApiCepDto;
 import tech4good.cruds.dto.endereco.EnderecoRequestDto;
 import tech4good.cruds.dto.endereco.EnderecoResponseDto;
+import tech4good.cruds.dto.endereco.EnderecoUpdateDto;
 import tech4good.cruds.entity.Endereco;
 import tech4good.cruds.mapper.EnderecoMapper;
 import tech4good.cruds.service.EnderecoService;
@@ -54,13 +55,13 @@ public class EnderecoController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<EnderecoResponseDto> atualizar(
-            @RequestBody Endereco enderecoNovo,
+            @RequestBody EnderecoUpdateDto dto,
             @PathVariable Integer id
     ) {
-        enderecoNovo.setIdEndereco(id);
-        Endereco enderecoAlterado = enderecoService.atualizarEndereco(enderecoNovo);
-        EnderecoResponseDto enderecoDto = EnderecoMapper.toResponseDto(enderecoAlterado);
-        return ResponseEntity.status(200).body(enderecoDto);
+       Endereco endereco = EnderecoMapper.toUpdate(dto, id);
+       Endereco enderecoAtualizado = enderecoService.atualizarEndereco(endereco, id);
+       EnderecoResponseDto enderecoDto = EnderecoMapper.toResponseDto(enderecoAtualizado);
+       return ResponseEntity.status(200).body(enderecoDto);
     }
 
     @DeleteMapping("/{id}")

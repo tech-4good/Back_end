@@ -2,6 +2,7 @@ package tech4good.cruds.mapper;
 
 import tech4good.cruds.dto.endereco.EnderecoRequestDto;
 import tech4good.cruds.dto.endereco.EnderecoResponseDto;
+import tech4good.cruds.dto.endereco.EnderecoUpdateDto;
 import tech4good.cruds.entity.Endereco;
 
 public class EnderecoMapper {
@@ -51,5 +52,17 @@ public class EnderecoMapper {
         );
 
         return responseDto;
+    }
+
+    public static Endereco toUpdate(EnderecoUpdateDto dto, Integer idEndereco){
+        if(dto == null){
+            return null;
+        }
+
+        Endereco endereco = new Endereco();
+        endereco.setIdEndereco(idEndereco);
+        endereco.setStatus(dto.getStatus());
+
+        return endereco;
     }
 }
