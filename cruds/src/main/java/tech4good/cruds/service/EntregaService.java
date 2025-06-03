@@ -28,7 +28,6 @@ public class EntregaService {
         this.beneficiadoService = beneficiadoService;
     }
 
-
     public Entrega cadastrarEntrega(Entrega entrega, Integer enderecoId, Integer voluntarioId, Integer cestaId, Integer beneficiadoId){
         Endereco endereco = enderecoService.listarEnderecoPorId(enderecoId);
         if (endereco == null){

@@ -28,7 +28,7 @@ public class FilhoBeneficiadoController {
     public ResponseEntity<FilhoBeneficiadoResponseDto> cadastrar(
             @RequestBody FilhoBeneficiadoRequestDto dto) {
         FilhoBeneficiado filho = FilhoBeneficiarioMapper.toEntity(dto);
-        FilhoBeneficiado novoFilho = filhoBeneficiadoService.cadastrarFilhoBeneficiado(filho);
+        FilhoBeneficiado novoFilho = filhoBeneficiadoService.cadastrarFilhoBeneficiado(filho, dto.getBeneficiadoId(), dto.getEnderecoId());
         FilhoBeneficiadoResponseDto dtoSalvo = FilhoBeneficiarioMapper.toResponseDto(novoFilho);
         return ResponseEntity.status(201).body(dtoSalvo);
     }

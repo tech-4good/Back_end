@@ -19,6 +19,12 @@ public class FilhoBeneficiadoRequestDto {
     @Schema(description = "O filho está em uma creche?", example = "0")
     @NotNull
     private Integer hasCreche;
+    @Schema(description = "Chave estrangeira do beneficiado associado", example = "1")
+    @NotNull
+    private Integer beneficiadoId;
+    @Schema(description = "Chave estrangeira do endereço associado", example = "1")
+    @NotNull
+    private Integer enderecoId;
 
     public LocalDate getDataNascimento() {
         return dataNascimento;
@@ -42,5 +48,21 @@ public class FilhoBeneficiadoRequestDto {
 
     public void setHasCreche(@NotNull Integer hasCreche) {
         this.hasCreche = hasCreche;
+    }
+
+    public Integer getBeneficiadoId() {
+        return beneficiadoId;
+    }
+
+    public void setBeneficiadoId(Integer beneficiadoId) {
+        this.beneficiadoId = beneficiadoId;
+    }
+
+    public Integer getEnderecoId() {
+        return enderecoId;
+    }
+
+    public void setEnderecoId(Integer enderecoId) {
+        this.enderecoId = enderecoId;
     }
 }
