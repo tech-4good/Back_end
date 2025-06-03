@@ -1,6 +1,7 @@
 package tech4good.cruds.dto.tipomorador;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 
 @Schema(description = "Objeto de requisição para cadastro de tipos de moradores")
 public class TipoMoradorRequestDto {
@@ -19,6 +20,12 @@ public class TipoMoradorRequestDto {
     private String quantidadeDeficiente;
     @Schema(description = "Quantidade de Outros", example = "2")
     private String quantidadeOutros;
+    @Schema(description = "Chave estrangeira do beneficiado associado", example = "1")
+    @NotNull
+    private Integer beneficiadoId;
+    @Schema(description = "Chave estrangeira do endereço associado", example = "1")
+    @NotNull
+    private Integer enderecoId;
 
     public String getQuantidadeCrianca() {
         return quantidadeCrianca;
@@ -74,5 +81,21 @@ public class TipoMoradorRequestDto {
 
     public void setQuantidadeOutros(String quantidadeOutros) {
         this.quantidadeOutros = quantidadeOutros;
+    }
+
+    public Integer getBeneficiadoId() {
+        return beneficiadoId;
+    }
+
+    public void setBeneficiadoId(Integer beneficiadoId) {
+        this.beneficiadoId = beneficiadoId;
+    }
+
+    public Integer getEnderecoId() {
+        return enderecoId;
+    }
+
+    public void setEnderecoId(Integer enderecoId) {
+        this.enderecoId = enderecoId;
     }
 }

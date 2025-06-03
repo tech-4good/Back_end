@@ -27,7 +27,7 @@ public class TipoMoradorController {
     @PostMapping
     public ResponseEntity<TipoMoradorResponseDto> cadastrar(@RequestBody TipoMoradorRequestDto dto) {
         TipoMorador morador = TipoMoradorMapper.toEntity(dto);
-        TipoMorador novoTipoMorador = tipoMoradorService.cadastrarTipoMorador(morador);
+        TipoMorador novoTipoMorador = tipoMoradorService.cadastrarTipoMorador(morador, dto.getEnderecoId(), dto.getBeneficiadoId());
         TipoMoradorResponseDto dtoSalvo = TipoMoradorMapper.toResponseDto(novoTipoMorador);
         return ResponseEntity.status(201).body(dtoSalvo);
     }
