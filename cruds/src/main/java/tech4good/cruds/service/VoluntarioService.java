@@ -100,6 +100,9 @@ public class VoluntarioService {
     public void redefinirSenha(String email, String senhaAtual, String novaSenha) {
         Voluntario voluntario = voluntarioRepository.findByEmail(email)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Voluntário com e-mail %s não encontrado".formatted(email)));
+
+        System.out.println("Senha criptografada no banco: " + voluntario.getSenha());
+
         if (!passwordEncoder.matches(senhaAtual, voluntario.getSenha())) {
             throw new RuntimeException("Senha atual incorreta");
         }
