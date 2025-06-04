@@ -2,6 +2,7 @@ package tech4good.cruds.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.entrega.EntregaRequestDto;
@@ -12,6 +13,7 @@ import tech4good.cruds.mapper.EnderecoMapper;
 import tech4good.cruds.mapper.EntregaMapper;
 import tech4good.cruds.service.EntregaService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Tag(name = "Controller - Entrega", description = "Operações relacionadas as doações das cestas básicas ou kits.")
@@ -66,4 +68,21 @@ public class EntregaController {
         entregaService.removerEntregaPorId(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/historico/{idBeneficiado}")
+    public ResponseEntity<List<EntregaResponseDto>> listarHistoricoEntregas(
+            @PathVariable Integer idBeneficiado,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim
+    ) {
+        List<Entrega> entregas = entregaService.listarEntregasPorBeneficiadoComFiltro(idBeneficiado, dataInicio, dataFim);
+        if (entregas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        List<EntregaResponseDto> resposta = entregas.stream()
+                .map(EntregaMapper::toResponseDto)
+                .toList();
+        return ResponseEntity.ok(resposta);
+    }
+
 }

@@ -54,6 +54,7 @@ public class CestaController {
         return ResponseEntity.status(200).body(cestaDto);
     }
 
+    /*
     @GetMapping("/historico/{idBeneficiado}")
     public ResponseEntity<List<CestaResponseDto>> listarHistoricoCestasPorBeneficiado(
             @PathVariable Integer idBeneficiado,
@@ -68,6 +69,7 @@ public class CestaController {
         List<CestaResponseDto> resposta = cestas.stream().map(CestaMapper::toResponseDto).toList();
         return ResponseEntity.status(200).body(resposta);
     }
+     */
 
     @PatchMapping("/{id}")
     public ResponseEntity<CestaResponseDto> atualizar(

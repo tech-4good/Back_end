@@ -11,16 +11,15 @@ public interface EntregaRepository extends JpaRepository<Entrega,Integer> {
     List<Entrega> findByBeneficiadoId(Integer id);
 
     @Query("""
-        SELECT e FROM Entrega e
-        WHERE (:idBeneficiado IS NULL OR e.beneficiado.id = :idBeneficiado)
-        AND (:dataInicio IS NULL OR e.dataRetirada >= :dataInicio)
-        AND (:dataFim IS NULL OR e.dataRetirada <= :dataFim)
-        AND (:tipo IS NULL OR e.cesta.tipo = :tipo)
-    """)
+    SELECT e FROM Entrega e
+    WHERE (:idBeneficiado IS NULL OR e.beneficiado.id = :idBeneficiado)
+    AND (:dataInicio IS NULL OR e.dataRetirada >= :dataInicio)
+    AND (:dataFim IS NULL OR e.dataRetirada <= :dataFim)
+""")
     List<Entrega> findByFiltro(
-        @Param("idBeneficiado") Integer idBeneficiado,
-        @Param("dataInicio") LocalDate dataInicio,
-        @Param("dataFim") LocalDate dataFim,
-        @Param("tipo") String tipo
+            @Param("idBeneficiado") Integer idBeneficiado,
+            @Param("dataInicio") LocalDate dataInicio,
+            @Param("dataFim") LocalDate dataFim
     );
+
 }

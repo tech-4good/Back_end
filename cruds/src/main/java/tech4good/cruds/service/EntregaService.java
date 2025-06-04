@@ -7,6 +7,7 @@ import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.EnderecoRepository;
 import tech4good.cruds.repository.EntregaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -87,4 +88,9 @@ public class EntregaService {
             throw new EntidadeNaoEncontradaException("Entrega de id %d não encontrado".formatted(id));
         }
     }
+
+    public List<Entrega> listarEntregasPorBeneficiadoComFiltro(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim) {
+        return entregaRepository.findByFiltro(idBeneficiado, dataInicio, dataFim);
+    }
+
 }
