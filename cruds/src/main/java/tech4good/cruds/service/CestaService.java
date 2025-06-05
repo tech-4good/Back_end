@@ -53,16 +53,5 @@ public class CestaService {
             throw new EntidadeNaoEncontradaException("Curso de id %d não encontrado".formatted(id));
         }
     }
-
-    /*
-    public List<Cesta> listarCestasEntreguesPorBeneficiadoComFiltro(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, String tipo) {
-        List<Entrega> entregas = entregaRepository.findByFiltro(idBeneficiado, dataInicio, dataFim, tipo);
-        return entregas.stream()
-                .map(Entrega::getCesta)
-                .collect(Collectors.toList());
-    }
-
-     */
-
 }
 
