@@ -2,6 +2,7 @@ package tech4good.cruds.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.cruds.dto.endereco.EnderecoApiCepDto;
@@ -28,6 +29,7 @@ public class EnderecoController {
 
     @PostMapping
     public ResponseEntity<EnderecoResponseDto> cadastrar(
+            @Valid
             @RequestBody EnderecoRequestDto dto
     ) {
         Endereco endereco = EnderecoMapper.toEntity(dto);
@@ -55,6 +57,7 @@ public class EnderecoController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<EnderecoResponseDto> atualizar(
+            @Valid
             @RequestBody EnderecoUpdateDto dto,
             @PathVariable Integer id
     ) {

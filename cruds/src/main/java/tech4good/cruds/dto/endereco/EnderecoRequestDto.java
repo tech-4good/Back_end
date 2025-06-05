@@ -26,7 +26,7 @@ public class EnderecoRequestDto {
     @Schema(description = "Nome do estado", example = "SP")
     @NotBlank
     private String estado;
-    @Schema(description = "CEP da região onde se encontra a residência", example = "01001-000")
+    @Schema(description = "CEP da região onde se encontra a residência", example = "01001000")
     @NotBlank
     @Size(min = 8, max = 8)
     private String cep;
