@@ -14,7 +14,7 @@ public class CestaRequestDto {
     @Schema(description = "Tipo da cesta", example = "Kit")
     @NotBlank
     private String tipo;
-    @Schema(description = "Peso da cesta em kilogramas", example = "3,5")
+    @Schema(description = "Peso da cesta em kilogramas", example = "3.5")
     @NotNull
     @Positive
     private Double pesoKg;
