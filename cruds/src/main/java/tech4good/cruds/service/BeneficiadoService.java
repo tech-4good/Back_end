@@ -2,10 +2,14 @@ package tech4good.cruds.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tech4good.cruds.dto.beneficiado.BeneficiadoCadastroSimplesDto;
 import tech4good.cruds.entity.Beneficiado;
+import tech4good.cruds.entity.Endereco;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.BeneficiadoRepository;
+import tech4good.cruds.repository.EnderecoRepository;
 
 import java.util.List;
 
@@ -14,6 +18,9 @@ public class BeneficiadoService {
 
     private static final Logger log = LoggerFactory.getLogger(BeneficiadoService.class);
     private final BeneficiadoRepository beneficiadoRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public BeneficiadoService(BeneficiadoRepository beneficiadoRepository) {
         this.beneficiadoRepository = beneficiadoRepository;
@@ -86,5 +93,38 @@ public class BeneficiadoService {
             throw new EntidadeNaoEncontradaException("Beneficiado de id %d não encontrado"
                     .formatted(id));
         }
+    }
+
+    public Beneficiado cadastrarBeneficiadoSimples(BeneficiadoCadastroSimplesDto dto) {
+        Endereco endereco = enderecoRepository.findAll().stream()
+            .filter(e -> e.getLogradouro() != null && e.getNumero() != null)
+            .filter(e -> e.getLogradouro().equalsIgnoreCase(dto.getLogradouro()))
+            .filter(e -> e.getNumero().equals(dto.getNumero()))
+            .findFirst()
+            .orElse(null);
+
+        if (endereco == null) {
+            endereco = new Endereco();
+            endereco.setLogradouro(dto.getLogradouro());
+            endereco.setNumero(dto.getNumero());
+            endereco.setComplemento(dto.getComplemento());
+            endereco.setBairro(dto.getBairro());
+            endereco.setCidade(dto.getCidade());
+            endereco.setEstado(dto.getEstado());
+            endereco.setCep(dto.getCep());
+            endereco.setTipoCesta(dto.getTipoCesta());
+            endereco.setDataEntrada(dto.getDataEntrada());
+            endereco.setDataSaida(dto.getDataSaida());
+            endereco.setMoradia(dto.getMoradia());
+            endereco.setTipoMoradia(dto.getTipoMoradia());
+            endereco.setStatus(dto.getStatus());
+            endereco = enderecoRepository.save(endereco);
+        }
+        Beneficiado beneficiado = new Beneficiado();
+        beneficiado.setNome(dto.getNome());
+        beneficiado.setCpf(dto.getCpf());
+        beneficiado.setDataNascimento(dto.getDataNascimento());
+        beneficiado.setEndereco(endereco);
+        return beneficiadoRepository.save(beneficiado);
     }
 }

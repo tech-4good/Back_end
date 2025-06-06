@@ -4,12 +4,15 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech4good.cruds.dto.beneficiado.BeneficiadoCadastroSimplesDto;
 import tech4good.cruds.dto.beneficiado.BeneficiadoRequestDto;
 import tech4good.cruds.dto.beneficiado.BeneficiadoResponseDto;
 import tech4good.cruds.dto.beneficiado.BeneficiadoUpdateDto;
 import tech4good.cruds.entity.Beneficiado;
+import tech4good.cruds.entity.Endereco;
 import tech4good.cruds.mapper.BeneficiadoMapper;
 import tech4good.cruds.service.BeneficiadoService;
+import tech4good.cruds.repository.EnderecoRepository;
 
 import java.util.List;
 
@@ -20,9 +23,11 @@ import java.util.List;
 public class BeneficiadoController {
 
     private final BeneficiadoService beneficiadoService;
+    private final EnderecoRepository enderecoRepository;
 
-    public BeneficiadoController(BeneficiadoService beneficiadoService) {
+    public BeneficiadoController(BeneficiadoService beneficiadoService, EnderecoRepository enderecoRepository) {
         this.beneficiadoService = beneficiadoService;
+        this.enderecoRepository = enderecoRepository;
     }
 
     @PostMapping
@@ -33,6 +38,13 @@ public class BeneficiadoController {
         Beneficiado beneficiadoRegistrado = beneficiadoService.cadastrarBeneficiado(beneficiado);
         BeneficiadoResponseDto  dtoSalvo = BeneficiadoMapper.toResponseDto(beneficiadoRegistrado);
 
+        return ResponseEntity.status(201).body(dtoSalvo);
+    }
+
+    @PostMapping("/cadastro-simples")
+    public ResponseEntity<BeneficiadoResponseDto> cadastrarSimples(@RequestBody BeneficiadoCadastroSimplesDto dto) {
+        Beneficiado beneficiado = beneficiadoService.cadastrarBeneficiadoSimples(dto);
+        BeneficiadoResponseDto dtoSalvo = BeneficiadoMapper.toResponseDto(beneficiado);
         return ResponseEntity.status(201).body(dtoSalvo);
     }
 
