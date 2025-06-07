@@ -58,13 +58,14 @@ public class Beneficiado {
     private Integer quantidadeDependentes;
 
     @Schema(description = "Foto do beneficiado")
-    @Column(name = "foto_beneficiado")
-    private byte[] fotoBeneficiado;
+    @OneToOne
+    @JoinColumn(name = "id_foto")
+    private FileEntity fotoBeneficiado;
 
     public Beneficiado() {
     }
 
-    public Beneficiado(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, Endereco endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
+    public Beneficiado(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, Endereco endereco, Integer quantidadeDependentes, FileEntity fotoBeneficiado) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
@@ -212,11 +213,11 @@ public class Beneficiado {
         this.quantidadeDependentes = quantidadeDependentes;
     }
 
-    public byte[] getFotoBeneficiado() {
+    public FileEntity getFotoBeneficiado() {
         return fotoBeneficiado;
     }
 
-    public void setFotoBeneficiado(byte[] fotoBeneficiado) {
+    public void setFotoBeneficiado(FileEntity fotoBeneficiado) {
         this.fotoBeneficiado = fotoBeneficiado;
     }
 }

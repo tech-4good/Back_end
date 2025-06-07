@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import tech4good.cruds.entity.Endereco;
+import tech4good.cruds.entity.FileEntity;
+
 import java.time.LocalDate;
 
 @Schema(description = "Objeto de requisição para beneficiado da ASA")
@@ -55,14 +57,8 @@ public class BeneficiadoRequestDto {
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     @NotBlank
     private Integer quantidadeDependentes;
-    @Schema(
-            description = "Foto do beneficiado codificada",
-            type = "string",
-            format = "byte",
-            example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
-    )
-    @Lob
-    private byte[] fotoBeneficiado;
+    @Schema(description = "Foto do beneficiado codificada")
+    private FileEntity fotoBeneficiado;
 
     public String getCpf() {
         return cpf;
@@ -176,11 +172,11 @@ public class BeneficiadoRequestDto {
         this.quantidadeDependentes = quantidadeDependentes;
     }
 
-    public byte[] getFotoBeneficiado() {
+    public FileEntity getFotoBeneficiado() {
         return fotoBeneficiado;
     }
 
-    public void setFotoBeneficiado(byte[] fotoBeneficiado) {
+    public void setFotoBeneficiado(FileEntity fotoBeneficiado) {
         this.fotoBeneficiado = fotoBeneficiado;
     }
 
