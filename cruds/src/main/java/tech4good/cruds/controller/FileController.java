@@ -1,6 +1,7 @@
 package tech4good.cruds.controller;
 
 import com.amazonaws.services.s3.AmazonS3;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import tech4good.cruds.service.FileService;
 
 import java.net.URI;
 
+@Tag(name = "Controller - Foto do Beneficiado", description = "Operações relacionadas as fotos das pessoas beneficiadas pela ASA.")
 @RestController
 @RequestMapping("/files")
 public class FileController {

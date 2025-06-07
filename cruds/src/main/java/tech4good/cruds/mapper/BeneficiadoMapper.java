@@ -13,25 +13,23 @@ public class BeneficiadoMapper {
             return null;
         }
 
-        Beneficiado entity = new Beneficiado(
-                null,
-                requestDto.getCpf(),
-                requestDto.getNome(),
-                requestDto.getRg(),
-                requestDto.getDataNascimento(),
-                requestDto.getNaturalidade(),
-                requestDto.getTelefone(),
-                requestDto.getEstadoCivil(),
-                requestDto.getEscolaridade(),
-                requestDto.getProfissao(),
-                requestDto.getRendaMensal(),
-                requestDto.getEmpresa(),
-                requestDto.getCargo(),
-                requestDto.getReligiao(),
-                requestDto.getEndereco(),
-                requestDto.getQuantidadeDependentes(),
-                requestDto.getFotoBeneficiado()
-        );
+        Beneficiado entity = new Beneficiado();
+
+        entity.setCpf(requestDto.getCpf());
+        entity.setNome(requestDto.getNome());
+        entity.setRg(requestDto.getRg());
+        entity.setDataNascimento(requestDto.getDataNascimento());
+        entity.setNaturalidade(requestDto.getNaturalidade());
+        entity.setTelefone(requestDto.getTelefone());
+        entity.setEstadoCivil(requestDto.getEstadoCivil());
+        entity.setEscolaridade(requestDto.getEscolaridade());
+        entity.setProfissao(requestDto.getProfissao());
+        entity.setRendaMensal(requestDto.getRendaMensal());
+        entity.setEmpresa(requestDto.getEmpresa());
+        entity.setCargo(requestDto.getCargo());
+        entity.setReligiao(requestDto.getReligiao());
+        entity.setEndereco(requestDto.getEndereco());
+        entity.setQuantidadeDependentes(requestDto.getQuantidadeDependentes());
 
         return entity;
     }

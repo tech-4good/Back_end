@@ -58,7 +58,7 @@ public class BeneficiadoRequestDto {
     @NotBlank
     private Integer quantidadeDependentes;
     @Schema(description = "Foto do beneficiado codificada")
-    private FileEntity fotoBeneficiado;
+    private Integer fotoBeneficiadoId;
 
     public String getCpf() {
         return cpf;
@@ -172,12 +172,12 @@ public class BeneficiadoRequestDto {
         this.quantidadeDependentes = quantidadeDependentes;
     }
 
-    public FileEntity getFotoBeneficiado() {
-        return fotoBeneficiado;
+    public Integer getFotoBeneficiadoId() {
+        return fotoBeneficiadoId;
     }
 
-    public void setFotoBeneficiado(FileEntity fotoBeneficiado) {
-        this.fotoBeneficiado = fotoBeneficiado;
+    public void setFotoBeneficiadoId(Integer fotoBeneficiadoId) {
+        this.fotoBeneficiadoId = fotoBeneficiadoId;
     }
 
     public Endereco getEndereco() {

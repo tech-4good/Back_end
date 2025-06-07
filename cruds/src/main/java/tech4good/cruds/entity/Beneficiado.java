@@ -65,26 +65,6 @@ public class Beneficiado {
     public Beneficiado() {
     }
 
-    public Beneficiado(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, Endereco endereco, Integer quantidadeDependentes, FileEntity fotoBeneficiado) {
-        this.id = id;
-        this.cpf = cpf;
-        this.nome = nome;
-        this.rg = rg;
-        this.dataNascimento = dataNascimento;
-        this.naturalidade = naturalidade;
-        this.telefone = telefone;
-        this.estadoCivil = estadoCivil;
-        this.escolaridade = escolaridade;
-        this.profissao = profissao;
-        this.rendaMensal = rendaMensal;
-        this.empresa = empresa;
-        this.cargo = cargo;
-        this.religiao = religiao;
-        this.endereco = endereco;
-        this.quantidadeDependentes = quantidadeDependentes;
-        this.fotoBeneficiado = fotoBeneficiado;
-    }
-
     public Integer getId() {
         return id;
     }

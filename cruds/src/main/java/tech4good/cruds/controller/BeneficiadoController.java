@@ -35,7 +35,7 @@ public class BeneficiadoController {
             @RequestBody BeneficiadoRequestDto dto
             ) {
         Beneficiado beneficiado = BeneficiadoMapper.toEntity(dto);
-        Beneficiado beneficiadoRegistrado = beneficiadoService.cadastrarBeneficiado(beneficiado);
+        Beneficiado beneficiadoRegistrado = beneficiadoService.cadastrarBeneficiado(beneficiado, dto.getFotoBeneficiadoId());
         BeneficiadoResponseDto  dtoSalvo = BeneficiadoMapper.toResponseDto(beneficiadoRegistrado);
 
         return ResponseEntity.status(201).body(dtoSalvo);

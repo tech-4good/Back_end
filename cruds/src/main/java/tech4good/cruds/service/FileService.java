@@ -70,6 +70,12 @@ public class FileService{
         return fileEntity;
     }
 
+    public FileEntity loadEntity(Integer fileId) {
+        return this.fileEntityRepository.findById(fileId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
+    }
+
+
     private String generateStoredName(MultipartFile file) {
         return System.currentTimeMillis() + "_" + file.getOriginalFilename();
     }
@@ -85,4 +91,6 @@ public class FileService{
 
         return model;
     }
+
+
 }

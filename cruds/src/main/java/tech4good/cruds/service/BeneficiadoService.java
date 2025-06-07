@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import tech4good.cruds.dto.beneficiado.BeneficiadoCadastroSimplesDto;
 import tech4good.cruds.entity.Beneficiado;
 import tech4good.cruds.entity.Endereco;
+import tech4good.cruds.entity.FileEntity;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.BeneficiadoRepository;
 import tech4good.cruds.repository.EnderecoRepository;
@@ -22,11 +23,23 @@ public class BeneficiadoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private FileService fileService;
+
     public BeneficiadoService(BeneficiadoRepository beneficiadoRepository) {
         this.beneficiadoRepository = beneficiadoRepository;
     }
 
-    public Beneficiado cadastrarBeneficiado(Beneficiado beneficiado){
+    public Beneficiado cadastrarBeneficiado(Beneficiado beneficiado, Integer fotoBeneficiadoId){
+
+        FileEntity fileEntity =fileService.loadEntity(fotoBeneficiadoId);
+
+        if (fileEntity == null){
+            throw new EntidadeNaoEncontradaException("Foto de id %d não encontrada".formatted(fotoBeneficiadoId));
+        }
+
+        beneficiado.setFotoBeneficiado(fileEntity);
+
         return beneficiadoRepository.save(beneficiado);
     }
 
