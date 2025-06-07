@@ -1,5 +1,6 @@
 package tech4good.cruds.mapper;
 
+import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
 import tech4good.cruds.dto.fila.FilaEsperaRequestDto;
 import tech4good.cruds.dto.fila.FilaEsperaResponseDto;
@@ -22,28 +23,17 @@ public class FilaEsperaMapper {
             return null;
         }
 
-        EnderecoSummarizedResponseDto enderecoBeneficiadoResponseDto = filaEspera.getEndereco() != null
-                ? new EnderecoSummarizedResponseDto(
-                filaEspera.getEndereco().getLogradouro(),
-                filaEspera.getEndereco().getNumero(),
-                filaEspera.getEndereco().getComplemento(),
-                filaEspera.getEndereco().getBairro(),
-                filaEspera.getEndereco().getCidade(),
-                filaEspera.getEndereco().getEstado(),
-                filaEspera.getEndereco().getCep(),
-                filaEspera.getEndereco().getTipoCesta(),
-                filaEspera.getEndereco().getDataEntrada(),
-                filaEspera.getEndereco().getDataSaida(),
-                filaEspera.getEndereco().getMoradia(),
-                filaEspera.getEndereco().getTipoMoradia(),
-                filaEspera.getEndereco().getStatus()
+        BeneficiadoSummarizedResponseDto beneficiadoResponseDto = filaEspera.getBeneficiado() != null
+                ? new BeneficiadoSummarizedResponseDto(
+                filaEspera.getBeneficiado().getCpf(),
+                filaEspera.getBeneficiado().getNome()
         ): null;
 
         FilaEsperaResponseDto responseDto = new FilaEsperaResponseDto(
                 filaEspera.getIdFila(),
                 filaEspera.getDataEntradaFila(),
                 filaEspera.getDataSaidaFila(),
-                enderecoBeneficiadoResponseDto
+                beneficiadoResponseDto
         );
         return responseDto;
     }

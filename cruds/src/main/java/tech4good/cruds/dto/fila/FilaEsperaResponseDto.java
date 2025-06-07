@@ -1,6 +1,7 @@
 package tech4good.cruds.dto.fila;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import tech4good.cruds.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
 
 import java.time.LocalDate;
@@ -14,13 +15,13 @@ public class FilaEsperaResponseDto {
     private LocalDate dataEntradaFila;
     @Schema(description = "Data de saída da fila", example = "2025/04/22")
     private LocalDate dataSaidaFila;
-    private EnderecoSummarizedResponseDto endereco;
+    private BeneficiadoSummarizedResponseDto beneficiado;
 
-    public FilaEsperaResponseDto(Integer idFila, LocalDate dataEntradaFila, LocalDate dataSaidaFila, EnderecoSummarizedResponseDto endereco) {
+    public FilaEsperaResponseDto(Integer idFila, LocalDate dataEntradaFila, LocalDate dataSaidaFila, BeneficiadoSummarizedResponseDto beneficiado) {
         this.idFila = idFila;
         this.dataEntradaFila = dataEntradaFila;
         this.dataSaidaFila = dataSaidaFila;
-        this.endereco = endereco;
+        this.beneficiado = beneficiado;
     }
 
     public FilaEsperaResponseDto() {
@@ -50,11 +51,11 @@ public class FilaEsperaResponseDto {
         this.dataSaidaFila = dataSaidaFila;
     }
 
-    public EnderecoSummarizedResponseDto getEndereco() {
-        return endereco;
+    public BeneficiadoSummarizedResponseDto getBeneficiado() {
+        return beneficiado;
     }
 
-    public void setEndereco(EnderecoSummarizedResponseDto endereco) {
-        this.endereco = endereco;
+    public void setBeneficiado(BeneficiadoSummarizedResponseDto beneficiado) {
+        this.beneficiado = beneficiado;
     }
 }

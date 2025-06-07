@@ -22,15 +22,15 @@ public class FilaEspera {
     @Column(name = "data_saida")
     private LocalDate dataSaidaFila;
     @ManyToOne
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
+    @JoinColumn(name = "id_beneficiado")
+    private Beneficiado beneficiado;
 
-    public Endereco getEndereco() {
-        return endereco;
+    public Beneficiado getBeneficiado() {
+        return beneficiado;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setBeneficiado(Beneficiado beneficiado) {
+        this.beneficiado = beneficiado;
     }
 
     public Integer getIdFila() {
