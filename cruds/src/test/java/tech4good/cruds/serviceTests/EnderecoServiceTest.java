@@ -79,11 +79,11 @@ class EnderecoServiceTest {
     }
 
     @Test
-    @DisplayName("listarEnderecoPorId() quando acionado com ID válido e não houver resultados, deve retornar optional vazio")
-    void listarEnderecoPorIdQuandoAcionadoComIdValidoENaoHouverResultadoDeveRetornarOptionalVazioTest() {
+    @DisplayName("listarEnderecoPorId() quando acionado com ID válido e não houver resultados, deve lançar EntidadeNaoEncontradaException")
+    void listarEnderecoPorIdQuandoAcionadoComIdValidoENaoHouverResultadoDeveLancarEntidadeNaoEncontradaExceptionTest() {
         when(repository.findById(anyInt())).thenReturn(Optional.empty());
 
-        service.listarEnderecoPorId(anyInt());
+        assertThrows(EntidadeNaoEncontradaException.class, () -> service.listarEnderecoPorId(anyInt()));
 
         verify(repository, times(1)).findById(anyInt());
     }

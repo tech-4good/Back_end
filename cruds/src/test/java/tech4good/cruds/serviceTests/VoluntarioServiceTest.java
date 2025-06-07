@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import tech4good.cruds.entity.Voluntario;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.VoluntarioRepository;
@@ -27,11 +28,15 @@ class VoluntarioServiceTest {
     @Mock
     private VoluntarioRepository repository;
 
+    @Mock
+    PasswordEncoder passwordEncoder;
+
     @Test
     @DisplayName("cadastrarVoluntario() quando acionado com voluntário válido deve cadastrar corretamente")
     void cadastrarVoluntarioQuandoAcionadoComVoluntarioValidoDeveCadastrarCorretamenteTest() {
         Voluntario voluntario = new Voluntario();
 
+        passwordEncoder.encode(voluntario.getSenha());
         service.cadastrarVoluntario(voluntario);
 
         verify(repository, times(1)).save(voluntario);
@@ -90,22 +95,23 @@ class VoluntarioServiceTest {
     @Test
     @DisplayName("atualizarVoluntarioPorId() quando acionado com Id válido deve atualizar voluntario")
     void atualizarVoluntarioPorIdQuandoAcionadoComIdValidoDeveAtualizarVoluntarioTest() {
-        when(repository.existsById(anyInt())).thenReturn(true);
+        Voluntario voluntarioExistente = new Voluntario();
+        when(repository.findById(anyInt())).thenReturn(Optional.of(new Voluntario()));
 
-        service.atualizarVoluntario(new Voluntario(), anyInt());
+        service.atualizarVoluntario(voluntarioExistente, anyInt());
 
-        verify(repository, times(1)).existsById(anyInt());
-        verify(repository, times(1)).save(new Voluntario());
+        verify(repository, times(1)).findById(anyInt());
+        verify(repository, times(1)).save(voluntarioExistente);
     }
 
     @Test
     @DisplayName("atualizarVoluntarioPorId() quando acionado com Id inválido deve lançar EntidadeNaoEncontradaException")
     void atualizarVoluntarioPorIdQuandoAcionadoComIdInvalidoDeveLancarEntidadeNaoEncontradaExceptionTest() {
-        when(repository.existsById(anyInt())).thenReturn(false);
+        when(repository.findById(anyInt())).thenReturn(Optional.empty());
 
         assertThrows(EntidadeNaoEncontradaException.class, () -> service.atualizarVoluntario(new Voluntario(), anyInt()));
 
-        verify(repository, times(1)).existsById(anyInt());
+        verify(repository, times(1)).findById(anyInt());
     }
 
     @Test
