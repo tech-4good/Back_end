@@ -52,12 +52,13 @@ public class BeneficiadoRequestDto {
     @Schema(description = "Religião do beneficiado", example = "Evangélico")
     @NotBlank
     private String religiao;
+    @Schema(description = "Chave estrangeira do endereco relacionado ao beneficiado", example = "1")
     @NotBlank
-    private Endereco endereco;
+    private Integer enderecoId;
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     @NotBlank
     private Integer quantidadeDependentes;
-    @Schema(description = "Foto do beneficiado codificada")
+    @Schema(description = "Foto do beneficiado codificada", example = "1")
     private Integer fotoBeneficiadoId;
 
     public String getCpf() {
@@ -180,11 +181,11 @@ public class BeneficiadoRequestDto {
         this.fotoBeneficiadoId = fotoBeneficiadoId;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public @NotBlank Integer getEnderecoId() {
+        return enderecoId;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setEnderecoId(@NotBlank Integer enderecoId) {
+        this.enderecoId = enderecoId;
     }
 }

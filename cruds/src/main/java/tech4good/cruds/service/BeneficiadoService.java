@@ -20,17 +20,19 @@ public class BeneficiadoService {
     private static final Logger log = LoggerFactory.getLogger(BeneficiadoService.class);
     private final BeneficiadoRepository beneficiadoRepository;
 
-    @Autowired
-    private EnderecoRepository enderecoRepository;
 
-    @Autowired
-    private FileService fileService;
+    private final EnderecoRepository enderecoRepository;
+    private final FileService fileService;
+    private final EnderecoService enderecoService;
 
-    public BeneficiadoService(BeneficiadoRepository beneficiadoRepository) {
+    public BeneficiadoService(BeneficiadoRepository beneficiadoRepository, EnderecoRepository enderecoRepository, FileService fileService, EnderecoService enderecoService) {
         this.beneficiadoRepository = beneficiadoRepository;
+        this.enderecoRepository = enderecoRepository;
+        this.fileService = fileService;
+        this.enderecoService = enderecoService;
     }
 
-    public Beneficiado cadastrarBeneficiado(Beneficiado beneficiado, Integer fotoBeneficiadoId){
+    public Beneficiado cadastrarBeneficiado(Beneficiado beneficiado, Integer fotoBeneficiadoId, Integer enderecoId){
 
         FileEntity fileEntity =fileService.loadEntity(fotoBeneficiadoId);
 
@@ -39,6 +41,14 @@ public class BeneficiadoService {
         }
 
         beneficiado.setFotoBeneficiado(fileEntity);
+
+        Endereco endereco = enderecoService.listarEnderecoPorId(enderecoId);
+
+        if (endereco == null){
+            throw new EntidadeNaoEncontradaException("Endereco de id %d não encontrada".formatted(enderecoId));
+        }
+
+        beneficiado.setEndereco(endereco);
 
         return beneficiadoRepository.save(beneficiado);
     }

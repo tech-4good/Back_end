@@ -28,7 +28,6 @@ public class BeneficiadoMapper {
         entity.setEmpresa(requestDto.getEmpresa());
         entity.setCargo(requestDto.getCargo());
         entity.setReligiao(requestDto.getReligiao());
-        entity.setEndereco(requestDto.getEndereco());
         entity.setQuantidadeDependentes(requestDto.getQuantidadeDependentes());
 
         return entity;
