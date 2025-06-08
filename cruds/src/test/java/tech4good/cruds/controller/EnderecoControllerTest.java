@@ -5,12 +5,14 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import tech4good.cruds.dto.endereco.EnderecoApiCepDto;
 import tech4good.cruds.dto.endereco.EnderecoRequestDto;
 import tech4good.cruds.dto.endereco.EnderecoResponseDto;
 import tech4good.cruds.dto.endereco.EnderecoUpdateDto;
@@ -22,10 +24,9 @@ import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -50,6 +51,9 @@ class EnderecoControllerTest {
 
     //UPDATE DTO
     private EnderecoUpdateDto updateDto;
+
+    //API VIA CEP
+    private EnderecoApiCepDto apiCepDto;
 
     private LocalDate dataSaida;
 
@@ -103,6 +107,14 @@ class EnderecoControllerTest {
 
         updateDto = new EnderecoUpdateDto();
         updateDto.setStatus("Fechado");
+
+        apiCepDto = new EnderecoApiCepDto();
+        apiCepDto.setLogradouro("Praça da Sé");
+        apiCepDto.setComplemento("lado ímpar");
+        apiCepDto.setBairro("Sé");
+        apiCepDto.setCidade("São Paulo");
+        apiCepDto.setEstado("SP");
+        apiCepDto.setCep("01001-000");
     }
 
     @Test
@@ -208,4 +220,83 @@ class EnderecoControllerTest {
         mockMvc.perform(get("/enderecos/1000"))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    @WithMockUser
+    @DisplayName("Deve atualizar um endereco e retornar 200")
+    void deveAtualizarUmEnderecoERetornar200() throws Exception {
+        Endereco endereco = EnderecoMapper.toEntity(requestDto);
+        Endereco enderecoSalvo = enderecoService.cadastrarEndereco(endereco);
+
+        mockMvc.perform(patch("/enderecos/" + enderecoSalvo.getIdEndereco())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updateDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.idEndereco").value(enderecoSalvo.getIdEndereco()))
+                .andExpect(jsonPath("$.status").value(enderecoSalvo.getStatus()));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("Deve retornar 404 ao tentar atualizar um endereco inexistente")
+    void deveRetornar404AoTentarAtualizarUmEnderecoInexistente() throws Exception {
+        mockMvc.perform(patch("/enderecos/1000")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updateDto)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("Deve remover um endereco existente e retornar 204")
+    void deveRemoverUmEnderecoExistente() throws Exception {
+        Endereco endereco = EnderecoMapper.toEntity(requestDto);
+        Endereco enderecoSalvo = enderecoService.cadastrarEndereco(endereco);
+
+        mockMvc.perform(delete("/enderecos/" + enderecoSalvo.getIdEndereco()))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("Deve retornar 404 ao tentar remover um endereco inexistente")
+    void deveRetornar404AoTentarRemoverEnderecoInexistente() throws Exception {
+        mockMvc.perform(delete("/enderecos/1000"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("Deve retornar endereço ao buscar por CEP e retornar 200")
+    void deveRetornarEnderecoAoBuscarPorCep() throws Exception {
+
+        EnderecoApiCepDto buscar = enderecoService.buscarPorCep(requestDto.getCep());
+
+        mockMvc.perform(get("/enderecos/cep/01001000")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.logradouro").value(apiCepDto.getLogradouro()))
+                .andExpect(jsonPath("$.complemento").value(apiCepDto.getComplemento()))
+                .andExpect(jsonPath("$.bairro").value(apiCepDto.getBairro()))
+                .andExpect(jsonPath("$.localidade").value(apiCepDto.getCidade()))
+                .andExpect(jsonPath("$.uf").value(apiCepDto.getEstado()))
+                .andExpect(jsonPath("$.cep").value(apiCepDto.getCep()));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("Deve retornar 200 com os campos vazios ao buscar por CEP inexistente")
+    void deveRetorna200ComOsCamposVaziosAoBuscarPorCepInexistente() throws Exception {
+        mockMvc.perform(get("/enderecos/cep/00000000")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.logradouro").value(nullValue()))
+                .andExpect(jsonPath("$.complemento").value(nullValue()))
+                .andExpect(jsonPath("$.bairro").value(nullValue()))
+                .andExpect(jsonPath("$.localidade").value(nullValue()))
+                .andExpect(jsonPath("$.uf").value(nullValue()))
+                .andExpect(jsonPath("$.cep").value(nullValue()));
+
+    }
+
 }
