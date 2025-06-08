@@ -23,7 +23,7 @@ public class BeneficiadoRequestDto {
     @Schema(description = "RG do beneficiado (somente números)", example = "5583567")
     @NotBlank
     private String rg;
-    @Schema(description = "Data de nascimento do beneficiado", example = "1978/03/21")
+    @Schema(description = "Data de nascimento do beneficiado", example = "1978-03-21")
     @NotBlank
     @PastOrPresent
     private LocalDate dataNascimento;

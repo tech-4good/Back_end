@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Schema(description = "Objeto de requisição para filhos dos beneficiados")
 public class FilhoBeneficiadoRequestDto {
 
-    @Schema(description = "Data de nascimento do filho", example = "2005/02/15")
+    @Schema(description = "Data de nascimento do filho", example = "2005-02-15")
     @NotNull
     @PastOrPresent
     private LocalDate dataNascimento;

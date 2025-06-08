@@ -17,7 +17,7 @@ public class BeneficiadoResponseDto {
     private String nome;
     @Schema(description = "RG do beneficiado (somente números)", example = "5583567")
     private String rg;
-    @Schema(description = "Data de nascimento do beneficiado", example = "1978/03/21")
+    @Schema(description = "Data de nascimento do beneficiado", example = "1978-03-21")
     private LocalDate dataNascimento;
     @Schema(description = "Naturalidade do beneficiado", example = "Brasileiro")
     private String naturalidade;

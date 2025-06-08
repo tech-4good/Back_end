@@ -11,7 +11,7 @@ public class FilhoBeneficiadoResponseDto {
 
     @Schema(description = "Identificador único do filho do beneficiado", example = "1")
     private Integer idFilhoBeneficiado;
-    @Schema(description = "Data de nascimento do filho", example = "2005/02/15")
+    @Schema(description = "Data de nascimento do filho", example = "2005-02-15")
     private LocalDate dataNascimento;
     @Schema(description = "O filho está estudaando?", example = "1")
     private Integer isEstudante;

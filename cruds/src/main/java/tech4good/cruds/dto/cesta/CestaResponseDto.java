@@ -11,7 +11,7 @@ public class CestaResponseDto {
     private Integer idCesta;
     @Schema(description = "Tipo da cesta", example = "Kit")
     private String tipo;
-    @Schema(description = "Data em que a cesta entrou no estoque da ASA", example = "2025/01/20")
+    @Schema(description = "Data em que a cesta entrou no estoque da ASA", example = "2025-01-20")
     private LocalDate dataEntradaEstoque;
     @Schema(description = "Quantidade de cestas no estoque", example = "37")
     private Integer quantidadeCestas;

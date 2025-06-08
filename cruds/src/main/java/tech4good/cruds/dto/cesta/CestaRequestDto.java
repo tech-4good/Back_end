@@ -18,7 +18,7 @@ public class CestaRequestDto {
     @NotNull
     @Positive
     private Double pesoKg;
-    @Schema(description = "Data em que a cesta entrou no estoque da ASA", example = "2025/01/20")
+    @Schema(description = "Data em que a cesta entrou no estoque da ASA", example = "2025-01-20")
     @NotNull
     @PastOrPresent
     private LocalDate dataEntradaEstoque;
