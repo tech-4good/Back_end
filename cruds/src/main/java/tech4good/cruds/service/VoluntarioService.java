@@ -23,8 +23,7 @@ public class VoluntarioService {
 
     private final VoluntarioRepository voluntarioRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private GerenciadorTokenJwt gerenciadorTokenJwt;
@@ -32,11 +31,16 @@ public class VoluntarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public VoluntarioService(VoluntarioRepository voluntarioRepository) {
+    public VoluntarioService(VoluntarioRepository voluntarioRepository, PasswordEncoder passwordEncoder) {
         this.voluntarioRepository = voluntarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void cadastrarVoluntario(Voluntario voluntario){
+        if (voluntario.getSenha() == null || voluntario.getEmail() == null) {
+            throw new EntidadeNaoEncontradaException("Dados do voluntário são inválidos");
+        }
+
         String senhaCriptografada = passwordEncoder.encode(voluntario.getSenha());
         voluntario.setSenha(senhaCriptografada);
 

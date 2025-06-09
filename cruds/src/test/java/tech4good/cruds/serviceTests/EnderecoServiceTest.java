@@ -42,10 +42,15 @@ class EnderecoServiceTest {
     @DisplayName("cadastrarEndereco() quando acionado com endereço inválido, deve lançar ConflitoEntidadeException")
     void cadastrarEnderecoComEnderecoInvalidoDeveLancarConflitoEntidadeExceptionTest() {
         Endereco endereco = new Endereco();
+        endereco.setCep("12345678");
+        endereco.setNumero(100);
+
+        when(repository.existsByCepAndNumero(endereco.getCep(), endereco.getNumero())).thenReturn(true);
 
         assertThrows(ConflitoEntidadeException.class, () -> service.cadastrarEndereco(endereco));
 
-        verify(repository, times(1)).save(endereco);
+        verify(repository, never()).save(any(Endereco.class));
+        verify(repository, times(1)).existsByCepAndNumero(endereco.getCep(), endereco.getNumero());
     }
 
     @Test
@@ -119,7 +124,4 @@ class EnderecoServiceTest {
         verify(repository, times(1)).existsById(anyInt());
     }
 
-    /*
-    * falta buscarPorCep() e atualizarEndereco()
-    * */
 }

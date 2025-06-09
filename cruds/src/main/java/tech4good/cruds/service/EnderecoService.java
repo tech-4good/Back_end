@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import tech4good.cruds.dto.endereco.EnderecoApiCepDto;
 import tech4good.cruds.entity.Endereco;
+import tech4good.cruds.exception.ConflitoEntidadeException;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.integration.LogradouroIntegration;
 import tech4good.cruds.repository.EnderecoRepository;
@@ -25,6 +26,10 @@ public class EnderecoService {
     }
 
     public Endereco cadastrarEndereco(Endereco endereco){
+        if (enderecoRepository.existsByCepAndNumero(endereco.getCep(), endereco.getNumero())){
+            throw new ConflitoEntidadeException("O endereço com CEP: %s e número: %d já existe no banco de dados".formatted(endereco.getCep(), endereco.getNumero()));
+        }
+
         return enderecoRepository.save(endereco);
     }
 
@@ -35,7 +40,13 @@ public class EnderecoService {
     }
 
     public List<Endereco> listarEnderecos(){
-        return enderecoRepository.findAll();
+        List<Endereco> enderecos = enderecoRepository.findAll();
+
+        if (enderecos.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Não há endereços cadastrados");
+        }
+
+        return enderecos;
     }
 
     public Endereco atualizarEndereco(Endereco endereco, Integer idEndereco){

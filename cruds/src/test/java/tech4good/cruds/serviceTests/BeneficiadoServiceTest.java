@@ -131,23 +131,39 @@ class BeneficiadoServiceTest {
     }
 
 
-    /*@Test
+    @Test
     @DisplayName("atualizarBeneficiado() quando acionado com id válido, deve lançar EntidadeNaoEncontradaException")
     void atualizarBeneficiadoQuandoAcionadoComIdValidoDeve() {
-        when(repository.existsById(anyInt())).thenReturn(true);
+        Integer id = 1;
+        Beneficiado beneficiadoAtualizacao = new Beneficiado();
+        beneficiadoAtualizacao.setTelefone("999999999");
+        beneficiadoAtualizacao.setProfissao("Professor");
 
+        Beneficiado beneficiadoExistente = new Beneficiado();
+        beneficiadoExistente.setTelefone("888888888");
+        beneficiadoExistente.setProfissao("Engenheiro");
 
+        when(repository.findById(id)).thenReturn(Optional.of(beneficiadoExistente));
+        when(repository.save(any(Beneficiado.class))).thenReturn(beneficiadoExistente);
 
-        verify(repository, times(1)).findAll();
+        Beneficiado atualizado = service.atualizarBeneficiado(beneficiadoAtualizacao, id);
+
+        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).save(beneficiadoExistente);
+
+        assertEquals("999999999", atualizado.getTelefone());
+        assertEquals("Professor", atualizado.getProfissao());
     }
 
     @Test
     @DisplayName("atualizarBeneficiado() quando acionado com id inválido, deve lançar EntidadeNaoEncontradaException")
     void atualizarBeneficiadoQuandoAcionadoComIdInvalidoDeveLancarEntidadeNaoEncontradaExceptionTest() {
-        when(repository.existsById(anyInt())).thenReturn(false);
+        Beneficiado beneficiadoAtualizacao = new Beneficiado();
+        when(repository.findById(anyInt())).thenReturn(Optional.empty());
 
-        assertThrows(EntidadeNaoEncontradaException.class, () -> service.listarBeneficiados());
+        assertThrows(EntidadeNaoEncontradaException.class, () -> service.atualizarBeneficiado(beneficiadoAtualizacao, anyInt()));
 
-        verify(repository, times(1)).findAll();
-    }*/
+        verify(repository, times(1)).findById(anyInt());
+        verify(repository, never()).save(any());
+    }
 }
