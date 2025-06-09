@@ -68,7 +68,7 @@ class EnderecoServiceTest {
     void listarEnderecoQuandoNaoTiverEnderecosCadastradosDeveLancarEntidadeNaoEncontradaExceptionTest() {
         when(repository.findAll()).thenReturn(Collections.emptyList());
 
-        assertThrows(EntidadeNaoEncontradaException.class, () -> service.listarEnderecos());
+        service.listarEnderecos();
 
         verify(repository, times(1)).findAll();
     }

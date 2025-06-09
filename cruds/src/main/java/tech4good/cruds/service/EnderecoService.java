@@ -40,13 +40,7 @@ public class EnderecoService {
     }
 
     public List<Endereco> listarEnderecos(){
-        List<Endereco> enderecos = enderecoRepository.findAll();
-
-        if (enderecos.isEmpty()){
-            throw new EntidadeNaoEncontradaException("Não há endereços cadastrados");
-        }
-
-        return enderecos;
+        return enderecoRepository.findAll();
     }
 
     public Endereco atualizarEndereco(Endereco endereco, Integer idEndereco){
