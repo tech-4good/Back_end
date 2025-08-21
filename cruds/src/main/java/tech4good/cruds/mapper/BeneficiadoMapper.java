@@ -5,6 +5,7 @@ import tech4good.cruds.dto.beneficiado.BeneficiadoResponseDto;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
 import tech4good.cruds.dto.beneficiado.BeneficiadoUpdateDto;
 import tech4good.cruds.entity.Beneficiado;
+import tech4good.cruds.entity.FileEntity;
 
 public class BeneficiadoMapper {
     public static Beneficiado toEntity(BeneficiadoRequestDto requestDto) {
@@ -12,25 +13,22 @@ public class BeneficiadoMapper {
             return null;
         }
 
-        Beneficiado entity = new Beneficiado(
-                null,
-                requestDto.getCpf(),
-                requestDto.getNome(),
-                requestDto.getRg(),
-                requestDto.getDataNascimento(),
-                requestDto.getNaturalidade(),
-                requestDto.getTelefone(),
-                requestDto.getEstadoCivil(),
-                requestDto.getEscolaridade(),
-                requestDto.getProfissao(),
-                requestDto.getRendaMensal(),
-                requestDto.getEmpresa(),
-                requestDto.getCargo(),
-                requestDto.getReligiao(),
-                requestDto.getEndereco(),
-                requestDto.getQuantidadeDependentes(),
-                requestDto.getFotoBeneficiado()
-        );
+        Beneficiado entity = new Beneficiado();
+
+        entity.setCpf(requestDto.getCpf());
+        entity.setNome(requestDto.getNome());
+        entity.setRg(requestDto.getRg());
+        entity.setDataNascimento(requestDto.getDataNascimento());
+        entity.setNaturalidade(requestDto.getNaturalidade());
+        entity.setTelefone(requestDto.getTelefone());
+        entity.setEstadoCivil(requestDto.getEstadoCivil());
+        entity.setEscolaridade(requestDto.getEscolaridade());
+        entity.setProfissao(requestDto.getProfissao());
+        entity.setRendaMensal(requestDto.getRendaMensal());
+        entity.setEmpresa(requestDto.getEmpresa());
+        entity.setCargo(requestDto.getCargo());
+        entity.setReligiao(requestDto.getReligiao());
+        entity.setQuantidadeDependentes(requestDto.getQuantidadeDependentes());
 
         return entity;
     }
@@ -57,6 +55,16 @@ public class BeneficiadoMapper {
                     beneficiado.getEndereco().getStatus()
                 ): null;
 
+        FileEntity fotoBeneficiado = beneficiado.getFotoBeneficiado() != null
+                ? new FileEntity(
+                beneficiado.getFotoBeneficiado().getIdFoto(),
+                beneficiado.getFotoBeneficiado().getNomeOriginal(),
+                beneficiado.getFotoBeneficiado().getNomeArmazenamento(),
+                beneficiado.getFotoBeneficiado().getTamanho(),
+                beneficiado.getFotoBeneficiado().getFormato(),
+                beneficiado.getFotoBeneficiado().getDataCriacao()
+        ): null;
+
 
         BeneficiadoResponseDto responseDto = new BeneficiadoResponseDto(
                 beneficiado.getId(),
@@ -75,7 +83,7 @@ public class BeneficiadoMapper {
                 beneficiado.getReligiao(),
                 enderecoBeneficiadoResponseDto,
                 beneficiado.getQuantidadeDependentes(),
-                beneficiado.getFotoBeneficiado()
+                fotoBeneficiado
         );
 
         return responseDto;

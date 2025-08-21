@@ -13,11 +13,11 @@ import java.time.LocalDate;
 @Schema(description = "Objeto de requisição para entregas de kits e cestas básicas")
 public class EntregaRequestDto {
 
-    @Schema(description = "Data de retirada da doação", example = "2025/02/10")
+    @Schema(description = "Data de retirada da doação", example = "2025-02-10")
     @NotNull
     @PastOrPresent
     private LocalDate dataRetirada;
-    @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025/02/25")
+    @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025-02-25")
     @NotNull
     private LocalDate proximaRetirada;
     @Schema(description = "Chave estrangeira do endereço associado", example = "1")

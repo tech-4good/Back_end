@@ -2,6 +2,7 @@ package tech4good.cruds.dto.beneficiado;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import tech4good.cruds.dto.auxiliares.EnderecoSummarizedResponseDto;
+import tech4good.cruds.entity.FileEntity;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ public class BeneficiadoResponseDto {
     private String nome;
     @Schema(description = "RG do beneficiado (somente números)", example = "5583567")
     private String rg;
-    @Schema(description = "Data de nascimento do beneficiado", example = "1978/03/21")
+    @Schema(description = "Data de nascimento do beneficiado", example = "1978-03-21")
     private LocalDate dataNascimento;
     @Schema(description = "Naturalidade do beneficiado", example = "Brasileiro")
     private String naturalidade;
@@ -39,16 +40,13 @@ public class BeneficiadoResponseDto {
     private EnderecoSummarizedResponseDto endereco;
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     private Integer quantidadeDependentes;
-    @Schema( description = "Foto do beneficiado codificada",
-            type = "string",
-            format = "byte",
-            example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=")
-    private byte[] fotoBeneficiado;
+    @Schema( description = "Foto do beneficiado codificada")
+    private FileEntity fotoBeneficiado;
 
     public BeneficiadoResponseDto() {
     }
 
-    public BeneficiadoResponseDto(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, EnderecoSummarizedResponseDto endereco, Integer quantidadeDependentes, byte[] fotoBeneficiado) {
+    public BeneficiadoResponseDto(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade, String telefone, String estadoCivil, String escolaridade, String profissao, Double rendaMensal, String empresa, String cargo, String religiao, EnderecoSummarizedResponseDto endereco, Integer quantidadeDependentes, FileEntity fotoBeneficiado) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
@@ -188,11 +186,11 @@ public class BeneficiadoResponseDto {
         this.quantidadeDependentes = quantidadeDependentes;
     }
 
-    public byte[] getFotoBeneficiado() {
+    public FileEntity getFotoBeneficiado() {
         return fotoBeneficiado;
     }
 
-    public void setFotoBeneficiado(byte[] fotoBeneficiado) {
+    public void setFotoBeneficiado(FileEntity fotoBeneficiado) {
         this.fotoBeneficiado = fotoBeneficiado;
     }
 

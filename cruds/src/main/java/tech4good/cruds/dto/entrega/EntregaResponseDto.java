@@ -13,9 +13,9 @@ public class EntregaResponseDto {
 
     @Schema(description = "Identificador único da entrega", example = "1")
     private Integer idEntrega;
-    @Schema(description = "Data de retirada da doação", example = "2025/02/10")
+    @Schema(description = "Data de retirada da doação", example = "2025-02-10")
     private LocalDate dataRetirada;
-    @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025/02/25")
+    @Schema(description = "Data que poderá fazer a próxima retirada de doação", example = "2025-02-25")
     private LocalDate proximaRetirada;
     private EnderecoSummarizedResponseDto endereco;
     private CestaSummarizedResponseDto cesta;

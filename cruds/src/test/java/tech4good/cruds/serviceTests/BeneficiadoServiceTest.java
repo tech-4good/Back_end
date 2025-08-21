@@ -7,10 +7,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech4good.cruds.entity.Beneficiado;
+import tech4good.cruds.entity.Endereco;
+import tech4good.cruds.entity.FileEntity;
 import tech4good.cruds.exception.ConflitoEntidadeException;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.BeneficiadoRepository;
 import tech4good.cruds.service.BeneficiadoService;
+import tech4good.cruds.service.EnderecoService;
+import tech4good.cruds.service.FileService;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,26 +33,37 @@ class BeneficiadoServiceTest {
     @Mock
     private BeneficiadoRepository repository;
 
-    @Test
-    @DisplayName("cadastrarBeneficiado() quando acionado com beneficiado válido, deve cadastrar corretamente")
-    void cadastrarBeneficiadoComBeneficiadoValidoDeveCadastrarCorretamenteTest() {
-        Beneficiado beneficiado = new Beneficiado();
-        when(repository.existsByCpf(beneficiado.getCpf())).thenReturn(false);
+    @Mock
+    private FileService fileService;
 
-        service.cadastrarBeneficiado(beneficiado);
-
-        verify(repository, times(1)).existsByCpf(beneficiado.getCpf());
-    }
+    @Mock
+    private EnderecoService enderecoService;
 
     @Test
-    @DisplayName("cadastrarBeneficiado() quando acionado com beneficiado inválido, deve lançar ConflitoEntidadeException")
-    void cadastrarBeneficiadoComBeneficiadoInvalidoDeveLancarConflitoEntidadeExceptionTest() {
+    @DisplayName("cadastrarBeneficiado() com beneficiado válido deve salvar corretamente")
+    void cadastrarBeneficiadoComBeneficiadoValidoDeveSalvarCorretamente() {
         Beneficiado beneficiado = new Beneficiado();
-        when(repository.existsByCpf(beneficiado.getCpf())).thenReturn(true);
+        beneficiado.setCpf("12345678900");
 
-        assertThrows(ConflitoEntidadeException.class, () -> service.cadastrarBeneficiado(beneficiado));
+        Integer fotoId = 1;
+        Integer enderecoId = 2;
 
-        verify(repository, times(1)).existsByCpf(beneficiado.getCpf());
+        FileEntity fileMock = new FileEntity();
+        Endereco enderecoMock = new Endereco();
+
+        when(fileService.loadEntity(fotoId)).thenReturn(fileMock);
+        when(enderecoService.listarEnderecoPorId(enderecoId)).thenReturn(enderecoMock);
+        when(repository.save(any(Beneficiado.class))).thenReturn(beneficiado);
+
+        Beneficiado resultado = service.cadastrarBeneficiado(beneficiado, fotoId, enderecoId);
+
+        verify(fileService, times(1)).loadEntity(fotoId);
+        verify(enderecoService, times(1)).listarEnderecoPorId(enderecoId);
+        verify(repository, times(1)).save(beneficiado);
+
+        assertNotNull(resultado);
+        assertEquals(fileMock, beneficiado.getFotoBeneficiado());
+        assertEquals(enderecoMock, beneficiado.getEndereco());
     }
 
     @Test
@@ -103,32 +118,52 @@ class BeneficiadoServiceTest {
     }
 
     @Test
-    @DisplayName("listarBeneficiados() quando não houver beneficiados cadastrados, deve lançar EntidadeNaoEncontradaException")
-    void listarBeneficiadosQuandoNaoHouverBeneficiadosCadastradosDeveLancarEntidadeNaoEncontradaExceptionTest() {
+    @DisplayName("listarBeneficiados() quando não houver beneficiados, deve retornar lista vazia")
+    void listarBeneficiadosSemRegistrosDeveRetornarListaVazia() {
+
         when(repository.findAll()).thenReturn(Collections.emptyList());
 
-        assertThrows(EntidadeNaoEncontradaException.class, () -> service.listarBeneficiados());
+        List<Beneficiado> resultado = service.listarBeneficiados();
 
+        assertNotNull(resultado);
+        assertTrue(resultado.isEmpty());
         verify(repository, times(1)).findAll();
     }
 
-    /*@Test
+
+    @Test
     @DisplayName("atualizarBeneficiado() quando acionado com id válido, deve lançar EntidadeNaoEncontradaException")
     void atualizarBeneficiadoQuandoAcionadoComIdValidoDeve() {
-        when(repository.existsById(anyInt())).thenReturn(true);
+        Integer id = 1;
+        Beneficiado beneficiadoAtualizacao = new Beneficiado();
+        beneficiadoAtualizacao.setTelefone("999999999");
+        beneficiadoAtualizacao.setProfissao("Professor");
 
+        Beneficiado beneficiadoExistente = new Beneficiado();
+        beneficiadoExistente.setTelefone("888888888");
+        beneficiadoExistente.setProfissao("Engenheiro");
 
+        when(repository.findById(id)).thenReturn(Optional.of(beneficiadoExistente));
+        when(repository.save(any(Beneficiado.class))).thenReturn(beneficiadoExistente);
 
-        verify(repository, times(1)).findAll();
+        Beneficiado atualizado = service.atualizarBeneficiado(beneficiadoAtualizacao, id);
+
+        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).save(beneficiadoExistente);
+
+        assertEquals("999999999", atualizado.getTelefone());
+        assertEquals("Professor", atualizado.getProfissao());
     }
 
     @Test
     @DisplayName("atualizarBeneficiado() quando acionado com id inválido, deve lançar EntidadeNaoEncontradaException")
     void atualizarBeneficiadoQuandoAcionadoComIdInvalidoDeveLancarEntidadeNaoEncontradaExceptionTest() {
-        when(repository.existsById(anyInt())).thenReturn(false);
+        Beneficiado beneficiadoAtualizacao = new Beneficiado();
+        when(repository.findById(anyInt())).thenReturn(Optional.empty());
 
-        assertThrows(EntidadeNaoEncontradaException.class, () -> service.listarBeneficiados());
+        assertThrows(EntidadeNaoEncontradaException.class, () -> service.atualizarBeneficiado(beneficiadoAtualizacao, anyInt()));
 
-        verify(repository, times(1)).findAll();
-    }*/
+        verify(repository, times(1)).findById(anyInt());
+        verify(repository, never()).save(any());
+    }
 }

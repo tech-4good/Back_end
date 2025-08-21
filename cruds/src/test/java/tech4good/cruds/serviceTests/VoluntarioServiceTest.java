@@ -29,16 +29,22 @@ class VoluntarioServiceTest {
     private VoluntarioRepository repository;
 
     @Mock
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Test
     @DisplayName("cadastrarVoluntario() quando acionado com voluntário válido deve cadastrar corretamente")
     void cadastrarVoluntarioQuandoAcionadoComVoluntarioValidoDeveCadastrarCorretamenteTest() {
         Voluntario voluntario = new Voluntario();
+        voluntario.setSenha("senha123");
+        voluntario.setEmail("email@email.com");
 
-        passwordEncoder.encode(voluntario.getSenha());
+        String senhaCriptografada = "senhaCriptografada123";
+
+        when(passwordEncoder.encode("senha123")).thenReturn(senhaCriptografada);
+
         service.cadastrarVoluntario(voluntario);
 
+        assertEquals(senhaCriptografada, voluntario.getSenha());
         verify(repository, times(1)).save(voluntario);
     }
 
@@ -95,13 +101,26 @@ class VoluntarioServiceTest {
     @Test
     @DisplayName("atualizarVoluntarioPorId() quando acionado com Id válido deve atualizar voluntario")
     void atualizarVoluntarioPorIdQuandoAcionadoComIdValidoDeveAtualizarVoluntarioTest() {
+        Integer id = 1;
+
+        Voluntario voluntarioAtualizacao = new Voluntario();
+        voluntarioAtualizacao.setEmail("novo@email.com");
+        voluntarioAtualizacao.setTelefone("123456789");
+
         Voluntario voluntarioExistente = new Voluntario();
-        when(repository.findById(anyInt())).thenReturn(Optional.of(new Voluntario()));
+        voluntarioExistente.setEmail("antigo@email.com");
+        voluntarioExistente.setTelefone("000000000");
 
-        service.atualizarVoluntario(voluntarioExistente, anyInt());
+        when(repository.findById(id)).thenReturn(Optional.of(voluntarioExistente));
+        when(repository.save(any(Voluntario.class))).thenReturn(voluntarioExistente);
 
-        verify(repository, times(1)).findById(anyInt());
+        Voluntario atualizado = service.atualizarVoluntario(voluntarioAtualizacao, id);
+
+        verify(repository, times(1)).findById(id);
         verify(repository, times(1)).save(voluntarioExistente);
+
+        assertEquals("novo@email.com", atualizado.getEmail());
+        assertEquals("123456789", atualizado.getTelefone());
     }
 
     @Test

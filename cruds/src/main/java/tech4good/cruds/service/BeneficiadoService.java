@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import tech4good.cruds.dto.beneficiado.BeneficiadoCadastroSimplesDto;
 import tech4good.cruds.entity.Beneficiado;
 import tech4good.cruds.entity.Endereco;
+import tech4good.cruds.entity.FileEntity;
 import tech4good.cruds.exception.EntidadeNaoEncontradaException;
 import tech4good.cruds.repository.BeneficiadoRepository;
 import tech4good.cruds.repository.EnderecoRepository;
@@ -19,14 +20,36 @@ public class BeneficiadoService {
     private static final Logger log = LoggerFactory.getLogger(BeneficiadoService.class);
     private final BeneficiadoRepository beneficiadoRepository;
 
-    @Autowired
-    private EnderecoRepository enderecoRepository;
 
-    public BeneficiadoService(BeneficiadoRepository beneficiadoRepository) {
+    private final EnderecoRepository enderecoRepository;
+    private final FileService fileService;
+    private final EnderecoService enderecoService;
+
+    public BeneficiadoService(BeneficiadoRepository beneficiadoRepository, EnderecoRepository enderecoRepository, FileService fileService, EnderecoService enderecoService) {
         this.beneficiadoRepository = beneficiadoRepository;
+        this.enderecoRepository = enderecoRepository;
+        this.fileService = fileService;
+        this.enderecoService = enderecoService;
     }
 
-    public Beneficiado cadastrarBeneficiado(Beneficiado beneficiado){
+    public Beneficiado cadastrarBeneficiado(Beneficiado beneficiado, Integer fotoBeneficiadoId, Integer enderecoId){
+
+        FileEntity fileEntity =fileService.loadEntity(fotoBeneficiadoId);
+
+        if (fileEntity == null){
+            throw new EntidadeNaoEncontradaException("Foto de id %d não encontrada".formatted(fotoBeneficiadoId));
+        }
+
+        beneficiado.setFotoBeneficiado(fileEntity);
+
+        Endereco endereco = enderecoService.listarEnderecoPorId(enderecoId);
+
+        if (endereco == null){
+            throw new EntidadeNaoEncontradaException("Endereco de id %d não encontrada".formatted(enderecoId));
+        }
+
+        beneficiado.setEndereco(endereco);
+
         return beneficiadoRepository.save(beneficiado);
     }
 

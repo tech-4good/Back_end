@@ -25,9 +25,9 @@ public class EnderecoResponseDto {
     private String cep;
     @Schema(description = "Tipo de cesta que o endereço pode receber atualmente", example = "Kit")
     private String tipoCesta;
-    @Schema(description = "Data de entrada no projeto ASA", example = "2025/02/10")
+    @Schema(description = "Data de entrada no projeto ASA", example = "2025-02-10")
     private LocalDate dataEntrada;
-    @Schema(description = "Data de saída no projeto ASA", example = "2025/06/22")
+    @Schema(description = "Data de saída no projeto ASA", example = "2025-06-22")
     private LocalDate dataSaida;
     @Schema(description = "Tipo de obtenção da moradia", example = "Alugada")
     private String moradia;

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Schema(description = "Objeto de requisição para fila de espera de cestas básicas")
 public class FilaEsperaRequestDto {
 
-    @Schema(description = "Data de entrada na fila", example = "2025/02/10")
+    @Schema(description = "Data de entrada na fila", example = "2025-02-10")
     @NotNull
     @PastOrPresent
     private LocalDate dataEntradaFila;

@@ -33,7 +33,7 @@ public class EnderecoRequestDto {
     @Schema(description = "Tipo de cesta que o endereço pode receber atualmente", example = "Kit")
     @NotBlank
     private String tipoCesta;
-    @Schema(description = "Data de entrada no projeto ASA", example = "2025/02/10")
+    @Schema(description = "Data de entrada no projeto ASA", example = "2025-02-10")
     @NotNull
     @PastOrPresent
     private LocalDate dataEntrada;

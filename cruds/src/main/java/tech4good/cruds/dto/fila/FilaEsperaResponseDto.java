@@ -11,9 +11,9 @@ public class FilaEsperaResponseDto {
 
     @Schema(description = "Identificador único de posição na fila", example = "1")
     private Integer idFila;
-    @Schema(description = "Data de entrada na fila", example = "2025/02/10")
+    @Schema(description = "Data de entrada na fila", example = "2025-02-10")
     private LocalDate dataEntradaFila;
-    @Schema(description = "Data de saída da fila", example = "2025/04/22")
+    @Schema(description = "Data de saída da fila", example = "2025-04-22")
     private LocalDate dataSaidaFila;
     private BeneficiadoSummarizedResponseDto beneficiado;
 

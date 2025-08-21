@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import tech4good.cruds.entity.Endereco;
+import tech4good.cruds.entity.FileEntity;
+
 import java.time.LocalDate;
 
 @Schema(description = "Objeto de requisição para beneficiado da ASA")
@@ -21,7 +23,7 @@ public class BeneficiadoRequestDto {
     @Schema(description = "RG do beneficiado (somente números)", example = "5583567")
     @NotBlank
     private String rg;
-    @Schema(description = "Data de nascimento do beneficiado", example = "1978/03/21")
+    @Schema(description = "Data de nascimento do beneficiado", example = "1978-03-21")
     @NotBlank
     @PastOrPresent
     private LocalDate dataNascimento;
@@ -50,19 +52,14 @@ public class BeneficiadoRequestDto {
     @Schema(description = "Religião do beneficiado", example = "Evangélico")
     @NotBlank
     private String religiao;
+    @Schema(description = "Chave estrangeira do endereco relacionado ao beneficiado", example = "1")
     @NotBlank
-    private Endereco endereco;
+    private Integer enderecoId;
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     @NotBlank
     private Integer quantidadeDependentes;
-    @Schema(
-            description = "Foto do beneficiado codificada",
-            type = "string",
-            format = "byte",
-            example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
-    )
-    @Lob
-    private byte[] fotoBeneficiado;
+    @Schema(description = "Foto do beneficiado codificada", example = "1")
+    private Integer fotoBeneficiadoId;
 
     public String getCpf() {
         return cpf;
@@ -176,19 +173,19 @@ public class BeneficiadoRequestDto {
         this.quantidadeDependentes = quantidadeDependentes;
     }
 
-    public byte[] getFotoBeneficiado() {
-        return fotoBeneficiado;
+    public Integer getFotoBeneficiadoId() {
+        return fotoBeneficiadoId;
     }
 
-    public void setFotoBeneficiado(byte[] fotoBeneficiado) {
-        this.fotoBeneficiado = fotoBeneficiado;
+    public void setFotoBeneficiadoId(Integer fotoBeneficiadoId) {
+        this.fotoBeneficiadoId = fotoBeneficiadoId;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public @NotBlank Integer getEnderecoId() {
+        return enderecoId;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setEnderecoId(@NotBlank Integer enderecoId) {
+        this.enderecoId = enderecoId;
     }
 }
