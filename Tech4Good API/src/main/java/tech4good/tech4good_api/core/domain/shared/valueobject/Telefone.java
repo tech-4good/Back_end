@@ -15,7 +15,7 @@ public class Telefone {
     }
 
     public static Telefone valueOf(String telefone) {
-        if (telefone == null || telefone.isBlank()) {
+        if (telefone.isBlank()) {
             throw new IllegalArgumentException("Telefone não pode ser vazio.");
         }
 
