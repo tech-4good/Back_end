@@ -1,6 +1,6 @@
 package tech4good.tech4good_api.core.domain.endereco;
 
-import tech4good.tech4good_api.core.domain.cesta.valueobject.TipoCesta;
+import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
 import tech4good.tech4good_api.core.domain.endereco.valueobjects.*;
 
 import java.time.LocalDate;
