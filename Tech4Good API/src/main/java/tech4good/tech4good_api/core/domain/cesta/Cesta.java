@@ -11,4 +11,44 @@ public class Cesta {
     private Peso peso;
     private LocalDate dataEntradaEstoque;
     private Integer quantidadeCestas;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public TipoCesta getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoCesta tipo) {
+        this.tipo = tipo;
+    }
+
+    public Peso getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Peso peso) {
+        this.peso = peso;
+    }
+
+    public LocalDate getDataEntradaEstoque() {
+        return dataEntradaEstoque;
+    }
+
+    public void setDataEntradaEstoque(LocalDate dataEntradaEstoque) {
+        this.dataEntradaEstoque = dataEntradaEstoque;
+    }
+
+    public Integer getQuantidadeCestas() {
+        return quantidadeCestas;
+    }
+
+    public void setQuantidadeCestas(Integer quantidadeCestas) {
+        this.quantidadeCestas = quantidadeCestas;
+    }
 }

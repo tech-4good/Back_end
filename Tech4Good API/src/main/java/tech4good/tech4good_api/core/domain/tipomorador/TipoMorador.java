@@ -14,4 +14,84 @@ public class TipoMorador {
     private Integer quantidadeOutros;
     private Beneficiado beneficiado;
     private Endereco endereco;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getQuantidadeCrianca() {
+        return quantidadeCrianca;
+    }
+
+    public void setQuantidadeCrianca(Integer quantidadeCrianca) {
+        this.quantidadeCrianca = quantidadeCrianca;
+    }
+
+    public Integer getQuantidadeAdolescente() {
+        return quantidadeAdolescente;
+    }
+
+    public void setQuantidadeAdolescente(Integer quantidadeAdolescente) {
+        this.quantidadeAdolescente = quantidadeAdolescente;
+    }
+
+    public Integer getQuantidadeJovem() {
+        return quantidadeJovem;
+    }
+
+    public void setQuantidadeJovem(Integer quantidadeJovem) {
+        this.quantidadeJovem = quantidadeJovem;
+    }
+
+    public Integer getQuantidadeIdoso() {
+        return quantidadeIdoso;
+    }
+
+    public void setQuantidadeIdoso(Integer quantidadeIdoso) {
+        this.quantidadeIdoso = quantidadeIdoso;
+    }
+
+    public Integer getQuantidadeGestnte() {
+        return quantidadeGestnte;
+    }
+
+    public void setQuantidadeGestnte(Integer quantidadeGestnte) {
+        this.quantidadeGestnte = quantidadeGestnte;
+    }
+
+    public Integer getQuantidadeDeficiente() {
+        return quantidadeDeficiente;
+    }
+
+    public void setQuantidadeDeficiente(Integer quantidadeDeficiente) {
+        this.quantidadeDeficiente = quantidadeDeficiente;
+    }
+
+    public Integer getQuantidadeOutros() {
+        return quantidadeOutros;
+    }
+
+    public void setQuantidadeOutros(Integer quantidadeOutros) {
+        this.quantidadeOutros = quantidadeOutros;
+    }
+
+    public Beneficiado getBeneficiado() {
+        return beneficiado;
+    }
+
+    public void setBeneficiado(Beneficiado beneficiado) {
+        this.beneficiado = beneficiado;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 }
