@@ -1,6 +1,5 @@
 package tech4good.tech4good_api.core.domain.endereco.valueobjects;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Cep {
