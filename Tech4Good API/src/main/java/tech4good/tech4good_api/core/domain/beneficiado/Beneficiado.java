@@ -12,22 +12,127 @@ import tech4good.tech4good_api.core.domain.shared.valueobject.Telefone;
 import java.time.LocalDate;
 
 public class Beneficiado {
-    private Integer id;
-    private Cpf cpf;
-    private String nome;
-    private Rg rg;
-    private LocalDate dataNascimento;
-    private String naturalidade;
-    private Telefone telefone;
-    private EstadoCivil estadoCivil;
-    private String escolaridade;
-    private String profissao;
-    private Renda rendaMensal;
-    private String empresa;
-    private String cargo;
-    private Religiao religiao;
-    private Endereco endereco;
-    private Integer quantidadeDependentes;
-    private FileEntity fotoBeneficiado;
+    private final Integer id;
+    private final Cpf cpf;
+    private final String nome;
+    private final Rg rg;
+    private final LocalDate dataNascimento;
+    private final String naturalidade;
+    private final Telefone telefone;
+    private final EstadoCivil estadoCivil;
+    private final String escolaridade;
+    private final String profissao;
+    private final Renda rendaMensal;
+    private final String empresa;
+    private final String cargo;
+    private final Religiao religiao;
+    private final Endereco endereco;
+    private final Integer quantidadeDependentes;
+    private final FileEntity fotoBeneficiado;
 
+    public Beneficiado(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento,
+                      String naturalidade, String telefone, String estadoCivil,
+                      String escolaridade, String profissao, Double rendaMensal,
+                      String empresa, String cargo, String religiao, Endereco endereco,
+                      Integer quantidadeDependentes, FileEntity fotoBeneficiado) {
+
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio.");
+        }
+        if (dataNascimento == null) {
+            throw new IllegalArgumentException("Data de nascimento não pode ser nula.");
+        }
+        if (dataNascimento.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Data de nascimento não pode ser futura.");
+        }
+        if (quantidadeDependentes != null && quantidadeDependentes < 0) {
+            throw new IllegalArgumentException("Quantidade de dependentes não pode ser negativa.");
+        }
+
+        this.id = id;
+        this.cpf = Cpf.valueOf(cpf);
+        this.nome = nome.trim();
+        this.rg = Rg.valueOf(rg);
+        this.dataNascimento = dataNascimento;
+        this.naturalidade = naturalidade != null ? naturalidade.trim() : null;
+        this.telefone = Telefone.valueOf(telefone);
+        this.estadoCivil = EstadoCivil.fromString(estadoCivil);
+        this.escolaridade = escolaridade != null ? escolaridade.trim() : null;
+        this.profissao = profissao != null ? profissao.trim() : null;
+        this.rendaMensal = rendaMensal != null ? Renda.valueOf(rendaMensal) : null;
+        this.empresa = empresa != null ? empresa.trim() : null;
+        this.cargo = cargo != null ? cargo.trim() : null;
+        this.religiao = religiao != null ? Religiao.valueOf(religiao) : null;
+        this.endereco = endereco;
+        this.quantidadeDependentes = quantidadeDependentes;
+        this.fotoBeneficiado = fotoBeneficiado;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Cpf getCpf() {
+        return cpf;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Rg getRg() {
+        return rg;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public String getNaturalidade() {
+        return naturalidade;
+    }
+
+    public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public EstadoCivil getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public String getEscolaridade() {
+        return escolaridade;
+    }
+
+    public String getProfissao() {
+        return profissao;
+    }
+
+    public Renda getRendaMensal() {
+        return rendaMensal;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public Religiao getReligiao() {
+        return religiao;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public Integer getQuantidadeDependentes() {
+        return quantidadeDependentes;
+    }
+
+    public FileEntity getFotoBeneficiado() {
+        return fotoBeneficiado;
+    }
 }
