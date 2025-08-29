@@ -22,12 +22,12 @@ public class BeneficiadoEntity {
     private Integer id;
 
     @Schema(description = "CPF do beneficiado (somente números)", example = "12345678901")
-    private Cpf cpf;
+    private String cpf;
 
     @Schema(description = "Nome completo do beneficiado", example = "Lucas Alves Matos")
     private String nome;
     @Schema(description = "RG do beneficiado (somente números)", example = "5583567")
-    private Rg rg;
+    private String rg;
 
     @Schema(description = "Data de nascimento do beneficiado", example = "1978/03/21")
     @Column(name = "data_nascimento")
@@ -35,7 +35,7 @@ public class BeneficiadoEntity {
     @Schema(description = "Naturalidade do beneficiado", example = "Brasileiro")
     private String naturalidade;
     @Schema(description = "Telefone para contato com DDD", example = "(11)91234-5678")
-    private Telefone telefone;
+    private String telefone;
 
     @Schema(description = "Estado civil do beneficiado", example = "Divorciado")
     @Column(name = "estado_civil")
@@ -47,13 +47,13 @@ public class BeneficiadoEntity {
 
     @Schema(description = "Renda mensal do beneficiado", example = "2000,0")
     @Column(name = "renda_mensal")
-    private Renda rendaMensal;
+    private Double rendaMensal;
     @Schema(description = "Nome da empresa em que o beneficiado trabalha", example = "Limpeza Total")
     private String empresa;
     @Schema(description = "Cargo profissional do beneficiado", example = "Auxiliar")
     private String cargo;
     @Schema(description = "Religião do beneficiado", example = "Evangélico")
-    private Religiao religiao;
+    private String religiao;
 
     @ManyToOne
     @JoinColumn(name = "fk_endereco")
@@ -79,11 +79,11 @@ public class BeneficiadoEntity {
         this.id = id;
     }
 
-    public Cpf getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(Cpf cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
@@ -95,11 +95,11 @@ public class BeneficiadoEntity {
         this.nome = nome;
     }
 
-    public Rg getRg() {
+    public String getRg() {
         return rg;
     }
 
-    public void setRg(Rg rg) {
+    public void setRg(String rg) {
         this.rg = rg;
     }
 
@@ -119,11 +119,11 @@ public class BeneficiadoEntity {
         this.naturalidade = naturalidade;
     }
 
-    public Telefone getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(Telefone telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
@@ -151,11 +151,11 @@ public class BeneficiadoEntity {
         this.profissao = profissao;
     }
 
-    public Renda getRendaMensal() {
+    public Double getRendaMensal() {
         return rendaMensal;
     }
 
-    public void setRendaMensal(Renda rendaMensal) {
+    public void setRendaMensal(Double rendaMensal) {
         this.rendaMensal = rendaMensal;
     }
 
@@ -175,11 +175,11 @@ public class BeneficiadoEntity {
         this.cargo = cargo;
     }
 
-    public Religiao getReligiao() {
+    public String getReligiao() {
         return religiao;
     }
 
-    public void setReligiao(Religiao religiao) {
+    public void setReligiao(String religiao) {
         this.religiao = religiao;
     }
 
