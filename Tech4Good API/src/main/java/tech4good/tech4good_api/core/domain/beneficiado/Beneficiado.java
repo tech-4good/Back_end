@@ -30,11 +30,8 @@ public class Beneficiado {
     private final Integer quantidadeDependentes;
     private final FileEntity fotoBeneficiado;
 
-    public Beneficiado(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento,
-                      String naturalidade, String telefone, String estadoCivil,
-                      String escolaridade, String profissao, Double rendaMensal,
-                      String empresa, String cargo, String religiao, Endereco endereco,
-                      Integer quantidadeDependentes, FileEntity fotoBeneficiado) {
+
+    public Beneficiado(Integer id, Cpf cpf, String nome, Rg rg, LocalDate dataNascimento, String naturalidade, Telefone telefone, EstadoCivil estadoCivil, String escolaridade, String profissao, Renda rendaMensal, String empresa, String cargo, Religiao religiao, Endereco endereco, Integer quantidadeDependentes, FileEntity fotoBeneficiado) {
 
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Nome não pode ser vazio.");
