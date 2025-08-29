@@ -47,19 +47,19 @@ public class Beneficiado {
         }
 
         this.id = id;
-        this.cpf = Cpf.valueOf(cpf);
+        this.cpf = cpf;
         this.nome = nome.trim();
-        this.rg = Rg.valueOf(rg);
+        this.rg = rg;
         this.dataNascimento = dataNascimento;
         this.naturalidade = naturalidade != null ? naturalidade.trim() : null;
-        this.telefone = Telefone.valueOf(telefone);
-        this.estadoCivil = EstadoCivil.fromString(estadoCivil);
+        this.telefone = telefone;
+        this.estadoCivil = estadoCivil;
         this.escolaridade = escolaridade != null ? escolaridade.trim() : null;
         this.profissao = profissao != null ? profissao.trim() : null;
-        this.rendaMensal = rendaMensal != null ? Renda.valueOf(rendaMensal) : null;
+        this.rendaMensal = rendaMensal;
         this.empresa = empresa != null ? empresa.trim() : null;
         this.cargo = cargo != null ? cargo.trim() : null;
-        this.religiao = religiao != null ? Religiao.valueOf(religiao) : null;
+        this.religiao = religiao;
         this.endereco = endereco;
         this.quantidadeDependentes = quantidadeDependentes;
         this.fotoBeneficiado = fotoBeneficiado;
