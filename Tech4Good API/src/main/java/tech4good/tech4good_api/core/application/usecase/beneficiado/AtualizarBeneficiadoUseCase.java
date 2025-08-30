@@ -18,11 +18,7 @@ public class AtualizarBeneficiadoUseCase {
             throw new IllegalArgumentException("ID já existe na base de dados");
         }
 
-        if (gateway.findById(id).isEmpty()) {
-            throw new EntidadeNaoEncontradaException("Beneficiado com ID " + id + " não encontrado.");
-        }
-
-        Beneficiado beneficiadoExistente = gateway.findById(id).get();
+        Beneficiado beneficiadoExistente = gateway.findById(id);
 
         Beneficiado beneficiadoAtualizado = new Beneficiado(
                 beneficiadoExistente.getId(),
