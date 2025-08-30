@@ -1,19 +1,21 @@
-package tech4good.tech4good_api.core.domain.endereco;
+package tech4good.tech4good_api.core.application.dto.endereco;
 
+import tech4good.tech4good_api.core.domain.endereco.valueobjects.Status;
+import tech4good.tech4good_api.core.domain.endereco.valueobjects.TipoMoradia;
 import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
-import tech4good.tech4good_api.core.domain.endereco.valueobjects.*;
 
 import java.time.LocalDate;
 
-public class Endereco {
-    private Integer id;
+public class EnderecoResponseDto {
+
+    private Integer idEndereco;
     private String logradouro;
     private String numero;
     private String complemento;
-    private Bairro bairro;
-    private Cidade cidade;
-    private Estado estado;
-    private Cep cep;
+    private String bairro;
+    private String cidade;
+    private String estado;
+    private String cep;
     private TipoCesta tipoCesta;
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
@@ -21,25 +23,11 @@ public class Endereco {
     private TipoMoradia tipoMoradia;
     private Status status;
 
-    public Endereco(Integer id, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, TipoMoradia tipoMoradia, Status status) {
+    public EnderecoResponseDto() {
+    }
 
-        if (logradouro == null || logradouro.trim().isEmpty()) {
-            throw new IllegalArgumentException("Logradouro é obrigatório.");
-        }
-        if (numero == null || numero.trim().isEmpty()) {
-            throw new IllegalArgumentException("Número é obrigatório.");
-        }
-        if (dataEntrada != null && dataEntrada.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Data de entrada não pode ser futura.");
-        }
-        if (dataSaida != null && dataEntrada != null && dataSaida.isBefore(dataEntrada)) {
-            throw new IllegalArgumentException("Data de saída não pode ser anterior à data de entrada.");
-        }
-        if (moradia == null || moradia.trim().isEmpty()) {
-            throw new IllegalArgumentException("Moradia é obrigatória.");
-        }
-
-        this.id = id;
+    public EnderecoResponseDto(Integer idEndereco, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, TipoMoradia tipoMoradia, Status status) {
+        this.idEndereco = idEndereco;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -55,15 +43,12 @@ public class Endereco {
         this.status = status;
     }
 
-    public Endereco() {
+    public Integer getIdEndereco() {
+        return idEndereco;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdEndereco(Integer idEndereco) {
+        this.idEndereco = idEndereco;
     }
 
     public String getLogradouro() {
@@ -90,35 +75,35 @@ public class Endereco {
         this.complemento = complemento;
     }
 
-    public Bairro getBairro() {
+    public String getBairro() {
         return bairro;
     }
 
-    public void setBairro(Bairro bairro) {
+    public void setBairro(String bairro) {
         this.bairro = bairro;
     }
 
-    public Cidade getCidade() {
+    public String getCidade() {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public void setCidade(String cidade) {
         this.cidade = cidade;
     }
 
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public Cep getCep() {
+    public String getCep() {
         return cep;
     }
 
-    public void setCep(Cep cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 

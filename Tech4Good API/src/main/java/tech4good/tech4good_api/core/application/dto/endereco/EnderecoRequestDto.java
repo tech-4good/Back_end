@@ -1,12 +1,12 @@
-package tech4good.tech4good_api.core.domain.endereco;
+package tech4good.tech4good_api.core.application.dto.endereco;
 
-import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
 import tech4good.tech4good_api.core.domain.endereco.valueobjects.*;
+import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
 
 import java.time.LocalDate;
 
-public class Endereco {
-    private Integer id;
+public class EnderecoRequestDto {
+
     private String logradouro;
     private String numero;
     private String complemento;
@@ -16,30 +16,14 @@ public class Endereco {
     private Cep cep;
     private TipoCesta tipoCesta;
     private LocalDate dataEntrada;
-    private LocalDate dataSaida;
     private String moradia;
     private TipoMoradia tipoMoradia;
     private Status status;
 
-    public Endereco(Integer id, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, TipoMoradia tipoMoradia, Status status) {
+    public EnderecoRequestDto() {
+    }
 
-        if (logradouro == null || logradouro.trim().isEmpty()) {
-            throw new IllegalArgumentException("Logradouro é obrigatório.");
-        }
-        if (numero == null || numero.trim().isEmpty()) {
-            throw new IllegalArgumentException("Número é obrigatório.");
-        }
-        if (dataEntrada != null && dataEntrada.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Data de entrada não pode ser futura.");
-        }
-        if (dataSaida != null && dataEntrada != null && dataSaida.isBefore(dataEntrada)) {
-            throw new IllegalArgumentException("Data de saída não pode ser anterior à data de entrada.");
-        }
-        if (moradia == null || moradia.trim().isEmpty()) {
-            throw new IllegalArgumentException("Moradia é obrigatória.");
-        }
-
-        this.id = id;
+    public EnderecoRequestDto(String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, String moradia, TipoMoradia tipoMoradia, Status status) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -49,21 +33,9 @@ public class Endereco {
         this.cep = cep;
         this.tipoCesta = tipoCesta;
         this.dataEntrada = dataEntrada;
-        this.dataSaida = dataSaida;
         this.moradia = moradia;
         this.tipoMoradia = tipoMoradia;
         this.status = status;
-    }
-
-    public Endereco() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getLogradouro() {
@@ -136,14 +108,6 @@ public class Endereco {
 
     public void setDataEntrada(LocalDate dataEntrada) {
         this.dataEntrada = dataEntrada;
-    }
-
-    public LocalDate getDataSaida() {
-        return dataSaida;
-    }
-
-    public void setDataSaida(LocalDate dataSaida) {
-        this.dataSaida = dataSaida;
     }
 
     public String getMoradia() {

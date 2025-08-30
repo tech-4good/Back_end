@@ -1,45 +1,66 @@
-package tech4good.tech4good_api.core.domain.endereco;
+package tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco;
 
-import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
 import tech4good.tech4good_api.core.domain.endereco.valueobjects.*;
+import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.converter.BairroConverter;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.converter.CepConverter;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.converter.CidadeConverter;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.converter.TipoMoradiaConverter;
 
 import java.time.LocalDate;
 
-public class Endereco {
-    private Integer id;
+@Schema(description = "Objeto de entidade para endereços")
+@Entity
+public class EnderecoEntity {
+
+    @Schema(description = "Identificador único do endereço", example = "1")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_endereco")
+    private Integer idEndereco;
+    @Schema(description = "Rua ou Avenida", example = "Avenida Marechal Tito")
     private String logradouro;
+    @Schema(description = "Número da residência", example = "234")
     private String numero;
     private String complemento;
+    @Schema(description = "Nome do bairro", example = "São Miguel Paulista")
+    @Convert(converter = BairroConverter.class)
     private Bairro bairro;
+    @Schema(description = "Nome da cidade", example = "São Paulo")
+    @Convert(converter = CidadeConverter.class)
     private Cidade cidade;
+    @Schema(description = "Nome do estado", example = "São Paulo")
+    @Enumerated(EnumType.STRING)
     private Estado estado;
+    @Schema(description = "CEP da região onde se encontra a residência", example = "08356723")
+    @Convert(converter = CepConverter.class)
     private Cep cep;
+    @Schema(description = "Tipo de cesta que o endereço pode receber atualmente", example = "Kit")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_cesta")
     private TipoCesta tipoCesta;
+    @Schema(description = "Data de entrada no projeto ASA", example = "2025/02/10")
+    @Column(name = "data_entrada")
     private LocalDate dataEntrada;
+    @Schema(description = "Data de saída no projeto ASA", example = "2025/06/22")
+    @Column(name = "data_saida")
     private LocalDate dataSaida;
+    @Schema(description = "Tipo de obtenção da moradia", example = "Alugada")
     private String moradia;
+    @Schema(description = "Nome do tipo da moradia", example = "Apartamento")
+    @Convert(converter = TipoMoradiaConverter.class)
+    @Column(name = "tipo_moradia")
     private TipoMoradia tipoMoradia;
+    @Schema(description = "Controle para saber se ainda está participando da ASA", example = "Aberto")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Endereco(Integer id, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, TipoMoradia tipoMoradia, Status status) {
+    public EnderecoEntity() {}
 
-        if (logradouro == null || logradouro.trim().isEmpty()) {
-            throw new IllegalArgumentException("Logradouro é obrigatório.");
-        }
-        if (numero == null || numero.trim().isEmpty()) {
-            throw new IllegalArgumentException("Número é obrigatório.");
-        }
-        if (dataEntrada != null && dataEntrada.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Data de entrada não pode ser futura.");
-        }
-        if (dataSaida != null && dataEntrada != null && dataSaida.isBefore(dataEntrada)) {
-            throw new IllegalArgumentException("Data de saída não pode ser anterior à data de entrada.");
-        }
-        if (moradia == null || moradia.trim().isEmpty()) {
-            throw new IllegalArgumentException("Moradia é obrigatória.");
-        }
-
-        this.id = id;
+    public EnderecoEntity(Integer idEndereco, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, TipoMoradia tipoMoradia, Status status) {
+        this.idEndereco = idEndereco;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -55,15 +76,12 @@ public class Endereco {
         this.status = status;
     }
 
-    public Endereco() {
+    public Integer getIdEndereco() {
+        return idEndereco;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdEndereco(Integer idEndereco) {
+        this.idEndereco = idEndereco;
     }
 
     public String getLogradouro() {

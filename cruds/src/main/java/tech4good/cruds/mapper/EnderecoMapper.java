@@ -1,5 +1,6 @@
 package tech4good.cruds.mapper;
 
+import tech4good.cruds.command.CadastrarEnderecoCommand;
 import tech4good.cruds.dto.endereco.EnderecoRequestDto;
 import tech4good.cruds.dto.endereco.EnderecoResponseDto;
 import tech4good.cruds.dto.endereco.EnderecoUpdateDto;
@@ -63,6 +64,27 @@ public class EnderecoMapper {
         endereco.setIdEndereco(idEndereco);
         endereco.setStatus(dto.getStatus());
 
+        return endereco;
+    }
+
+    public static Endereco toDomain(CadastrarEnderecoCommand command) {
+        if (command == null) {
+            return null;
+        }
+        Endereco endereco = new Endereco();
+        endereco.setLogradouro(command.logradouro());
+        endereco.setNumero(command.numero());
+        endereco.setComplemento(command.complemento());
+        endereco.setBairro(command.bairro());
+        endereco.setCidade(command.cidade());
+        endereco.setEstado(command.estado());
+        endereco.setCep(command.cep());
+        endereco.setTipoCesta(command.tipoCesta());
+        endereco.setDataEntrada(command.dataEntrada());
+        endereco.setDataSaida(command.dataSaida());
+        endereco.setMoradia(command.moradia());
+        endereco.setTipoMoradia(command.tipoMoradia());
+        endereco.setStatus(command.status());
         return endereco;
     }
 }

@@ -9,7 +9,7 @@ public class Cep {
 
     private final String value;
 
-    private Cep(String value) {
+    public Cep(String value) {
         this.value = value;
     }
 
