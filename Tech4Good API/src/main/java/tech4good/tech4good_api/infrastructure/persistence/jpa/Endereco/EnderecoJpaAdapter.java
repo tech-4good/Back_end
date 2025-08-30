@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import tech4good.tech4good_api.core.adapter.EnderecoGateway;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,9 +26,6 @@ public class EnderecoJpaAdapter implements EnderecoGateway {
     @Override
     public Optional<Endereco> findById(Integer id) {
         var entityOpt = repository.findById(id);
-        if (entityOpt.isEmpty()) {
-            throw new IllegalArgumentException("Endereço com ID %d não encontrado".formatted(id));
-        }
         return Optional.ofNullable(EnderecoMapper.toDomainFromEntity(entityOpt.get()));
     }
 
@@ -40,5 +38,22 @@ public class EnderecoJpaAdapter implements EnderecoGateway {
     public Optional<Endereco> findByLogradouroAndNumero(String logradouro, String numero) {
         var entityOpt = repository.findByLogradouroAndNumero(logradouro, numero);
         return entityOpt.map(EnderecoMapper::toDomainFromEntity);
+    }
+
+    @Override
+    public List<Endereco> findAll() {
+        return repository.findAll().stream()
+            .map(EnderecoMapper::toDomainFromEntity)
+            .toList();
+    }
+
+    @Override
+    public boolean existsById(Integer id) {
+        return repository.existsById(id);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        repository.deleteById(id);
     }
 }
