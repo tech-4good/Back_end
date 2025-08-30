@@ -11,8 +11,8 @@ import tech4good.cruds.entity.Entrega;
 
 public class EntregaMapper {
 
-    public static Entrega toEntity(EntregaRequestDto requestDto){
-        if (requestDto == null){
+    public static Entrega toEntity(EntregaRequestDto requestDto) {
+        if (requestDto == null) {
             return null;
         }
 
@@ -22,8 +22,8 @@ public class EntregaMapper {
         return entrega;
     }
 
-    public static EntregaResponseDto toResponseDto(Entrega entrega){
-        if (entrega == null){
+    public static EntregaResponseDto toResponseDto(Entrega entrega) {
+        if (entrega == null) {
             return null;
         }
 
@@ -42,18 +42,18 @@ public class EntregaMapper {
                 entrega.getEndereco().getMoradia(),
                 entrega.getEndereco().getTipoMoradia(),
                 entrega.getEndereco().getStatus()
-        ): null;
+        ) : null;
 
         CestaSummarizedResponseDto cestaEntregaResponseDto = entrega.getCesta() != null
                 ? new CestaSummarizedResponseDto(
-                        entrega.getCesta().getTipo()
-        ): null;
+                entrega.getCesta().getTipo()
+        ) : null;
 
         VoluntarioSummarizedResponseDto voluntarioEntregaResponseDto = entrega.getVoluntario() != null
                 ? new VoluntarioSummarizedResponseDto(
-                        entrega.getVoluntario().getIdVoluntario(),
-                        entrega.getVoluntario().getNome()
-        ): null;
+                entrega.getVoluntario().getIdVoluntario(),
+                entrega.getVoluntario().getNome()
+        ) : null;
 
         BeneficiadoSummarizedResponseDto beneficiadoSummarizedResponseDto = entrega.getBeneficiado() != null
                 ? new BeneficiadoSummarizedResponseDto(
@@ -73,8 +73,8 @@ public class EntregaMapper {
         return responseDto;
     }
 
-    public static Entrega toUpdate(EntregaUpdateDto dto, Integer idEntrega){
-        if (dto == null){
+    public static Entrega toUpdate(EntregaUpdateDto dto, Integer idEntrega) {
+        if (dto == null) {
             return null;
         }
 
@@ -82,6 +82,8 @@ public class EntregaMapper {
         entrega.setIdEntrega(idEntrega);
         entrega.setDataRetirada(dto.getDataRetirada());
         entrega.setProximaRetirada(dto.getProximaRetirada());
+
         return entrega;
     }
+
 }
