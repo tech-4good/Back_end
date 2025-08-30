@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tech4good.tech4good_api.core.application.command.endereco.AtualizarEnderecoCommand;
-import tech4good.tech4good_api.core.application.command.endereco.CadastrarEnderecoCommand;
-import tech4good.tech4good_api.core.application.command.endereco.ListarEnderecoPorIdCommand;
-import tech4good.tech4good_api.core.application.command.endereco.RemoverEnderecoPorIdCommand;
+import tech4good.tech4good_api.core.application.command.endereco.*;
 import tech4good.tech4good_api.core.application.dto.endereco.AtualizarEnderecoRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoResponseDto;
@@ -22,7 +19,9 @@ import tech4good.tech4good_api.core.application.usecase.endereco.CadastrarEndere
 import tech4good.tech4good_api.core.application.usecase.endereco.ListarEnderecoPorIdUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.ListarEnderecosUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.RemoverEnderecoPorIdUseCase;
+import tech4good.tech4good_api.core.application.usecase.endereco.BuscarApiCepEnderecoUseCase;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
+import tech4good.tech4good_api.core.domain.endereco.valueobjects.Cep;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoMapper;
 
 import java.util.List;
@@ -36,19 +35,22 @@ public class EnderecoController {
     private final ListarEnderecosUseCase listarEnderecosUseCase;
     private final AtualizarEnderecoUseCase atualizarEnderecoUseCase;
     private final RemoverEnderecoPorIdUseCase removerEnderecoPorIdUseCase;
+    private final BuscarApiCepEnderecoUseCase buscarApiCepEnderecoUseCase;
 
     public EnderecoController(
         CadastrarEnderecoUseCase cadastrarEnderecoUseCase,
         ListarEnderecoPorIdUseCase listarEnderecoPorIdUseCase,
         ListarEnderecosUseCase listarEnderecosUseCase,
         AtualizarEnderecoUseCase atualizarEnderecoUseCase,
-        RemoverEnderecoPorIdUseCase removerEnderecoPorIdUseCase
+        RemoverEnderecoPorIdUseCase removerEnderecoPorIdUseCase,
+        BuscarApiCepEnderecoUseCase buscarApiCepEnderecoUseCase
     ) {
         this.cadastrarEnderecoUseCase = cadastrarEnderecoUseCase;
         this.listarEnderecoPorIdUseCase = listarEnderecoPorIdUseCase;
         this.listarEnderecosUseCase = listarEnderecosUseCase;
         this.atualizarEnderecoUseCase = atualizarEnderecoUseCase;
         this.removerEnderecoPorIdUseCase = removerEnderecoPorIdUseCase;
+        this.buscarApiCepEnderecoUseCase = buscarApiCepEnderecoUseCase;
     }
 
     @PostMapping
@@ -93,4 +95,14 @@ public class EnderecoController {
         removerEnderecoPorIdUseCase.executar(command);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/cep/{cep}")
+    public ResponseEntity<EnderecoResponseDto> buscarPorCep(@PathVariable String cep) {
+        Cep cepValue = Cep.valueOf(cep);
+        BuscarApiCepEnderecoCommand command = new BuscarApiCepEnderecoCommand(cepValue);
+        Endereco endereco = buscarApiCepEnderecoUseCase.executar(command);
+        EnderecoResponseDto responseDto = EnderecoMapper.toResponseDto(endereco);
+        return ResponseEntity.ok(responseDto);
+    }
+
 }

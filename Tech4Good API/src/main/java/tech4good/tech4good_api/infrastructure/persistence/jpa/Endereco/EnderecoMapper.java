@@ -1,8 +1,10 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco;
 
 import tech4good.tech4good_api.core.application.command.endereco.AtualizarEnderecoCommand;
+import tech4good.tech4good_api.core.application.command.endereco.BuscarApiCepEnderecoCommand;
 import tech4good.tech4good_api.core.application.command.endereco.CadastrarEnderecoCommand;
 import tech4good.tech4good_api.core.application.dto.endereco.AtualizarEnderecoRequestDto;
+import tech4good.tech4good_api.core.application.dto.endereco.EnderecoApiCepDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoResponseDto;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
@@ -117,10 +119,29 @@ public class EnderecoMapper {
         );
     }
 
+    public static EnderecoApiCepDto toApiCepDto(BuscarApiCepEnderecoCommand command){
+        if (command == null){
+            return null;
+        }
+        EnderecoApiCepDto dto = new EnderecoApiCepDto();
+        return dto;
+    }
+
     public static AtualizarEnderecoCommand toAtualizarCommand(Integer id, AtualizarEnderecoRequestDto dto) {
         if (dto == null) {
             return null;
         }
         return new AtualizarEnderecoCommand(id, dto.getStatus());
     }
+
+    public static Endereco toDomainFromApiCepDto(EnderecoApiCepDto dto){
+        if (dto == null){
+            return null;
+        }
+        Endereco endereco = new Endereco();
+        endereco.setCep(dto.getCep());
+
+        return endereco;
+    }
 }
+

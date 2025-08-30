@@ -3,6 +3,7 @@ package tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco;
 import org.springframework.stereotype.Service;
 import tech4good.tech4good_api.core.adapter.EnderecoGateway;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
+import tech4good.tech4good_api.core.domain.endereco.valueobjects.Cep;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,11 +31,6 @@ public class EnderecoJpaAdapter implements EnderecoGateway {
     }
 
     @Override
-    public boolean existsByCepAndNumero(String cep, String numero) {
-        return repository.existsByCepAndNumero(cep, numero);
-    }
-
-    @Override
     public Optional<Endereco> findByLogradouroAndNumero(String logradouro, String numero) {
         var entityOpt = repository.findByLogradouroAndNumero(logradouro, numero);
         return entityOpt.map(EnderecoMapper::toDomainFromEntity);
@@ -53,7 +49,13 @@ public class EnderecoJpaAdapter implements EnderecoGateway {
     }
 
     @Override
+    public boolean existsByCepAndNumero(String cep, String numero) {
+        return repository.existsByCepAndNumero(cep, numero);
+    }
+
+    @Override
     public void deleteById(Integer id) {
         repository.deleteById(id);
     }
+
 }

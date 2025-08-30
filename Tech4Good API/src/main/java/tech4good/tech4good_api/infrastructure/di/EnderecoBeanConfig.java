@@ -3,10 +3,12 @@ package tech4good.tech4good_api.infrastructure.di;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech4good.tech4good_api.core.application.usecase.endereco.AtualizarEnderecoUseCase;
+import tech4good.tech4good_api.core.application.usecase.endereco.BuscarApiCepEnderecoUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.CadastrarEnderecoUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.ListarEnderecoPorIdUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.ListarEnderecosUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.RemoverEnderecoPorIdUseCase;
+import tech4good.tech4good_api.infrastructure.integration.LogradouroIntegration;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoJpaAdapter;
 
 @Configuration
@@ -35,5 +37,13 @@ public class EnderecoBeanConfig {
     @Bean
     public RemoverEnderecoPorIdUseCase removerEnderecoPorIdUseCase(EnderecoJpaAdapter adapter) {
         return new RemoverEnderecoPorIdUseCase(adapter);
+    }
+
+    @Bean
+    public BuscarApiCepEnderecoUseCase buscarApiCepEnderecoUseCase(
+        EnderecoJpaAdapter adapter,
+        LogradouroIntegration integration
+    ) {
+        return new BuscarApiCepEnderecoUseCase(adapter, integration);
     }
 }
