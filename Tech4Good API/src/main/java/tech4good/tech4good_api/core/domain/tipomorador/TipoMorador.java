@@ -9,7 +9,7 @@ public class TipoMorador {
     private Integer quantidadeAdolescente;
     private Integer quantidadeJovem;
     private Integer quantidadeIdoso;
-    private Integer quantidadeGestnte;
+    private Integer quantidadeGestante;
     private Integer quantidadeDeficiente;
     private Integer quantidadeOutros;
     private Beneficiado beneficiado;
@@ -56,11 +56,11 @@ public class TipoMorador {
     }
 
     public Integer getQuantidadeGestnte() {
-        return quantidadeGestnte;
+        return quantidadeGestante;
     }
 
     public void setQuantidadeGestnte(Integer quantidadeGestnte) {
-        this.quantidadeGestnte = quantidadeGestnte;
+        this.quantidadeGestante = quantidadeGestnte;
     }
 
     public Integer getQuantidadeDeficiente() {

@@ -5,6 +5,8 @@ import tech4good.tech4good_api.core.adapter.BeneficiadoGateway;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
 
+import java.util.Optional;
+
 @Service
 public class BeneficiadoJpaAdapter implements BeneficiadoGateway {
     private final BeneficiadoJpaRepository repository;
@@ -22,4 +24,9 @@ public class BeneficiadoJpaAdapter implements BeneficiadoGateway {
     public boolean existsByCpf(Cpf cpf) {
         return false;
     }
-}
+
+    /*@Override
+    public Optional<Beneficiado> findById(Integer id) {
+        return repository.findById(id);
+    }
+}*/
