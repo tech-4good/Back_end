@@ -9,7 +9,7 @@ public class Rg {
 
     private final String value;
 
-    private Rg(String value) {
+    public Rg(String value) {
         this.value = value;
     }
 

@@ -4,7 +4,7 @@ public class Religiao {
 
     private final String value;
 
-    private Religiao(String value) {
+    public Religiao(String value) {
         this.value = value;
     }
 

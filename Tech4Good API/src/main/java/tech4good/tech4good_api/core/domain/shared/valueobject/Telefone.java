@@ -9,7 +9,7 @@ public class Telefone {
 
     private final String value;
 
-    private Telefone(String value) {
+    public Telefone(String value) {
         this.value = value;
     }
 

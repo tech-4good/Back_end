@@ -9,7 +9,7 @@ public class Cpf {
 
     private final String value;
 
-    private Cpf(String value) {
+    public Cpf(String value) {
         this.value = value;
     }
 
