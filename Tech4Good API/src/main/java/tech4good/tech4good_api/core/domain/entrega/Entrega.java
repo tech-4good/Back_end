@@ -15,4 +15,73 @@ public class Entrega {
     private Endereco endereco;
     private Cesta cesta;
     private Beneficiado beneficiado;
+
+    public Entrega(Integer id, LocalDate dataRetirada, LocalDate proximaRetirada, Voluntario voluntario, Endereco endereco, Cesta cesta, Beneficiado beneficiado) {
+        this.id = id;
+        this.dataRetirada = dataRetirada;
+        this.proximaRetirada = proximaRetirada;
+        this.voluntario = voluntario;
+        this.endereco = endereco;
+        this.cesta = cesta;
+        this.beneficiado = beneficiado;
+    }
+
+    public Entrega() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public LocalDate getDataRetirada() {
+        return dataRetirada;
+    }
+
+    public void setDataRetirada(LocalDate dataRetirada) {
+        this.dataRetirada = dataRetirada;
+    }
+
+    public LocalDate getProximaRetirada() {
+        return proximaRetirada;
+    }
+
+    public void setProximaRetirada(LocalDate proximaRetirada) {
+        this.proximaRetirada = proximaRetirada;
+    }
+
+    public Voluntario getVoluntario() {
+        return voluntario;
+    }
+
+    public void setVoluntario(Voluntario voluntario) {
+        this.voluntario = voluntario;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public Cesta getCesta() {
+        return cesta;
+    }
+
+    public void setCesta(Cesta cesta) {
+        this.cesta = cesta;
+    }
+
+    public Beneficiado getBeneficiado() {
+        return beneficiado;
+    }
+
+    public void setBeneficiado(Beneficiado beneficiado) {
+        this.beneficiado = beneficiado;
+    }
 }
