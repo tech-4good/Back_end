@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech4good.tech4good_api.core.application.usecase.beneficiado.*;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado.BeneficiadoJpaAdapter;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoJpaAdapter;
 
 @Configuration
 public class BeneficiadoBeanConfig {
@@ -29,8 +30,8 @@ public class BeneficiadoBeanConfig {
     }
 
     @Bean
-    public CadastrarBeneficiadoSimplesUseCase cadastrarBeneficiadoSimplesUseCase(BeneficiadoJpaAdapter adapter) {
-        return new CadastrarBeneficiadoSimplesUseCase(adapter);
+    public CadastrarBeneficiadoSimplesUseCase cadastrarBeneficiadoSimplesUseCase(BeneficiadoJpaAdapter BeneficiadoAdapter, EnderecoJpaAdapter enderecoAdapter) {
+        return new CadastrarBeneficiadoSimplesUseCase(BeneficiadoAdapter, enderecoAdapter);
     }
 
     @Bean
