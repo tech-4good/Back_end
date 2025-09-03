@@ -9,7 +9,7 @@ public class Email {
 
     private final String value;
 
-    private Email(String value) {
+    public Email(String value) {
         this.value = value;
     }
 

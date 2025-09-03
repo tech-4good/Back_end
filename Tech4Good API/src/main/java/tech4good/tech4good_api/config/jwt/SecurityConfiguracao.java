@@ -1,4 +1,4 @@
-package tech4good.tech4good_api.config.jwt;
+topackage tech4good.tech4good_api.config.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +31,10 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguracao {
+s
     @Autowired
     private AutenticacaoService autenticacaoService;
+
     @Autowired
     private AutenticacaoEntryPoint autenticacaoJwtEntryPoint;
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Component
 public class GerenciadorTokenJwt {
 
     @Value("${jwt.secret}")
@@ -31,12 +33,16 @@ public class GerenciadorTokenJwt {
     }
 
     public String generateToken(final Authentication authentication) {
-        final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+        final String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        return Jwts.builder().setSubject(authentication.getName())
-                .signWith(parseSecret()).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1000)).compact();
+        return Jwts.builder()
+                .setSubject(authentication.getName())
+                .signWith(parseSecret())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1000))
+                .compact();
     }
 
     public <T> T getClaimForToken(String token, Function<Claims, T> claimsResolver) {
@@ -55,11 +61,14 @@ public class GerenciadorTokenJwt {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(parseSecret()).build().parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder()
+                .setSigningKey(parseSecret())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private SecretKey parseSecret() {
         return Keys.hmacShaKeyFor(this.secret.getBytes(StandardCharsets.UTF_8));
     }
 }
-

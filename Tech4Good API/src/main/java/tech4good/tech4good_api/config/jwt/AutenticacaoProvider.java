@@ -21,7 +21,6 @@ public class AutenticacaoProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
-
         final String username = authentication.getName();
         final String password = authentication.getCredentials().toString();
 
