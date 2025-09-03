@@ -21,7 +21,6 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutenticacaoFilter.class);
 
     private final AutenticacaoService autenticacaoService;
-
     private final GerenciadorTokenJwt jwtTokenManager;
 
     public AutenticacaoFilter(AutenticacaoService autenticacaoService, GerenciadorTokenJwt jwtTokenManager) {
@@ -43,9 +42,7 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
                 username = jwtTokenManager.getUsernameFromToken(jwtToken);
             } catch (ExpiredJwtException exception) {
                 LOGGER.info("[FALHA AUTENTICACAO] - Token expirado, usuario: {} - {}", exception.getClaims().getSubject(), exception.getMessage());
-
                 LOGGER.trace("[FALHA AUTENTICACAO] - stack trace: %s", exception);
-
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
@@ -66,7 +63,6 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
             );
 
             usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         }
     }

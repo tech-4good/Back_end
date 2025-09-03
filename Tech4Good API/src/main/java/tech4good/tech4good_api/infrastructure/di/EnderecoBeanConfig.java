@@ -8,7 +8,7 @@ import tech4good.tech4good_api.core.application.usecase.endereco.CadastrarEndere
 import tech4good.tech4good_api.core.application.usecase.endereco.ListarEnderecoPorIdUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.ListarEnderecosUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.RemoverEnderecoPorIdUseCase;
-import tech4good.tech4good_api.infrastructure.integration.LogradouroIntegration;
+import tech4good.tech4good_api.core.adapter.ViaCepGateway;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoJpaAdapter;
 
 @Configuration
@@ -40,10 +40,7 @@ public class EnderecoBeanConfig {
     }
 
     @Bean
-    public BuscarApiCepEnderecoUseCase buscarApiCepEnderecoUseCase(
-        EnderecoJpaAdapter adapter,
-        LogradouroIntegration integration
-    ) {
-        return new BuscarApiCepEnderecoUseCase(adapter, integration);
+    public BuscarApiCepEnderecoUseCase buscarApiCepEnderecoUseCase(ViaCepGateway viaCepGateway) {
+        return new BuscarApiCepEnderecoUseCase(viaCepGateway);
     }
 }

@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -31,27 +30,29 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguracao {
-    @Autowired
-    private AutenticacaoService autenticacaoService;
-    @Autowired
-    private AutenticacaoEntryPoint autenticacaoJwtEntryPoint;
 
-    private static final AntPathRequestMatcher[] URLS_PERMITIDAS = {
-            new AntPathRequestMatcher("/swagger-ui/**"),
-            new AntPathRequestMatcher("/swagger-ui.html"),
-            new AntPathRequestMatcher("/swagger-resources"),
-            new AntPathRequestMatcher("/swagger-resources/**"),
-            new AntPathRequestMatcher("/configuration/ui"),
-            new AntPathRequestMatcher("/configuration/security"),
-            new AntPathRequestMatcher("/api/public/**"),
-            new AntPathRequestMatcher("/api/public/authenticate"),
-            new AntPathRequestMatcher("/webjars/**"),
-            new AntPathRequestMatcher("/v3/api-docs/**"),
-            new AntPathRequestMatcher("/actuator/*"),
-            new AntPathRequestMatcher("/voluntarios/login/**"),
-            new AntPathRequestMatcher("/h2-console/**"),
-            new AntPathRequestMatcher("/h2-console/**/**"),
-            new AntPathRequestMatcher("/error/**")
+    private final AutenticacaoService autenticacaoService;
+
+    public SecurityConfiguracao(AutenticacaoService autenticacaoService) {
+        this.autenticacaoService = autenticacaoService;
+    }
+
+    private static final String[] URLS_PERMITIDAS = {
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/api/public/**",
+            "/api/public/authenticate",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/actuator/*",
+            "/voluntarios/login/**",
+            "/h2-console/**",
+            "/h2-console/**/**",
+            "/error/**"
     };
 
     @Bean
@@ -61,21 +62,17 @@ public class SecurityConfiguracao {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .cors(Customizer.withDefaults())
                 .csrf(CsrfConfigurer<HttpSecurity>::disable)
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(URLS_PERMITIDAS)
-                        .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/voluntarios/login")
-                        .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/voluntarios")
-                        .permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(URLS_PERMITIDAS).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/voluntarios/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/voluntarios").permitAll()
                         .requestMatchers("/voluntarios/**", "/beneficiados/**",
                                 "/enderecos/**", "/cestas/**", "/auxilio-governamentais/**",
-                                "/filhos-beneficiados/**", "/tipo-moradores/**")
-                        .authenticated()
-                        .anyRequest()
-                        .authenticated()
+                                "/filhos-beneficiados/**", "/tipo-moradores/**").authenticated()
+                        .anyRequest().authenticated()
                 )
                 .exceptionHandling(handling -> handling
-                        .authenticationEntryPoint(autenticacaoJwtEntryPoint))
+                        .authenticationEntryPoint(jwtAuthenticationEntryPointBean()))
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -88,7 +85,8 @@ public class SecurityConfiguracao {
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(new AutenticacaoProvider(autenticacaoService, passwordEncoder()));
+        authenticationManagerBuilder.authenticationProvider(
+                new AutenticacaoProvider(autenticacaoService, passwordEncoder()));
         return authenticationManagerBuilder.build();
     }
 
