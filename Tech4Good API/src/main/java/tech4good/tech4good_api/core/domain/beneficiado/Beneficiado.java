@@ -1,6 +1,5 @@
 package tech4good.tech4good_api.core.domain.beneficiado;
 
-import org.apache.http.entity.FileEntity;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.EstadoCivil;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Religiao;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Renda;
@@ -8,6 +7,7 @@ import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Rg;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Telefone;
+import tech4good.tech4good_api.core.domain.file.File;
 
 import java.time.LocalDate;
 
@@ -28,10 +28,10 @@ public class Beneficiado {
     private Religiao religiao;
     private Endereco endereco;
     private Integer quantidadeDependentes;
-    private FileEntity fotoBeneficiado;
+    private File fotoBeneficiado;
 
 
-    public Beneficiado(Integer id, Cpf cpf, String nome, Rg rg, LocalDate dataNascimento, String naturalidade, Telefone telefone, EstadoCivil estadoCivil, String escolaridade, String profissao, Renda rendaMensal, String empresa, String cargo, Religiao religiao, Endereco endereco, Integer quantidadeDependentes, FileEntity fotoBeneficiado) {
+    public Beneficiado(Integer id, Cpf cpf, String nome, Rg rg, LocalDate dataNascimento, String naturalidade, Telefone telefone, EstadoCivil estadoCivil, String escolaridade, String profissao, Renda rendaMensal, String empresa, String cargo, Religiao religiao, Endereco endereco, Integer quantidadeDependentes, File fotoBeneficiado) {
 
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Nome não pode ser vazio.");
@@ -196,11 +196,11 @@ public class Beneficiado {
         this.quantidadeDependentes = quantidadeDependentes;
     }
 
-    public FileEntity getFotoBeneficiado() {
+    public File getFotoBeneficiado() {
         return fotoBeneficiado;
     }
 
-    public void setFotoBeneficiado(FileEntity fotoBeneficiado) {
+    public void setFotoBeneficiado(File fotoBeneficiado) {
         this.fotoBeneficiado = fotoBeneficiado;
     }
 }
