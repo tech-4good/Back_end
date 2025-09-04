@@ -11,7 +11,7 @@ public class RemoverVoluntarioPorIdUseCase {
         this.voluntarioGateway = voluntarioGateway;
     }
 
-    public void executar(RemoverVoluntarioPorIdCommand command) {
+    public void execute(RemoverVoluntarioPorIdCommand command) {
         voluntarioGateway.deletarPorId(command.id());
     }
 }

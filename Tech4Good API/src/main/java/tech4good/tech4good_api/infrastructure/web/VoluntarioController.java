@@ -59,15 +59,15 @@ public class VoluntarioController {
     @PostMapping("/login")
     public ResponseEntity<VoluntarioTokenDto> login(@RequestBody VoluntarioLoginDto voluntarioLoginDto) {
         AutenticarVoluntarioCommand command = VoluntarioMapper.toAutenticarCommand(voluntarioLoginDto);
-        VoluntarioTokenDto voluntarioTokenDto = autenticarVoluntarioUseCase.executar(command);
+        VoluntarioTokenDto voluntarioTokenDto = autenticarVoluntarioUseCase.execute(command);
         return ResponseEntity.status(200).body(voluntarioTokenDto);
     }
 
     @GetMapping("/{id}")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<VoluntarioResponseDto> buscarPorId(@PathVariable Integer id) {
-        ListarVoluntarioPorIdCommand command = new ListarVoluntarioPorIdCommand(id);
-        Voluntario voluntario = listarVoluntarioPorIdUseCase.executar(command);
+        ListarVoluntarioPorIdCommand command = VoluntarioMapper.toIdCommand(id);
+        Voluntario voluntario = listarVoluntarioPorIdUseCase.execute(command);
         VoluntarioResponseDto voluntarioSalvo = VoluntarioMapper.toResponseDto(voluntario);
         return ResponseEntity.ok(voluntarioSalvo);
     }
@@ -75,7 +75,7 @@ public class VoluntarioController {
     @GetMapping
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<VoluntarioListarDto>> listar() {
-        List<VoluntarioListarDto> voluntarios = listarVoluntariosUseCase.executar();
+        List<VoluntarioListarDto> voluntarios = listarVoluntariosUseCase.execute();
         return voluntarios.isEmpty() ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(voluntarios);
@@ -87,7 +87,7 @@ public class VoluntarioController {
             @PathVariable Integer id,
             @RequestBody AtualizarVoluntarioRequestDto dto) {
         AtualizarVoluntarioCommand command = VoluntarioMapper.toAtualizarCommand(id, dto);
-        Voluntario voluntarioAtualizado = atualizarVoluntarioUseCase.executar(command);
+        Voluntario voluntarioAtualizado = atualizarVoluntarioUseCase.execute(command);
         VoluntarioResponseDto voluntarioDto = VoluntarioMapper.toResponseDto(voluntarioAtualizado);
         return ResponseEntity.ok(voluntarioDto);
     }
@@ -95,8 +95,8 @@ public class VoluntarioController {
     @DeleteMapping("/{id}")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> remover(@PathVariable Integer id) {
-        RemoverVoluntarioPorIdCommand command = new RemoverVoluntarioPorIdCommand(id);
-        removerVoluntarioPorIdUseCase.executar(command);
+        RemoverVoluntarioPorIdCommand command = VoluntarioMapper.toRemoveCommand(id);
+        removerVoluntarioPorIdUseCase.execute(command);
         return ResponseEntity.noContent().build();
     }
 
@@ -104,7 +104,7 @@ public class VoluntarioController {
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> redefinirSenha(@RequestBody @Valid VoluntarioRedefinirSenhaDto dto) {
         RedefinirSenhaVoluntarioCommand command = VoluntarioMapper.toRedefinirSenhaCommand(dto);
-        redefinirSenhaVoluntarioUseCase.executar(command);
+        redefinirSenhaVoluntarioUseCase.execute(command);
         return ResponseEntity.ok().build();
     }
 }

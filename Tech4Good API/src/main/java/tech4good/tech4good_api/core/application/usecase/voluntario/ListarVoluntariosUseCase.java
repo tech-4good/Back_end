@@ -15,7 +15,7 @@ public class ListarVoluntariosUseCase {
         this.voluntarioGateway = voluntarioGateway;
     }
 
-    public List<VoluntarioListarDto> executar() {
+    public List<VoluntarioListarDto> execute() {
         List<Voluntario> voluntarios = voluntarioGateway.listarTodos();
         return voluntarios.stream()
                 .map(VoluntarioMapper::toVoluntarioListarDto)

@@ -16,7 +16,7 @@ public class RedefinirSenhaVoluntarioUseCase {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void executar(RedefinirSenhaVoluntarioCommand command) {
+    public void execute(RedefinirSenhaVoluntarioCommand command) {
         Voluntario voluntario = voluntarioGateway.buscarPorEmail(command.email());
 
         if (voluntario == null) {

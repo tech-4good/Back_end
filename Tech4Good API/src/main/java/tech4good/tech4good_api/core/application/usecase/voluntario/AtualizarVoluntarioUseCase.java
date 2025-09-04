@@ -12,7 +12,7 @@ public class AtualizarVoluntarioUseCase {
         this.voluntarioGateway = voluntarioGateway;
     }
 
-    public Voluntario executar(AtualizarVoluntarioCommand command) {
+    public Voluntario execute(AtualizarVoluntarioCommand command) {
         return voluntarioGateway.atualizar(command);
     }
 }

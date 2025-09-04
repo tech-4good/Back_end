@@ -12,7 +12,7 @@ public class ListarVoluntarioPorIdUseCase {
         this.voluntarioGateway = voluntarioGateway;
     }
 
-    public Voluntario executar(ListarVoluntarioPorIdCommand command) {
+    public Voluntario execute(ListarVoluntarioPorIdCommand command) {
         return voluntarioGateway.buscarPorId(command.id());
     }
 }
