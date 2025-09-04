@@ -6,7 +6,9 @@ import tech4good.tech4good_api.core.application.dto.entrega.EntregaResponseDto;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaUpdateDto;
 import tech4good.tech4good_api.core.domain.entrega.Entrega;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado.BeneficiadoMapper;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Cesta.CestaMapper;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoMapper;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Voluntario.VoluntarioMapper;
 
 import java.time.LocalDate;
 
@@ -47,9 +49,9 @@ public class EntregaMapper {
             entity.getIdEntrega(),
             entity.getDataRetirada(),
             entity.getProximaRetirada(),
+            VoluntarioMapper.toDomainFromEntity(entity.getVoluntario()),
             EnderecoMapper.toDomainFromEntity(entity.getEndereco()),
             CestaMapper.toDomainFromEntity(entity.getCesta()),
-            VoluntarioMapper.toDomainFromEntity(entity.getVoluntario()),
             BeneficiadoMapper.toDomain(entity.getBeneficiado())
         );
     }

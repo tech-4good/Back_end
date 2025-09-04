@@ -3,7 +3,9 @@ package tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado.BeneficiadoEntity;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Cesta.CestaEntity;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoEntity;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Voluntario.VoluntarioEntity;
 
 import java.time.LocalDate;
 

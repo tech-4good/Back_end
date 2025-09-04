@@ -3,6 +3,8 @@ package tech4good.tech4good_api.core.application.dto.entrega;
 import io.swagger.v3.oas.annotations.media.Schema;
 import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoResponseDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoResponseDto;
+import tech4good.tech4good_api.core.application.dto.cesta.CestaResponseDto;
+import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioResponseDto;
 
 import java.time.LocalDate;
 

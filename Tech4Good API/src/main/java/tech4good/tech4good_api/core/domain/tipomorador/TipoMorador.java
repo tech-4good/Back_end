@@ -15,6 +15,58 @@ public class TipoMorador {
     private Beneficiado beneficiado;
     private Endereco endereco;
 
+    // Construtor completo
+    public TipoMorador(Integer id, Integer quantidadeCrianca, Integer quantidadeAdolescente, Integer quantidadeJovem, Integer quantidadeIdoso, Integer quantidadeGestante, Integer quantidadeDeficiente, Integer quantidadeOutros, Beneficiado beneficiado, Endereco endereco) {
+        // Validações no construtor
+        if (quantidadeCrianca != null && quantidadeCrianca < 0) {
+            throw new IllegalArgumentException("Quantidade de crianças não pode ser negativa");
+        }
+        if (quantidadeAdolescente != null && quantidadeAdolescente < 0) {
+            throw new IllegalArgumentException("Quantidade de adolescentes não pode ser negativa");
+        }
+        if (quantidadeJovem != null && quantidadeJovem < 0) {
+            throw new IllegalArgumentException("Quantidade de jovens não pode ser negativa");
+        }
+        if (quantidadeIdoso != null && quantidadeIdoso < 0) {
+            throw new IllegalArgumentException("Quantidade de idosos não pode ser negativa");
+        }
+        if (quantidadeGestante != null && quantidadeGestante < 0) {
+            throw new IllegalArgumentException("Quantidade de gestantes não pode ser negativa");
+        }
+        if (quantidadeDeficiente != null && quantidadeDeficiente < 0) {
+            throw new IllegalArgumentException("Quantidade de deficientes não pode ser negativa");
+        }
+        if (quantidadeOutros != null && quantidadeOutros < 0) {
+            throw new IllegalArgumentException("Quantidade de outros não pode ser negativa");
+        }
+        if (beneficiado == null) {
+            throw new IllegalArgumentException("Beneficiado é obrigatório");
+        }
+        if (endereco == null) {
+            throw new IllegalArgumentException("Endereco é obrigatório");
+        }
+
+        this.id = id;
+        this.quantidadeCrianca = quantidadeCrianca;
+        this.quantidadeAdolescente = quantidadeAdolescente;
+        this.quantidadeJovem = quantidadeJovem;
+        this.quantidadeIdoso = quantidadeIdoso;
+        this.quantidadeGestante = quantidadeGestante;
+        this.quantidadeDeficiente = quantidadeDeficiente;
+        this.quantidadeOutros = quantidadeOutros;
+        this.beneficiado = beneficiado;
+        this.endereco = endereco;
+    }
+
+    // Construtor sem ID (para criação)
+    public TipoMorador(Integer quantidadeCrianca, Integer quantidadeAdolescente, Integer quantidadeJovem, Integer quantidadeIdoso, Integer quantidadeGestante, Integer quantidadeDeficiente, Integer quantidadeOutros, Beneficiado beneficiado, Endereco endereco) {
+        this(null, quantidadeCrianca, quantidadeAdolescente, quantidadeJovem, quantidadeIdoso, quantidadeGestante, quantidadeDeficiente, quantidadeOutros, beneficiado, endereco);
+    }
+
+    // Construtor vazio para frameworks
+    public TipoMorador() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -55,12 +107,12 @@ public class TipoMorador {
         this.quantidadeIdoso = quantidadeIdoso;
     }
 
-    public Integer getQuantidadeGestnte() {
+    public Integer getQuantidadeGestante() {
         return quantidadeGestante;
     }
 
-    public void setQuantidadeGestnte(Integer quantidadeGestnte) {
-        this.quantidadeGestante = quantidadeGestnte;
+    public void setQuantidadeGestante(Integer quantidadeGestante) {
+        this.quantidadeGestante = quantidadeGestante;
     }
 
     public Integer getQuantidadeDeficiente() {
