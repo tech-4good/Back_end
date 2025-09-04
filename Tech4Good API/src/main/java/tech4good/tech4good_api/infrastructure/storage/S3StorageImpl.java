@@ -6,11 +6,14 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import tech4good.tech4good_api.core.adapter.StorageService;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileJpaAdapter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,6 +22,7 @@ import java.io.IOException;
 @Service
 @Profile("s3")
 public class S3StorageImpl implements StorageService {
+    private static final Logger log = LoggerFactory.getLogger(S3StorageImpl.class);
     private final AmazonS3 s3Client;
     private final String bucketName;
 

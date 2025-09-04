@@ -1,9 +1,12 @@
 package tech4good.tech4good_api.infrastructure.storage;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import tech4good.tech4good_api.core.adapter.StorageService;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileJpaAdapter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +18,7 @@ import java.nio.file.Paths;
 @Profile("local")
 public class LocalStorageImpl implements StorageService {
 
+    private static final Logger log = LoggerFactory.getLogger(LocalStorageImpl.class);
     // Define the base path where files will be stored, defaulting to the system's temporary directory.
     private final Path basePath = Paths.get(System.getProperty("java.io.tmpdir"), "files");
 

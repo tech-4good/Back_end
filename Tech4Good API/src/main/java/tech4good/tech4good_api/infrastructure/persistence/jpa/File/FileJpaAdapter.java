@@ -1,6 +1,7 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.File;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,10 @@ import tech4good.tech4good_api.core.domain.file.FileModel;
 
 import java.io.IOException;
 
-@Slf4j
 @Service
 public class FileJpaAdapter implements FileGateway {
+
+    private static final Logger log = LoggerFactory.getLogger(FileJpaAdapter.class);
 
     private final StorageService storageService;
     private final FileJpaRepository fileJpaRepository;

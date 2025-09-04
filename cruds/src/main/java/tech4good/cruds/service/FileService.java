@@ -13,6 +13,8 @@ import tech4good.cruds.repository.FileEntityRepository;
 
 import java.io.IOException;
 
+import static tech4good.cruds.service.BeneficiadoService.log;
+
 @Slf4j
 @Service
 public class FileService{
