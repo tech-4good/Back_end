@@ -12,6 +12,30 @@ public class Cesta {
     private LocalDate dataEntradaEstoque;
     private Integer quantidadeCestas;
 
+    public Cesta(Integer id, TipoCesta tipo, Peso peso, LocalDate dataEntradaEstoque, Integer quantidadeCestas) {
+        if (tipo == null) {
+            throw new IllegalArgumentException("Tipo da cesta é obrigatório.");
+        }
+        if (peso == null) {
+            throw new IllegalArgumentException("Peso da cesta é obrigatório.");
+        }
+        if (dataEntradaEstoque != null && dataEntradaEstoque.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Data de entrada no estoque não pode ser futura.");
+        }
+        if (quantidadeCestas == null || quantidadeCestas <= 0) {
+            throw new IllegalArgumentException("Quantidade de cestas deve ser maior que zero.");
+        }
+
+        this.id = id;
+        this.tipo = tipo;
+        this.peso = peso;
+        this.dataEntradaEstoque = dataEntradaEstoque;
+        this.quantidadeCestas = quantidadeCestas;
+    }
+
+    public Cesta() {
+    }
+
     public Integer getId() {
         return id;
     }
