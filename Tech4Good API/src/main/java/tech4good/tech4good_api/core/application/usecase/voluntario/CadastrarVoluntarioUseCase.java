@@ -1,11 +1,11 @@
 package tech4good.tech4good_api.core.application.usecase.voluntario;
 
-ntityimport org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import tech4good.tech4good_api.core.adapter.VoluntarioGateway;
 import tech4good.tech4good_api.core.application.command.voluntario.CadastrarVoluntarioCommand;
 import tech4good.tech4good_api.core.application.exception.EntidadeNaoEncontradaException;
 import tech4good.tech4good_api.core.domain.voluntario.Voluntario;
- eimport tech4good.tech4good_api.infrastructure.persistence.jpa.Voluntario.VoluntarioMapper;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Voluntario.VoluntarioMapper;
 
 public class CadastrarVoluntarioUseCase {
 

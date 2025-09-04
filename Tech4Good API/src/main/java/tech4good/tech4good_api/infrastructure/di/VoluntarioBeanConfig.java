@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import tech4good.tech4good_api.config.jwt.GerenciadorTokenJwt;
+import tech4good.tech4good_api.core.adapter.TokenGateway;
 import tech4good.tech4good_api.core.application.usecase.voluntario.AtualizarVoluntarioUseCase;
 import tech4good.tech4good_api.core.application.usecase.voluntario.AutenticarVoluntarioUseCase;
 import tech4good.tech4good_api.core.application.usecase.voluntario.BuscarVoluntarioPorEmailUseCase;
@@ -25,9 +25,9 @@ public class VoluntarioBeanConfig {
 
     @Bean
     public AutenticarVoluntarioUseCase autenticarVoluntarioUseCase(VoluntarioJpaAdapter adapter,
-                                                                 GerenciadorTokenJwt gerenciadorTokenJwt,
+                                                                 TokenGateway tokenGateway,
                                                                  AuthenticationManager authenticationManager) {
-        return new AutenticarVoluntarioUseCase(adapter, gerenciadorTokenJwt, authenticationManager);
+        return new AutenticarVoluntarioUseCase(adapter, tokenGateway, authenticationManager);
     }
 
     @Bean

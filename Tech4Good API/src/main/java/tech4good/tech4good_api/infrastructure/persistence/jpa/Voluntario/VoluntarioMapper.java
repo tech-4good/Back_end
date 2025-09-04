@@ -1,10 +1,13 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Voluntario;
 
+import tech4good.tech4good_api.core.application.command.voluntario.AutenticarVoluntarioCommand;
 import tech4good.tech4good_api.core.application.command.voluntario.AtualizarVoluntarioCommand;
 import tech4good.tech4good_api.core.application.command.voluntario.CadastrarVoluntarioCommand;
 import tech4good.tech4good_api.core.application.dto.voluntario.AtualizarVoluntarioRequestDto;
+import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioListarDto;
 import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioRequestDto;
 import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioResponseDto;
+import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioTokenDto;
 import tech4good.tech4good_api.core.domain.voluntario.Voluntario;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Telefone;
@@ -118,40 +121,5 @@ public class VoluntarioMapper {
             voluntario.getEmail() != null ? voluntario.getEmail().toString() : null,
             token
         );
-    }
-
-    public static Voluntario toEntity(VoluntarioLoginDto dto) {
-        if (dto == null) {
-            return null;
-        }
-        Voluntario voluntario = new Voluntario();
-        voluntario.setEmail(new Email(dto.getEmail()));
-        voluntario.setSenha(dto.getSenha());
-        return voluntario;
-    }
-
-    public static Voluntario toUpdate(AtualizarVoluntarioRequestDto dto, Integer id) {
-        if (dto == null) {
-            return null;
-        }
-        Voluntario voluntario = new Voluntario();
-        voluntario.setId(id);
-        voluntario.setTelefone(new Telefone(dto.getTelefone()));
-        voluntario.setEmail(new Email(dto.getEmail()));
-        return voluntario;
-    }
-
-    public static AutenticarVoluntarioCommand toAutenticarCommand(VoluntarioLoginDto dto) {
-        if (dto == null) {
-            return null;
-        }
-        return new AutenticarVoluntarioCommand(dto.getEmail(), dto.getSenha());
-    }
-
-    public static RedefinirSenhaVoluntarioCommand toRedefinirSenhaCommand(VoluntarioRedefinirSenhaDto dto) {
-        if (dto == null) {
-            return null;
-        }
-        return new RedefinirSenhaVoluntarioCommand(dto.getEmail(), dto.getSenhaAtual(), dto.getNovaSenha());
     }
 }
