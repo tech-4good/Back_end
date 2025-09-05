@@ -7,6 +7,7 @@ import tech4good.tech4good_api.core.application.dto.endereco.AtualizarEnderecoRe
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoApiCepDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoResponseDto;
+import tech4good.tech4good_api.core.application.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
 
 public class EnderecoMapper {
@@ -143,5 +144,20 @@ public class EnderecoMapper {
 
         return endereco;
     }
-}
 
+    public static EnderecoSummarizedFilhoBeneficiadoResponseDto toSummarizedResponseDto(Endereco endereco) {
+        if (endereco == null) {
+            return null;
+        }
+        return new EnderecoSummarizedFilhoBeneficiadoResponseDto(
+            endereco.getId(),
+            endereco.getLogradouro(),
+            endereco.getNumero(),
+            endereco.getComplemento(),
+            endereco.getBairro(),
+            endereco.getCidade(),
+            endereco.getEstado(),
+            endereco.getCep()
+        );
+    }
+}

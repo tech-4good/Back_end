@@ -6,6 +6,7 @@ import tech4good.tech4good_api.core.adapter.BeneficiadoGateway;
 import tech4good.tech4good_api.core.adapter.CestaGateway;
 import tech4good.tech4good_api.core.adapter.VoluntarioGateway;
 import tech4good.tech4good_api.core.application.command.entrega.CadastrarEntregaCommand;
+import tech4good.tech4good_api.core.application.exception.EntidadeNaoEncontradaException;
 import tech4good.tech4good_api.core.domain.entrega.Entrega;
 
 public class CadastrarEntregaUseCase {
@@ -28,20 +29,25 @@ public class CadastrarEntregaUseCase {
     }
 
     public Entrega executar(CadastrarEntregaCommand command) {
-        // Verifica se as entidades relacionadas existem
-        var endereco = enderecoGateway.findById(command.enderecoId());
+        // Busca as entidades relacionadas e trata os Optional adequadamente
+        var endereco = enderecoGateway.findById(command.enderecoId())
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Endereço com ID %d não encontrado".formatted(command.enderecoId())));
+
         var beneficiado = beneficiadoGateway.findById(command.beneficiadoId());
-        var cesta = cestaGateway.findById(command.cestaId());
-        var voluntario = voluntarioGateway.findById(command.voluntarioId());
+
+        var cesta = cestaGateway.findById(command.cestaId())
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Cesta com ID %d não encontrada".formatted(command.cestaId())));
+
+        var voluntario = voluntarioGateway.buscarPorId(command.voluntarioId());
 
         // Cria a entrega
         var entrega = new Entrega(
             null,
             command.dataRetirada(),
             command.proximaRetirada(),
+            voluntario,
             endereco,
             cesta,
-            voluntario,
             beneficiado
         );
 

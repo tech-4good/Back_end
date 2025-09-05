@@ -3,12 +3,8 @@ package tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.EstadoCivil;
-import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Religiao;
-import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Renda;
-import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Rg;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
-import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
-import tech4good.tech4good_api.core.domain.shared.valueobject.Telefone;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoEntity;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileEntity;
 
 import java.time.LocalDate;
@@ -57,7 +53,7 @@ public class BeneficiadoEntity {
 
     @ManyToOne
     @JoinColumn(name = "fk_endereco")
-    private Endereco endereco;
+    private EnderecoEntity endereco;
 
     @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3")
     @Column(name = "quantidade_dependentes")
@@ -183,11 +179,11 @@ public class BeneficiadoEntity {
         this.religiao = religiao;
     }
 
-    public Endereco getEndereco() {
+    public EnderecoEntity getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(EnderecoEntity endereco) {
         this.endereco = endereco;
     }
 

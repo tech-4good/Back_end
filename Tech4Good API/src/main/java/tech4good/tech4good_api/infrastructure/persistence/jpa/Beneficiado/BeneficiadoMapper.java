@@ -7,12 +7,15 @@ import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoAtual
 import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoRequestDto;
 import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoResponseDto;
 import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoSimplesRequestDto;
+import tech4good.tech4good_api.core.application.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Religiao;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Renda;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Rg;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Telefone;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoMapper;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileMapper;
 
 public class BeneficiadoMapper {
     public static CadastrarBeneficiadoCommand toCommand(BeneficiadoRequestDto dto) {
@@ -73,9 +76,13 @@ public class BeneficiadoMapper {
         entity.setEmpresa(beneficiado.getEmpresa());
         entity.setCargo(beneficiado.getCargo());
         entity.setReligiao(beneficiado.getReligiao() != null ? beneficiado.getReligiao().toString() : null);
-        entity.setEndereco(beneficiado.getEndereco());
+        // Converte o objeto de domínio Endereco para EnderecoEntity
+        entity.setEndereco(beneficiado.getEndereco() != null ?
+            EnderecoMapper.toEntity(beneficiado.getEndereco()) : null);
         entity.setQuantidadeDependentes(beneficiado.getQuantidadeDependentes());
-        entity.setFotoBeneficiado(beneficiado.getFotoBeneficiado());
+        // Converte o objeto de domínio File para FileEntity
+        entity.setFotoBeneficiado(beneficiado.getFotoBeneficiado() != null ?
+            FileMapper.toEntity(beneficiado.getFotoBeneficiado()) : null);
         return entity;
     }
 
@@ -95,9 +102,13 @@ public class BeneficiadoMapper {
                 entity.getEmpresa(),
                 entity.getCargo(),
                 entity.getReligiao() != null ? Religiao.valueOf(entity.getReligiao()) : null,
-                entity.getEndereco(),
+                // Converte EnderecoEntity para objeto de domínio Endereco
+                entity.getEndereco() != null ?
+                        EnderecoMapper.toDomainFromEntity(entity.getEndereco()) : null,
                 entity.getQuantidadeDependentes(),
-                entity.getFotoBeneficiado()
+                // Converte FileEntity para objeto de domínio File
+                entity.getFotoBeneficiado() != null ?
+                        FileMapper.toDomain(entity.getFotoBeneficiado()) : null
         );
     }
 
@@ -145,6 +156,16 @@ public class BeneficiadoMapper {
             dto.getNome(),
             dto.getDataNascimento(),
             dto.getEndereco()
+        );
+    }
+
+    public static BeneficiadoSummarizedResponseDto toSummarizedResponseDto(Beneficiado beneficiado) {
+        if (beneficiado == null) {
+            return null;
+        }
+        return new BeneficiadoSummarizedResponseDto(
+            beneficiado.getCpf(),
+            beneficiado.getNome()
         );
     }
 }

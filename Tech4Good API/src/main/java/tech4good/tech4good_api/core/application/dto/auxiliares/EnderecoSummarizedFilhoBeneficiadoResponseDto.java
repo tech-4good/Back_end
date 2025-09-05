@@ -14,7 +14,7 @@ public class EnderecoSummarizedFilhoBeneficiadoResponseDto {
     @Schema(description = "Rua ou Avenida", example = "Avenida Marechal Tito")
     private String logradouro;
     @Schema(description = "Número da residência", example = "234")
-    private Integer numero;
+    private String numero;
     @Schema(description = "Complemento do número da residência", example = "A")
     private String complemento;
     @Schema(description = "Nome do bairro", example = "São Miguel Paulista")
@@ -26,7 +26,7 @@ public class EnderecoSummarizedFilhoBeneficiadoResponseDto {
     @Schema(description = "CEP da região onde se encontra a residência", example = "08356723")
     private Cep cep;
 
-    public EnderecoSummarizedFilhoBeneficiadoResponseDto(Integer idEndereco, String logradouro, Integer numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep) {
+    public EnderecoSummarizedFilhoBeneficiadoResponseDto(Integer idEndereco, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep) {
         this.idEndereco = idEndereco;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -80,11 +80,11 @@ public class EnderecoSummarizedFilhoBeneficiadoResponseDto {
         this.complemento = complemento;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
