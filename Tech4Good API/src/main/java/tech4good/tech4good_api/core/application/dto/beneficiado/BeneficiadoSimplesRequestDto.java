@@ -11,6 +11,8 @@ public class BeneficiadoSimplesRequestDto {
     private LocalDate dataNascimento;
     private Endereco endereco;
 
+    public BeneficiadoSimplesRequestDto() {}
+
     public BeneficiadoSimplesRequestDto(Cpf cpf, String nome, LocalDate dataNascimento, Endereco endereco) {
         this.cpf = cpf;
         this.nome = nome;
@@ -22,15 +24,31 @@ public class BeneficiadoSimplesRequestDto {
         return cpf;
     }
 
+    public void setCpf(Cpf cpf) {
+        this.cpf = cpf;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
     public Endereco getEndereco() {
         return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }

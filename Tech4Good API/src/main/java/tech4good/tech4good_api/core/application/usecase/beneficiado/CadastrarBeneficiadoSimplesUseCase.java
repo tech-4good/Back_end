@@ -19,31 +19,24 @@ public class CadastrarBeneficiadoSimplesUseCase {
     }
 
     public Beneficiado executar(CadastrarBeneficiadoSimplesCommand command) {
-        // Busca endereço por logradouro e número
-        Optional<Endereco> enderecoOpt = enderecoGateway.findByLogradouroAndNumero(command.logradouro(), command.numero());
+        // Busca endereço por logradouro e número do endereço que vem no command
+        Optional<Endereco> enderecoOpt = enderecoGateway.findByLogradouroAndNumero(
+            command.endereco().getLogradouro(), 
+            command.endereco().getNumero()
+        );
+        
         Endereco endereco = enderecoOpt.orElseGet(() -> {
-            Endereco novoEndereco = new Endereco();
-            novoEndereco.setLogradouro(command.logradouro());
-            novoEndereco.setNumero(command.numero());
-            novoEndereco.setComplemento(command.complemento());
-            novoEndereco.setBairro(command.bairro());
-            novoEndereco.setCidade(command.cidade());
-            novoEndereco.setEstado(command.estado());
-            novoEndereco.setCep(command.cep());
-            novoEndereco.setTipoCesta(command.tipoCesta());
-            novoEndereco.setDataEntrada(command.dataEntrada());
-            novoEndereco.setDataSaida(command.dataSaida());
-            novoEndereco.setMoradia(command.moradia());
-            novoEndereco.setTipoMoradia(command.tipoMoradia());
-            novoEndereco.setStatus(command.status());
-            return enderecoGateway.save(novoEndereco);
+            // Se não encontrar, salva o endereço completo que já vem no command
+            return enderecoGateway.save(command.endereco());
         });
+
+        // Cria o beneficiado com os dados do command
         Beneficiado beneficiado = new Beneficiado();
         beneficiado.setNome(command.nome());
         beneficiado.setCpf(command.cpf());
         beneficiado.setDataNascimento(command.dataNascimento());
         beneficiado.setEndereco(endereco);
+
         return beneficiadoGateway.save(beneficiado);
     }
 }
-
