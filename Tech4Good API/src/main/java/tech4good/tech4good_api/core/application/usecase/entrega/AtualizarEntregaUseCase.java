@@ -19,9 +19,9 @@ public class AtualizarEntregaUseCase {
             entregaExistente.getId(),
             command.dataRetirada() != null ? command.dataRetirada() : entregaExistente.getDataRetirada(),
             command.proximaRetirada() != null ? command.proximaRetirada() : entregaExistente.getProximaRetirada(),
+            entregaExistente.getVoluntario(),
             entregaExistente.getEndereco(),
             entregaExistente.getCesta(),
-            entregaExistente.getVoluntario(),
             entregaExistente.getBeneficiado()
         );
 
