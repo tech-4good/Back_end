@@ -101,7 +101,7 @@ public class TipoMoradorMapper {
                 ? new EnderecoSummarizedFilhoBeneficiadoResponseDto(
                 tipoMorador.getEndereco().getId(),
                 tipoMorador.getEndereco().getLogradouro(),
-                Integer.valueOf(tipoMorador.getEndereco().getNumero()),
+                tipoMorador.getEndereco().getNumero(),
                 tipoMorador.getEndereco().getComplemento(),
                 tipoMorador.getEndereco().getBairro(),
                 tipoMorador.getEndereco().getCidade(),
