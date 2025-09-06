@@ -3,6 +3,7 @@ package tech4good.tech4good_api.infrastructure.persistence.jpa.FilaEspera;
 import tech4good.tech4good_api.core.application.command.filaespera.*;
 import tech4good.tech4good_api.core.application.dto.filaespera.FilaEsperaRequestDto;
 import tech4good.tech4good_api.core.application.dto.filaespera.FilaEsperaResponseDto;
+import tech4good.tech4good_api.core.application.dto.filaespera.FilaEsperaUpdateDto;
 import tech4good.tech4good_api.core.application.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.tech4good_api.core.domain.filaespera.FilaEspera;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
@@ -18,6 +19,11 @@ public class FilaEsperaMapper {
     public static AtualizarFilaEsperaCommand toAtualizarCommand(Integer id, FilaEsperaRequestDto dto, Beneficiado beneficiado) {
         if (dto == null || beneficiado == null) return null;
         return new AtualizarFilaEsperaCommand(id, dto.getDataEntradaFila(), null, beneficiado);
+    }
+
+    public static AtualizarFilaEsperaCommand toAtualizarCommand(Integer id, FilaEsperaUpdateDto dto) {
+        if (dto == null) return null;
+        return new AtualizarFilaEsperaCommand(id, null, dto.getDataSaidaFila(), null);
     }
 
     public static RemoverFilaEsperaCommand toRemoverCommand(Integer id) {

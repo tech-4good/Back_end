@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import tech4good.tech4good_api.core.application.command.filaespera.*;
 import tech4good.tech4good_api.core.application.dto.filaespera.FilaEsperaRequestDto;
 import tech4good.tech4good_api.core.application.dto.filaespera.FilaEsperaResponseDto;
+import tech4good.tech4good_api.core.application.dto.filaespera.FilaEsperaUpdateDto;
 import tech4good.tech4good_api.core.application.usecase.filaespera.*;
 import tech4good.tech4good_api.core.domain.filaespera.FilaEspera;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
@@ -75,10 +76,9 @@ public class FilaEsperaController {
     @PutMapping("/{id}")
     public ResponseEntity<FilaEsperaResponseDto> atualizar(
         @PathVariable Integer id,
-        @RequestBody @Valid FilaEsperaRequestDto dto
+        @RequestBody @Valid FilaEsperaUpdateDto dto
     ) {
-        Beneficiado beneficiado = beneficiadoGateway.findById(dto.getBeneficiadoId());
-        AtualizarFilaEsperaCommand command = FilaEsperaMapper.toAtualizarCommand(id, dto, beneficiado);
+        AtualizarFilaEsperaCommand command = FilaEsperaMapper.toAtualizarCommand(id, dto);
         FilaEspera filaEsperaAtualizada = atualizarFilaEsperaUseCase.executar(command);
         FilaEsperaResponseDto response = FilaEsperaMapper.toResponseDto(filaEsperaAtualizada);
         return ResponseEntity.ok(response);
