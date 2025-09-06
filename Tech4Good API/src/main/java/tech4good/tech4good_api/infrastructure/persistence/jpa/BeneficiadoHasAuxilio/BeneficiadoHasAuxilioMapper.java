@@ -36,7 +36,7 @@ public class BeneficiadoHasAuxilioMapper {
     public static BeneficiadoHasAuxilioEntity toEntity(BeneficiadoHasAuxilio domain) {
         return new BeneficiadoHasAuxilioEntity(
             domain.getId(),
-            AuxilioGovernamentalMapper.toEntity(domain.getAuxilioGovernamental()),
+            AuxilioGovernamentalMapper.toEntity(domain.getAuxilio()),
             BeneficiadoMapper.toEntity(domain.getBeneficiado())
         );
     }
@@ -45,7 +45,7 @@ public class BeneficiadoHasAuxilioMapper {
         return new BeneficiadoHasAuxilioResponseDto(
             domain.getId(),
             BeneficiadoMapper.toResponseDto(domain.getBeneficiado()),
-            AuxilioGovernamentalMapper.toResponseDto(domain.getAuxilioGovernamental())
+            AuxilioGovernamentalMapper.toResponseDto(domain.getAuxilio())
         );
     }
 }
