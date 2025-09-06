@@ -8,6 +8,8 @@ import tech4good.tech4good_api.core.domain.filaespera.FilaEspera;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 
 public class FilaEsperaMapper {
+
+    // Conversões para Commands
     public static CadastrarFilaEsperaCommand toCadastrarCommand(FilaEsperaRequestDto dto, Beneficiado beneficiado) {
         if (dto == null || beneficiado == null) return null;
         return new CadastrarFilaEsperaCommand(dto.getDataEntradaFila(), beneficiado);
@@ -26,6 +28,7 @@ public class FilaEsperaMapper {
         return new BuscarFilaEsperaPorIdCommand(id);
     }
 
+    // Conversão para ResponseDto
     public static FilaEsperaResponseDto toResponseDto(FilaEspera filaEspera) {
         if (filaEspera == null) return null;
         Beneficiado beneficiado = filaEspera.getBeneficiado();
@@ -37,5 +40,26 @@ public class FilaEsperaMapper {
             filaEspera.getDataSaidaFila(),
             beneficiadoDto
         );
+    }
+
+    // Conversão Entity <-> Domain (seguindo padrão do EnderecoMapper)
+    public static FilaEspera toDomainFromEntity(FilaEsperaEntity entity, Beneficiado beneficiado) {
+        if (entity == null || beneficiado == null) return null;
+        FilaEspera fila = new FilaEspera();
+        fila.setId(entity.getIdFila());
+        fila.setDataEntradaFila(entity.getDataEntradaFila());
+        fila.setDataSaidaFila(entity.getDataSaidaFila());
+        fila.setBeneficiado(beneficiado);
+        return fila;
+    }
+
+    public static FilaEsperaEntity toEntity(FilaEspera fila) {
+        if (fila == null || fila.getBeneficiado() == null) return null;
+        FilaEsperaEntity entity = new FilaEsperaEntity();
+        entity.setIdFila(fila.getId());
+        entity.setDataEntradaFila(fila.getDataEntradaFila());
+        entity.setDataSaidaFila(fila.getDataSaidaFila());
+        entity.setBeneficiadoId(fila.getBeneficiado().getId());
+        return entity;
     }
 }
