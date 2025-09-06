@@ -51,7 +51,6 @@ public class SecurityConfiguracao {
             "/actuator/*",
             "/voluntarios/login/**",
             "/h2-console/**",
-            "/h2-console/**/**",
             "/error/**"
     };
 

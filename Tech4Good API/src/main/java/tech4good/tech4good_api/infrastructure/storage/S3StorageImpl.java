@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import tech4good.tech4good_api.core.adapter.StorageService;
-import tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileJpaAdapter;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

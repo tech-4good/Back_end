@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import tech4good.tech4good_api.core.adapter.StorageService;
-import tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileJpaAdapter;
 
 import java.io.IOException;
 import java.nio.file.Files;
