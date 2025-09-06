@@ -66,6 +66,11 @@ public class VoluntarioJpaAdapter implements VoluntarioGateway {
     }
 
     @Override
+    public boolean existsById(Integer integer) {
+        return repository.existsById(integer);
+    }
+
+    @Override
     public Voluntario buscarPorEmail(String email) {
         Optional<VoluntarioEntity> entity = repository.findByEmail(email);
         if (entity.isEmpty()) {
