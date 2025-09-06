@@ -8,7 +8,7 @@ import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
 public class CpfConverter implements AttributeConverter<Cpf, String> {
     @Override
     public String convertToDatabaseColumn(Cpf cpf) {
-        return cpf != null ? cpf.getValue() : null;
+        return cpf != null ? cpf.toString() : null;
     }
 
     @Override
