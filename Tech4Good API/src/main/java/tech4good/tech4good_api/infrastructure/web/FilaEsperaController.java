@@ -52,12 +52,13 @@ public class FilaEsperaController {
     @GetMapping
     public ResponseEntity<List<FilaEsperaResponseDto>> listar() {
         List<FilaEspera> filaEsperas = listarFilaEsperaUseCase.executar();
+        if (filaEsperas.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
         List<FilaEsperaResponseDto> responseList = filaEsperas.stream()
             .map(FilaEsperaMapper::toResponseDto)
             .toList();
-        return responseList.isEmpty() ?
-            ResponseEntity.noContent().build() :
-            ResponseEntity.ok(responseList);
+        return ResponseEntity.status(200).body(responseList);
     }
 
     @GetMapping("/{id}")
@@ -65,10 +66,10 @@ public class FilaEsperaController {
         BuscarFilaEsperaPorIdCommand command = FilaEsperaMapper.toBuscarPorIdCommand(id);
         FilaEspera filaEspera = buscarFilaEsperaPorIdUseCase.executar(command);
         if (filaEspera == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).build();
         }
         FilaEsperaResponseDto response = FilaEsperaMapper.toResponseDto(filaEspera);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(200).body(response);
     }
 
     @PutMapping("/{id}")
