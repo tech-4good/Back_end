@@ -45,7 +45,7 @@ public class BeneficiadoBeanConfig {
     }
 
     @Bean
-    public SetFotoBeneficiadoUseCase setFotoBeneficiadoUseCase(BeneficiadoJpaAdapter adapter) {
-        return new SetFotoBeneficiadoUseCase(adapter);
+    public SetFotoBeneficiadoUseCase setFotoBeneficiadoUseCase(BeneficiadoJpaAdapter beneficiadoAdapter, tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileJpaAdapter fileAdapter) {
+        return new SetFotoBeneficiadoUseCase(beneficiadoAdapter, fileAdapter);
     }
 }
