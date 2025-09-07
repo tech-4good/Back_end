@@ -13,6 +13,7 @@ import java.time.LocalDate;
 
 @Schema(description = "Objeto de entidade para endereços")
 @Entity
+@Table(name = "endereco")
 public class EnderecoEntity {
 
     @Schema(description = "Identificador único do endereço", example = "1")

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @Schema(description = "Objeto de entidade para beneficiado da ASA")
 @Entity
+@Table(name = "beneficiado")
 public class BeneficiadoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
