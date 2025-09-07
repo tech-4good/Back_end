@@ -8,6 +8,7 @@ import tech4good.tech4good_api.core.application.dto.endereco.EnderecoApiCepDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoResponseDto;
 import tech4good.tech4good_api.core.application.dto.endereco.CepResponseDto;
+import tech4good.tech4good_api.core.application.dto.endereco.EnderecoSummarizedDto;
 import tech4good.tech4good_api.core.application.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
 import tech4good.tech4good_api.core.domain.endereco.valueobjects.*;
@@ -183,6 +184,28 @@ public class EnderecoMapper {
             endereco.getCidade(),
             endereco.getEstado(),
             endereco.getCep()
+        );
+    }
+
+    public static EnderecoSummarizedDto toSummarizedDto(Endereco endereco) {
+        if (endereco == null) {
+            return null;
+        }
+        return new EnderecoSummarizedDto(
+            endereco.getId(),
+            endereco.getLogradouro(),
+            endereco.getNumero(),
+            endereco.getComplemento(),
+            endereco.getBairro() != null ? endereco.getBairro().toString() : null,
+            endereco.getCidade() != null ? endereco.getCidade().toString() : null,
+            endereco.getEstado() != null ? endereco.getEstado().toString() : null,
+            endereco.getCep() != null ? endereco.getCep().toString() : null,
+            endereco.getTipoCesta() != null ? endereco.getTipoCesta().toString() : null,
+            endereco.getDataEntrada(),
+            endereco.getDataSaida(),
+            endereco.getMoradia(),
+            endereco.getTipoMoradia() != null ? endereco.getTipoMoradia().toString() : null,
+            endereco.getStatus() != null ? endereco.getStatus().toString() : null
         );
     }
 }

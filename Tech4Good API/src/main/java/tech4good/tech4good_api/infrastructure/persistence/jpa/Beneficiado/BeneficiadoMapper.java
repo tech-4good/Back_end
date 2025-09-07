@@ -132,7 +132,7 @@ public class BeneficiadoMapper {
                 beneficiado.getEmpresa(),
                 beneficiado.getCargo(),
                 beneficiado.getReligiao() != null ? beneficiado.getReligiao().toString() : null,
-                beneficiado.getEndereco() != null ? beneficiado.getEndereco().getId() : null,
+                beneficiado.getEndereco() != null ? EnderecoMapper.toSummarizedDto(beneficiado.getEndereco()) : null,
                 beneficiado.getQuantidadeDependentes(),
                 beneficiado.getFotoBeneficiado() != null ? beneficiado.getFotoBeneficiado().getId() : null
         );

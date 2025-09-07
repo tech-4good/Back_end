@@ -1,25 +1,61 @@
 package tech4good.tech4good_api.core.application.dto.beneficiado;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import tech4good.tech4good_api.core.application.dto.endereco.EnderecoSummarizedDto;
 import java.time.LocalDate;
 
+@Schema(description = "Resposta com dados do beneficiado")
 public class BeneficiadoResponseDto {
+    @Schema(description = "Identificador único do beneficiado", example = "1")
     private Integer id;
-    private String cpf;          // Mudado de Cpf para String
+
+    @Schema(description = "CPF do beneficiado", example = "12345678901")
+    private String cpf;
+
+    @Schema(description = "Nome completo do beneficiado", example = "Maria Silva Santos")
     private String nome;
-    private String rg;           // Mudado de Rg para String
+
+    @Schema(description = "RG do beneficiado", example = "123456789")
+    private String rg;
+
+    @Schema(description = "Data de nascimento do beneficiado", example = "1985-03-15")
     private LocalDate dataNascimento;
+
+    @Schema(description = "Naturalidade do beneficiado", example = "Brasileira")
     private String naturalidade;
-    private String telefone;     // Mudado de Telefone para String
-    private String estadoCivil;  // Mudado de EstadoCivil para String
+
+    @Schema(description = "Telefone para contato", example = "(11)98765-4321")
+    private String telefone;
+
+    @Schema(description = "Estado civil do beneficiado", example = "CASADO")
+    private String estadoCivil;
+
+    @Schema(description = "Nível de escolaridade", example = "Ensino médio completo")
     private String escolaridade;
+
+    @Schema(description = "Profissão do beneficiado", example = "Auxiliar de limpeza")
     private String profissao;
-    private Double rendaMensal;  // Mudado de Renda para Double
+
+    @Schema(description = "Renda mensal em reais", example = "1500.00")
+    private Double rendaMensal;
+
+    @Schema(description = "Nome da empresa onde trabalha", example = "Limpeza Total Ltda")
     private String empresa;
+
+    @Schema(description = "Cargo que ocupa", example = "Auxiliar de serviços gerais")
     private String cargo;
-    private String religiao;     // Mudado de Religiao para String
-    private Integer enderecoId;  // Mudado de Endereco para Integer
+
+    @Schema(description = "Religião do beneficiado", example = "Católica")
+    private String religiao;
+
+    @Schema(description = "Informações resumidas do endereço onde reside")
+    private EnderecoSummarizedDto endereco;
+
+    @Schema(description = "Quantidade de dependentes", example = "3")
     private Integer quantidadeDependentes;
-    private Integer fotoId;      // Mudado de File para Integer
+
+    @Schema(description = "ID da foto do beneficiado", example = "1")
+    private Integer fotoId;
 
     public BeneficiadoResponseDto() {
     }
@@ -27,7 +63,7 @@ public class BeneficiadoResponseDto {
     public BeneficiadoResponseDto(Integer id, String cpf, String nome, String rg, LocalDate dataNascimento,
                                  String naturalidade, String telefone, String estadoCivil, String escolaridade,
                                  String profissao, Double rendaMensal, String empresa, String cargo,
-                                 String religiao, Integer enderecoId, Integer quantidadeDependentes, Integer fotoId) {
+                                 String religiao, EnderecoSummarizedDto endereco, Integer quantidadeDependentes, Integer fotoId) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
@@ -42,7 +78,7 @@ public class BeneficiadoResponseDto {
         this.empresa = empresa;
         this.cargo = cargo;
         this.religiao = religiao;
-        this.enderecoId = enderecoId;
+        this.endereco = endereco;
         this.quantidadeDependentes = quantidadeDependentes;
         this.fotoId = fotoId;
     }
@@ -160,12 +196,12 @@ public class BeneficiadoResponseDto {
         this.religiao = religiao;
     }
 
-    public Integer getEnderecoId() {
-        return enderecoId;
+    public EnderecoSummarizedDto getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecoId(Integer enderecoId) {
-        this.enderecoId = enderecoId;
+    public void setEndereco(EnderecoSummarizedDto endereco) {
+        this.endereco = endereco;
     }
 
     public Integer getQuantidadeDependentes() {
