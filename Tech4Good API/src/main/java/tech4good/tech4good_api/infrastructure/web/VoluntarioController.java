@@ -100,7 +100,7 @@ public class VoluntarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/redefinir-senha")
+    @PatchMapping("/redefinir-senha")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> redefinirSenha(@RequestBody @Valid VoluntarioRedefinirSenhaDto dto) {
         RedefinirSenhaVoluntarioCommand command = VoluntarioMapper.toRedefinirSenhaCommand(dto);
