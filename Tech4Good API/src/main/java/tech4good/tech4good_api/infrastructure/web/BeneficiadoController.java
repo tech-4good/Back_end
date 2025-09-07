@@ -30,8 +30,16 @@ public class BeneficiadoController {
     private final SetFotoBeneficiadoUseCase setFotoBeneficiadoUseCase;
     private final BuscarBeneficiadoPorIdUseCase buscarBeneficiadoPorIdUseCase;
 
-    public BeneficiadoController(CadastrarBeneficiadoUseCase cadastrarBeneficiadoUseCase, AtualizarBeneficiadoUseCase atualizarBeneficiadoUseCase, BuscarBeneficiadoPorCpfUseCase buscarBeneficiadoPorCpfUseCase, CadastrarBeneficiadoSimplesUseCase cadastrarBeneficiadoSimplesUseCase, ListarBeneficiadosUseCase listarBeneficiadosUseCase, RemoverBeneficiadoPorIdUseCase removerBeneficiadoPorIdUseCase, SetFotoBeneficiadoUseCase setFotoBeneficiadoUseCase, BuscarBeneficiadoPorIdUseCase buscarBeneficiadoPorIdUseCase) {
-        this.buscarBeneficiadoPorIdUseCase = buscarBeneficiadoPorIdUseCase;
+    public BeneficiadoController(
+        CadastrarBeneficiadoUseCase cadastrarBeneficiadoUseCase,
+        AtualizarBeneficiadoUseCase atualizarBeneficiadoUseCase,
+        BuscarBeneficiadoPorCpfUseCase buscarBeneficiadoPorCpfUseCase,
+        CadastrarBeneficiadoSimplesUseCase cadastrarBeneficiadoSimplesUseCase,
+        ListarBeneficiadosUseCase listarBeneficiadosUseCase,
+        RemoverBeneficiadoPorIdUseCase removerBeneficiadoPorIdUseCase,
+        SetFotoBeneficiadoUseCase setFotoBeneficiadoUseCase,
+        BuscarBeneficiadoPorIdUseCase buscarBeneficiadoPorIdUseCase
+    ) {
         this.cadastrarBeneficiadoUseCase = cadastrarBeneficiadoUseCase;
         this.atualizarBeneficiadoUseCase = atualizarBeneficiadoUseCase;
         this.buscarBeneficiadoPorCpfUseCase = buscarBeneficiadoPorCpfUseCase;
@@ -39,6 +47,7 @@ public class BeneficiadoController {
         this.listarBeneficiadosUseCase = listarBeneficiadosUseCase;
         this.removerBeneficiadoPorIdUseCase = removerBeneficiadoPorIdUseCase;
         this.setFotoBeneficiadoUseCase = setFotoBeneficiadoUseCase;
+        this.buscarBeneficiadoPorIdUseCase = buscarBeneficiadoPorIdUseCase;
     }
 
     @PostMapping

@@ -1,5 +1,7 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +17,10 @@ import tech4good.tech4good_api.infrastructure.persistence.jpa.FilaEspera.FilaEsp
 
 import java.util.List;
 
+@Tag(name = "Controller - Fila de Espera", description = "Operações relacionadas à fila de espera dos beneficiados.")
 @RestController
 @RequestMapping("/fila-espera")
+@SecurityRequirement(name = "Bearer")
 public class FilaEsperaController {
 
     private final CadastrarFilaEsperaUseCase cadastrarFilaEsperaUseCase;
