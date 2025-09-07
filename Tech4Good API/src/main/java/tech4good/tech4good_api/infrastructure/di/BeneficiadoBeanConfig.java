@@ -15,8 +15,8 @@ public class BeneficiadoBeanConfig {
     }
 
     @Bean
-    public AtualizarBeneficiadoUseCase atualizarBeneficiadoUseCase(BeneficiadoJpaAdapter adapter) {
-        return new AtualizarBeneficiadoUseCase(adapter);
+    public AtualizarBeneficiadoUseCase atualizarBeneficiadoUseCase(BeneficiadoJpaAdapter adapter, EnderecoJpaAdapter enderecoJpaAdapter) {
+        return new AtualizarBeneficiadoUseCase(adapter, enderecoJpaAdapter);
     }
 
     @Bean

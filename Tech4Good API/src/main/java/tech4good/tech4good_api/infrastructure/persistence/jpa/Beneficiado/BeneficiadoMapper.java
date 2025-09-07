@@ -147,7 +147,7 @@ public class BeneficiadoMapper {
             dto.getCargo(),
             dto.getReligiao(),
             dto.quantidadeDependentes(),
-            dto.getEndereco()
+            dto.getEnderecoId()
         );
     }
 

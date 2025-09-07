@@ -30,7 +30,11 @@ public class BeneficiadoJpaAdapter implements BeneficiadoGateway {
 
     @Override
     public Beneficiado findByCpf(String cpf) {
-        return repository.findByCpf(cpf);
+        Optional<BeneficiadoEntity> entityOpt = repository.findByCpf(cpf);
+        if (entityOpt.isEmpty()) {
+            throw new IllegalArgumentException("Beneficiado com CPF %s não encontrado".formatted(cpf));
+        }
+        return BeneficiadoMapper.toDomain(entityOpt.get());
     }
 
     @Override
