@@ -34,7 +34,7 @@ public class BeneficiadoMapper {
                 dto.getEmpresa(),
                 dto.getCargo(),
                 new Religiao(dto.getReligiao()),        // Converte String para Religiao
-                null,                                   // Será preenchido pelo use case buscando pelo ID
+                dto.getEnderecoId(),                    // Agora usa o enderecoId do DTO
                 dto.getQuantidadeDependentes()
         );
     }
@@ -55,7 +55,7 @@ public class BeneficiadoMapper {
                 command.empresa(),
                 command.cargo(),
                 command.religiao(),
-                command.endereco(),
+                null,  // endereco será resolvido pelo use case usando enderecoId
                 command.quantidadeDependentes(),
                 null
         );

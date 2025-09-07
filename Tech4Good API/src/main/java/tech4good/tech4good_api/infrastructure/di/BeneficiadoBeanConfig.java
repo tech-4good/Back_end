@@ -10,8 +10,8 @@ import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoJ
 public class BeneficiadoBeanConfig {
 
     @Bean
-    public CadastrarBeneficiadoUseCase cadastrarBeneficiadoUseCase(BeneficiadoJpaAdapter adapter) {
-        return new CadastrarBeneficiadoUseCase(adapter);
+    public CadastrarBeneficiadoUseCase cadastrarBeneficiadoUseCase(BeneficiadoJpaAdapter adapter, EnderecoJpaAdapter enderecoJpaAdapter) {
+        return new CadastrarBeneficiadoUseCase(adapter, enderecoJpaAdapter);
     }
 
     @Bean

@@ -4,7 +4,6 @@ import tech4good.tech4good_api.core.domain.beneficiado.valueobject.EstadoCivil;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Religiao;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Renda;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Rg;
-import tech4good.tech4good_api.core.domain.endereco.Endereco;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Telefone;
 
@@ -24,7 +23,7 @@ public record CadastrarBeneficiadoCommand(
     String empresa,
     String cargo,
     Religiao religiao,
-    Endereco endereco,
+    Integer enderecoId,  // Alterado de Endereco para Integer
     Integer quantidadeDependentes
 ) {
 }
