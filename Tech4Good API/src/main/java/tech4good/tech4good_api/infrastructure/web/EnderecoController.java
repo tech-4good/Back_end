@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tech4good.tech4good_api.core.application.command.endereco.*;
 import tech4good.tech4good_api.core.application.dto.endereco.AtualizarEnderecoRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoRequestDto;
+import tech4good.tech4good_api.core.application.dto.endereco.CepResponseDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoResponseDto;
 import tech4good.tech4good_api.core.application.usecase.endereco.AtualizarEnderecoUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.CadastrarEnderecoUseCase;
@@ -101,11 +102,11 @@ public class EnderecoController {
     }
 
     @GetMapping("/cep/{cep}")
-    public ResponseEntity<EnderecoResponseDto> buscarPorCep(@PathVariable String cep) {
+    public ResponseEntity<CepResponseDto> buscarPorCep(@PathVariable String cep) {
         Cep cepValue = Cep.valueOf(cep);
         BuscarApiCepEnderecoCommand command = new BuscarApiCepEnderecoCommand(cepValue);
         Endereco endereco = buscarApiCepEnderecoUseCase.executar(command);
-        EnderecoResponseDto responseDto = EnderecoMapper.toResponseDto(endereco);
+        CepResponseDto responseDto = EnderecoMapper.toCepResponseDto(endereco);
         return ResponseEntity.ok(responseDto);
     }
 
