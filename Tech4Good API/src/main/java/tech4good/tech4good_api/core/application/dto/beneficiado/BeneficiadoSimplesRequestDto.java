@@ -1,30 +1,38 @@
 package tech4good.tech4good_api.core.application.dto.beneficiado;
 
-import tech4good.tech4good_api.core.domain.endereco.Endereco;
-import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
 
+@Schema(description = "DTO para cadastro simplificado de beneficiado")
 public class BeneficiadoSimplesRequestDto {
-    private Cpf cpf;
+
+    @Schema(description = "CPF do beneficiado (somente números)", example = "12345678901")
+    private String cpf;
+
+    @Schema(description = "Nome completo do beneficiado", example = "Maria Silva Santos")
     private String nome;
+
+    @Schema(description = "Data de nascimento do beneficiado", example = "1985-03-15")
     private LocalDate dataNascimento;
-    private Endereco endereco;
+
+    @Schema(description = "ID do endereço cadastrado", example = "1")
+    private Integer enderecoId;
 
     public BeneficiadoSimplesRequestDto() {}
 
-    public BeneficiadoSimplesRequestDto(Cpf cpf, String nome, LocalDate dataNascimento, Endereco endereco) {
+    public BeneficiadoSimplesRequestDto(String cpf, String nome, LocalDate dataNascimento, Integer enderecoId) {
         this.cpf = cpf;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
-        this.endereco = endereco;
+        this.enderecoId = enderecoId;
     }
 
-    public Cpf getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(Cpf cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
@@ -44,11 +52,11 @@ public class BeneficiadoSimplesRequestDto {
         this.dataNascimento = dataNascimento;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public Integer getEnderecoId() {
+        return enderecoId;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setEnderecoId(Integer enderecoId) {
+        this.enderecoId = enderecoId;
     }
 }

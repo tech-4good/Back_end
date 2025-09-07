@@ -14,6 +14,7 @@ import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoAtual
 import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoRequestDto;
 import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoResponseDto;
 import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoSimplesRequestDto;
+import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoSimplesResponseDto;
 import tech4good.tech4good_api.core.application.command.beneficiado.*;
 import tech4good.tech4good_api.core.application.usecase.beneficiado.*;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
@@ -75,10 +76,10 @@ public class BeneficiadoController {
         @ApiResponse(responseCode = "401", description = "Não autorizado")
     })
     @PostMapping("/cadastro-simples")
-    public ResponseEntity<BeneficiadoResponseDto> cadastrarSimples(@RequestBody BeneficiadoSimplesRequestDto dto) {
+    public ResponseEntity<BeneficiadoSimplesResponseDto> cadastrarSimples(@RequestBody BeneficiadoSimplesRequestDto dto) {
         CadastrarBeneficiadoSimplesCommand command = BeneficiadoMapper.toCommand(dto);
         Beneficiado beneficiado = cadastrarBeneficiadoSimplesUseCase.executar(command);
-        BeneficiadoResponseDto responseDto = BeneficiadoMapper.toResponseDto(beneficiado);
+        BeneficiadoSimplesResponseDto responseDto = BeneficiadoMapper.toSimplesResponseDto(beneficiado);
         return ResponseEntity.status(201).body(responseDto);
     }
 

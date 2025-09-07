@@ -5,6 +5,7 @@ import tech4good.tech4good_api.core.adapter.EnderecoGateway;
 import tech4good.tech4good_api.core.application.command.beneficiado.CadastrarBeneficiadoSimplesCommand;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
+import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
 import tech4good.tech4good_api.core.application.exception.EntidadeNaoEncontradaException;
 
 import java.util.Optional;
@@ -19,21 +20,22 @@ public class CadastrarBeneficiadoSimplesUseCase {
     }
 
     public Beneficiado executar(CadastrarBeneficiadoSimplesCommand command) {
-        // Busca endereço por logradouro e número do endereço que vem no command
-        Optional<Endereco> enderecoOpt = enderecoGateway.findByLogradouroAndNumero(
-            command.endereco().getLogradouro(), 
-            command.endereco().getNumero()
-        );
-        
-        Endereco endereco = enderecoOpt.orElseGet(() -> {
-            // Se não encontrar, salva o endereço completo que já vem no command
-            return enderecoGateway.save(command.endereco());
-        });
+        // Busca o endereço pelo ID fornecido no command
+        Optional<Endereco> enderecoOpt = enderecoGateway.findById(command.enderecoId());
+
+        if (enderecoOpt.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Endereço não encontrado com ID: " + command.enderecoId());
+        }
+
+        Endereco endereco = enderecoOpt.get();
+
+        // Converte String CPF para value object Cpf
+        Cpf cpf = new Cpf(command.cpf());
 
         // Cria o beneficiado com os dados do command
         Beneficiado beneficiado = new Beneficiado();
         beneficiado.setNome(command.nome());
-        beneficiado.setCpf(command.cpf());
+        beneficiado.setCpf(cpf);
         beneficiado.setDataNascimento(command.dataNascimento());
         beneficiado.setEndereco(endereco);
 

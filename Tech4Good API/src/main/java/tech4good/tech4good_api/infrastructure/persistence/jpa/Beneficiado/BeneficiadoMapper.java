@@ -3,10 +3,7 @@ package tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado;
 import tech4good.tech4good_api.core.application.command.beneficiado.AtualizarBeneficiadoCommand;
 import tech4good.tech4good_api.core.application.command.beneficiado.CadastrarBeneficiadoCommand;
 import tech4good.tech4good_api.core.application.command.beneficiado.CadastrarBeneficiadoSimplesCommand;
-import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoAtualizarRequestDto;
-import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoRequestDto;
-import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoResponseDto;
-import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoSimplesRequestDto;
+import tech4good.tech4good_api.core.application.dto.beneficiado.*;
 import tech4good.tech4good_api.core.application.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.EstadoCivil;
@@ -159,7 +156,20 @@ public class BeneficiadoMapper {
             dto.getCpf(),
             dto.getNome(),
             dto.getDataNascimento(),
-            dto.getEndereco()
+            dto.getEnderecoId()
+        );
+    }
+
+    public static BeneficiadoSimplesResponseDto toSimplesResponseDto(Beneficiado beneficiado) {
+        if (beneficiado == null) {
+            return null;
+        }
+        return new BeneficiadoSimplesResponseDto(
+                beneficiado.getId(),
+                beneficiado.getCpf() != null ? beneficiado.getCpf().toString() : null,
+                beneficiado.getNome(),
+                beneficiado.getDataNascimento(),
+                beneficiado.getEndereco() != null ? EnderecoMapper.toSummarizedDto(beneficiado.getEndereco()) : null
         );
     }
 
