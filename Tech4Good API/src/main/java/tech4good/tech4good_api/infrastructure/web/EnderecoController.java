@@ -1,5 +1,8 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -58,6 +61,12 @@ public class EnderecoController {
         this.buscarApiCepEnderecoUseCase = buscarApiCepEnderecoUseCase;
     }
 
+    @Operation(summary = "Cadastrar endereço", description = "Cria um novo endereço no sistema")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Endereço criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping
     public ResponseEntity<EnderecoResponseDto> cadastrar(@RequestBody EnderecoRequestDto requestDto) {
         CadastrarEnderecoCommand command = EnderecoMapper.toCommand(requestDto);

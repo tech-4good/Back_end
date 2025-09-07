@@ -1,5 +1,8 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -42,6 +45,12 @@ public class CestaController {
         this.removerCestaUseCase = removerCestaUseCase;
     }
 
+    @Operation(summary = "Cadastrar cesta", description = "Cria uma nova cesta básica ou kit no sistema")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Cesta criada com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping
     public ResponseEntity<CestaResponseDto> cadastrar(@Valid @RequestBody CestaRequestDto dto) {
         CadastrarCestaCommand command = CestaMapper.toCommand(dto);

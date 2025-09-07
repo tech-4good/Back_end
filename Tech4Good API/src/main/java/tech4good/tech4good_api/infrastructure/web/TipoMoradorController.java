@@ -1,5 +1,8 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +41,12 @@ public class TipoMoradorController {
         this.removerTipoMoradorUseCase = removerTipoMoradorUseCase;
     }
 
+    @Operation(summary = "Cadastrar tipo de morador", description = "Cria um novo tipo de morador no sistema")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Tipo de morador criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping
     public ResponseEntity<TipoMoradorResponseDto> cadastrar(@RequestBody TipoMoradorRequestDto dto) {
         var command = TipoMoradorMapper.toCommand(dto);

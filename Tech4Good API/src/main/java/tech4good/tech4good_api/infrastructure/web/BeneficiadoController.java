@@ -1,5 +1,8 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -50,14 +53,26 @@ public class BeneficiadoController {
         this.buscarBeneficiadoPorIdUseCase = buscarBeneficiadoPorIdUseCase;
     }
 
+    @Operation(summary = "Cadastrar beneficiado", description = "Cria um novo beneficiado no sistema")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Beneficiado criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping
-    public ResponseEntity<BeneficiadoResponseDto> cadastrarBeneficiado(@RequestBody BeneficiadoRequestDto requestDto) {
+    public ResponseEntity<BeneficiadoResponseDto> cadastrarBeneficiado(@RequestBody @Valid BeneficiadoRequestDto requestDto) {
         CadastrarBeneficiadoCommand command = BeneficiadoMapper.toCommand(requestDto);
         Beneficiado beneficiadoCadastrado = cadastrarBeneficiadoUseCase.executar(command);
         BeneficiadoResponseDto responseDto = BeneficiadoMapper.toResponseDto(beneficiadoCadastrado);
         return ResponseEntity.status(201).body(responseDto);
     }
 
+    @Operation(summary = "Cadastrar beneficiado simplificado", description = "Cria um novo beneficiado com dados simplificados")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Beneficiado criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping("/cadastro-simples")
     public ResponseEntity<BeneficiadoResponseDto> cadastrarSimples(@RequestBody BeneficiadoSimplesRequestDto dto) {
         CadastrarBeneficiadoSimplesCommand command = BeneficiadoMapper.toCommand(dto);

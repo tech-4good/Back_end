@@ -1,5 +1,8 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -46,6 +49,12 @@ public class FilaEsperaController {
         this.beneficiadoGateway = beneficiadoGateway;
     }
 
+    @Operation(summary = "Cadastrar na fila de espera", description = "Adiciona um beneficiado à fila de espera")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Beneficiado adicionado à fila de espera com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping
     public ResponseEntity<Void> cadastrar(@RequestBody @Valid FilaEsperaRequestDto dto) {
         Beneficiado beneficiado = beneficiadoGateway.findById(dto.getBeneficiadoId());

@@ -2,6 +2,9 @@ package tech4good.tech4good_api.infrastructure.web;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +52,12 @@ public class VoluntarioController {
         this.redefinirSenhaVoluntarioUseCase = redefinirSenhaVoluntarioUseCase;
     }
 
+    @Operation(summary = "Cadastrar voluntário", description = "Cria um novo voluntário no sistema")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Voluntário criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping
     public ResponseEntity<Void> cadastrar(@RequestBody @Valid VoluntarioRequestDto dto) {
         CadastrarVoluntarioCommand command = VoluntarioMapper.toCommand(dto);
@@ -56,6 +65,11 @@ public class VoluntarioController {
         return ResponseEntity.status(201).build();
     }
 
+    @Operation(summary = "Login do voluntário", description = "Autentica um voluntário e retorna token JWT")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+    })
     @PostMapping("/login")
     public ResponseEntity<VoluntarioTokenDto> login(@RequestBody VoluntarioLoginDto voluntarioLoginDto) {
         AutenticarVoluntarioCommand command = VoluntarioMapper.toAutenticarCommand(voluntarioLoginDto);

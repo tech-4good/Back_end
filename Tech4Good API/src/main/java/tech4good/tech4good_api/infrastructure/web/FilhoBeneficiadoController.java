@@ -1,5 +1,9 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 @Tag(name = "Controller - Filho Beneficiado", description = "Operações relacionadas aos filhos dos beneficiados pela ASA.")
 @RestController
 @RequestMapping("/filhos-beneficiados")
+@SecurityRequirement(name = "Bearer")
 public class FilhoBeneficiadoController {
 
     private final CriarFilhoBeneficiadoUseCase criarFilhoBeneficiadoUseCase;
@@ -38,6 +43,12 @@ public class FilhoBeneficiadoController {
         this.removerFilhoBeneficiadoPorIdUseCase = removerFilhoBeneficiadoPorIdUseCase;
     }
 
+    @Operation(summary = "Cadastrar filho de beneficiado", description = "Cria um novo registro de filho de beneficiado no sistema")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Filho de beneficiado criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping
     public ResponseEntity<FilhoBeneficiadoResponseDto> cadastrar(@RequestBody FilhoBeneficiadoRequestDto dto) {
         var command = FilhoBeneficiadoMapper.toCommand(dto);

@@ -1,5 +1,8 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -41,6 +44,12 @@ public class AuxilioGovernamentalController {
         this.removerAuxilioGovernamentalPorIdUseCase = removerAuxilioGovernamentalPorIdUseCase;
     }
 
+    @Operation(summary = "Cadastrar auxílio governamental", description = "Cria um novo auxílio governamental no sistema")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Auxílio governamental criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado")
+    })
     @PostMapping
     public ResponseEntity<AuxilioGovernamentalResponseDto> cadastrar(@Valid @RequestBody AuxilioGovernamentalRequestDto dto) {
         var command = AuxilioGovernamentalMapper.toCommand(dto);
