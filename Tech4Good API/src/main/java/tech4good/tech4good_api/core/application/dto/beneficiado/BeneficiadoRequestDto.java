@@ -1,22 +1,73 @@
 package tech4good.tech4good_api.core.application.dto.beneficiado;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 
+@Schema(description = "DTO para cadastro de beneficiado")
 public class BeneficiadoRequestDto {
-    private String cpf;           // Mudado de Cpf para String
+
+    @Schema(description = "CPF do beneficiado (somente números)", example = "12345678901", required = true)
+    @NotBlank(message = "CPF é obrigatório")
+    private String cpf;
+
+    @Schema(description = "Nome completo do beneficiado", example = "Maria Silva Santos", required = true)
+    @NotBlank(message = "Nome é obrigatório")
     private String nome;
-    private String rg;            // Mudado de Rg para String
+
+    @Schema(description = "RG do beneficiado (somente números)", example = "123456789", required = true)
+    @NotBlank(message = "RG é obrigatório")
+    private String rg;
+
+    @Schema(description = "Data de nascimento do beneficiado", example = "1985-03-15", required = true)
+    @NotNull(message = "Data de nascimento é obrigatória")
     private LocalDate dataNascimento;
+
+    @Schema(description = "Naturalidade do beneficiado", example = "Brasileira", required = true)
+    @NotBlank(message = "Naturalidade é obrigatória")
     private String naturalidade;
-    private String telefone;      // Mudado de Telefone para String
-    private String estadoCivil;   // Mudado de EstadoCivil para String
+
+    @Schema(description = "Telefone para contato com DDD", example = "(11)98765-4321", required = true)
+    @NotBlank(message = "Telefone é obrigatório")
+    private String telefone;
+
+    @Schema(description = "Estado civil do beneficiado", example = "CASADO", required = true)
+    @NotBlank(message = "Estado civil é obrigatório")
+    private String estadoCivil;
+
+    @Schema(description = "Nível de escolaridade do beneficiado", example = "Ensino médio completo", required = true)
+    @NotBlank(message = "Escolaridade é obrigatória")
     private String escolaridade;
+
+    @Schema(description = "Profissão do beneficiado", example = "Auxiliar de limpeza", required = true)
+    @NotBlank(message = "Profissão é obrigatória")
     private String profissao;
-    private Double rendaMensal;   // Mudado de Renda para Double
+
+    @Schema(description = "Renda mensal do beneficiado em reais", example = "1500.00", required = true)
+    @NotNull(message = "Renda mensal é obrigatória")
+    @Positive(message = "Renda mensal deve ser positiva")
+    private Double rendaMensal;
+
+    @Schema(description = "Nome da empresa onde trabalha", example = "Limpeza Total Ltda", required = false)
     private String empresa;
+
+    @Schema(description = "Cargo que ocupa na empresa", example = "Auxiliar de serviços gerais", required = false)
     private String cargo;
-    private String religiao;     // Mudado de Religiao para String
-    private Integer enderecoId;  // Mudado de Endereco para Integer (ID do endereço)
+
+    @Schema(description = "Religião do beneficiado", example = "Católica", required = false)
+    private String religiao;
+
+    @Schema(description = "ID do endereço onde reside", example = "1", required = true)
+    @NotNull(message = "ID do endereço é obrigatório")
+    @Positive(message = "ID do endereço deve ser positivo")
+    private Integer enderecoId;
+
+    @Schema(description = "Quantidade de pessoas que dependem financeiramente do beneficiado", example = "3", required = true)
+    @NotNull(message = "Quantidade de dependentes é obrigatória")
+    @PositiveOrZero(message = "Quantidade de dependentes deve ser zero ou positiva")
     private Integer quantidadeDependentes;
 
     public BeneficiadoRequestDto() {

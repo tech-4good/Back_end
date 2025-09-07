@@ -35,6 +35,7 @@ public class BeneficiadoEntity {
     private String telefone;
 
     @Schema(description = "Estado civil do beneficiado", example = "Divorciado")
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado_civil")
     private EstadoCivil estadoCivil;
     @Schema(description = "Nível de escolaridade do beneficiado", example = "Ensino médio completo")
