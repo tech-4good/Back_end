@@ -1,5 +1,7 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -13,8 +15,10 @@ import tech4good.tech4good_api.core.application.usecase.beneficiado.*;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado.BeneficiadoMapper;
 
+@Tag(name = "Controller - Beneficiado", description = "Operações relacionadas aos beneficiados.")
 @RestController
 @RequestMapping("/beneficiados")
+@SecurityRequirement(name = "Bearer")
 public class BeneficiadoController {
 
     private final CadastrarBeneficiadoUseCase cadastrarBeneficiadoUseCase;

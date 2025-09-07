@@ -9,6 +9,7 @@ import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoRespo
 import tech4good.tech4good_api.core.application.dto.beneficiado.BeneficiadoSimplesRequestDto;
 import tech4good.tech4good_api.core.application.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
+import tech4good.tech4good_api.core.domain.beneficiado.valueobject.EstadoCivil;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Religiao;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Renda;
 import tech4good.tech4good_api.core.domain.beneficiado.valueobject.Rg;
@@ -20,20 +21,20 @@ import tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileMapper;
 public class BeneficiadoMapper {
     public static CadastrarBeneficiadoCommand toCommand(BeneficiadoRequestDto dto) {
         return new CadastrarBeneficiadoCommand(
-                dto.getCpf(),
+                new Cpf(dto.getCpf()),                  // Converte String para Cpf
                 dto.getNome(),
-                dto.getRg(),
+                new Rg(dto.getRg()),                    // Converte String para Rg
                 dto.getDataNascimento(),
                 dto.getNaturalidade(),
-                dto.getTelefone(),
-                dto.getEstadoCivil(),
+                new Telefone(dto.getTelefone()),        // Converte String para Telefone
+                Enum.valueOf(EstadoCivil.class, dto.getEstadoCivil()),  // Converte String para enum EstadoCivil
                 dto.getEscolaridade(),
                 dto.getProfissao(),
-                dto.getRendaMensal(),
+                new Renda(dto.getRendaMensal()),        // Converte Double para Renda
                 dto.getEmpresa(),
                 dto.getCargo(),
-                dto.getReligiao(),
-                dto.getEndereco(),
+                new Religiao(dto.getReligiao()),        // Converte String para Religiao
+                null,                                   // Será preenchido pelo use case buscando pelo ID
                 dto.getQuantidadeDependentes()
         );
     }
@@ -113,24 +114,27 @@ public class BeneficiadoMapper {
     }
 
     public static BeneficiadoResponseDto toResponseDto(Beneficiado beneficiado) {
+        if (beneficiado == null) {
+            return null;
+        }
         return new BeneficiadoResponseDto(
                 beneficiado.getId(),
-                beneficiado.getCpf(),
+                beneficiado.getCpf() != null ? beneficiado.getCpf().toString() : null,
                 beneficiado.getNome(),
-                beneficiado.getRg(),
+                beneficiado.getRg() != null ? beneficiado.getRg().toString() : null,
                 beneficiado.getDataNascimento(),
                 beneficiado.getNaturalidade(),
-                beneficiado.getTelefone(),
-                beneficiado.getEstadoCivil(),
+                beneficiado.getTelefone() != null ? beneficiado.getTelefone().toString() : null,
+                beneficiado.getEstadoCivil() != null ? beneficiado.getEstadoCivil().name() : null,
                 beneficiado.getEscolaridade(),
                 beneficiado.getProfissao(),
-                beneficiado.getRendaMensal(),
+                beneficiado.getRendaMensal() != null ? beneficiado.getRendaMensal().getValue() : null,
                 beneficiado.getEmpresa(),
                 beneficiado.getCargo(),
-                beneficiado.getReligiao(),
-                beneficiado.getEndereco(),
+                beneficiado.getReligiao() != null ? beneficiado.getReligiao().toString() : null,
+                beneficiado.getEndereco() != null ? beneficiado.getEndereco().getId() : null,
                 beneficiado.getQuantidadeDependentes(),
-                beneficiado.getFotoBeneficiado()
+                beneficiado.getFotoBeneficiado() != null ? beneficiado.getFotoBeneficiado().getId() : null
         );
     }
 
