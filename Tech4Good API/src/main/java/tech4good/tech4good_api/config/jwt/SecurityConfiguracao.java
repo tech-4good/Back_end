@@ -1,6 +1,5 @@
 package tech4good.tech4good_api.config.jwt;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -67,7 +66,9 @@ public class SecurityConfiguracao {
                         .requestMatchers(HttpMethod.POST, "/voluntarios").permitAll()
                         .requestMatchers("/voluntarios/**", "/beneficiados/**",
                                 "/enderecos/**", "/cestas/**", "/auxilio-governamentais/**",
-                                "/filhos-beneficiados/**", "/tipo-moradores/**").authenticated()
+                                "/filhos-beneficiados/**", "/tipo-moradores/**",
+                                "/files/**", "/fila-espera/**", "/entregas/**",
+                                "/beneficiado-has-auxilios/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(handling -> handling
