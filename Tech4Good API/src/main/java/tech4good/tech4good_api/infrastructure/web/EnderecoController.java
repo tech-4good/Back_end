@@ -1,5 +1,7 @@
 package tech4good.tech4good_api.infrastructure.web;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,8 +28,10 @@ import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoM
 
 import java.util.List;
 
+@Tag(name = "Controller - Endereço", description = "Operações relacionadas aos endereços dos beneficiados.")
 @RestController
 @RequestMapping("/enderecos")
+@SecurityRequirement(name = "Bearer")
 public class EnderecoController {
 
     private final CadastrarEnderecoUseCase cadastrarEnderecoUseCase;

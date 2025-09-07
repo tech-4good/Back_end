@@ -50,7 +50,8 @@ public class EnderecoJpaAdapter implements EnderecoGateway {
 
     @Override
     public boolean existsByCepAndNumero(String cep, String numero) {
-        return repository.existsByCepAndNumero(cep, numero);
+        Long count = repository.countByCepAndNumero(cep, numero);
+        return count != null && count > 0;
     }
 
     @Override

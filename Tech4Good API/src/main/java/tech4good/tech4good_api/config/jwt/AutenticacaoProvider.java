@@ -24,11 +24,19 @@ public class AutenticacaoProvider implements AuthenticationProvider {
         final String username = authentication.getName();
         final String password = authentication.getCredentials().toString();
 
+        System.out.println("[DEBUG PROVIDER] Iniciando autenticação para: " + username);
+        System.out.println("[DEBUG PROVIDER] Senha fornecida: " + password);
+
         UserDetails userDetails = this.usuarioAutorizacaoService.loadUserByUsername(username);
 
+        System.out.println("[DEBUG PROVIDER] UserDetails carregado - Username: " + userDetails.getUsername());
+        System.out.println("[DEBUG PROVIDER] Hash da senha no banco: " + userDetails.getPassword());
+
         if (this.passwordEncoder.matches(password, userDetails.getPassword())) {
+            System.out.println("[DEBUG PROVIDER] ✅ Senha VÁLIDA - Autenticação bem-sucedida!");
             return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         } else {
+            System.out.println("[DEBUG PROVIDER] ❌ Senha INVÁLIDA - Falha na autenticação!");
             throw new BadCredentialsException("Usuário ou Senha inválidos");
         }
     }

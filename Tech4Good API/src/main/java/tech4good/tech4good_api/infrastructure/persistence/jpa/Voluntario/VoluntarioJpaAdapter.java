@@ -72,10 +72,16 @@ public class VoluntarioJpaAdapter implements VoluntarioGateway {
 
     @Override
     public Voluntario buscarPorEmail(String email) {
+        System.out.println("[DEBUG ADAPTER] Buscando voluntário por email: " + email);
         Optional<VoluntarioEntity> entity = repository.findByEmail(email);
+        System.out.println("[DEBUG ADAPTER] Resultado da busca - Entity presente: " + entity.isPresent());
+
         if (entity.isEmpty()) {
+            System.out.println("[DEBUG ADAPTER] ❌ Nenhum voluntário encontrado com email: " + email);
             throw new EntidadeNaoEncontradaException("Voluntário com email %s não encontrado".formatted(email));
         }
+
+        System.out.println("[DEBUG ADAPTER] ✅ Voluntário encontrado - ID: " + entity.get().getIdVoluntario());
         return VoluntarioMapper.toDomainFromEntity(entity.get());
     }
 }

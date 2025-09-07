@@ -1,29 +1,53 @@
 package tech4good.tech4good_api.core.application.dto.endereco;
 
-import tech4good.tech4good_api.core.domain.endereco.valueobjects.*;
-import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
 public class EnderecoRequestDto {
 
+    @Schema(description = "Rua ou Avenida", example = "Avenida Marechal Tito")
+    @NotBlank
     private String logradouro;
+    @Schema(description = "Número da residência", example = "234")
+    @NotNull
+    @Positive
     private String numero;
+    @Schema(description = "Complemento do número da residência", example = "A")
     private String complemento;
-    private Bairro bairro;
-    private Cidade cidade;
-    private Estado estado;
-    private Cep cep;
-    private TipoCesta tipoCesta;
+    @Schema(description = "Nome do bairro", example = "São Miguel Paulista")
+    @NotBlank
+    private String bairro;
+    @Schema(description = "Nome da cidade", example = "São Paulo")
+    @NotBlank
+    private String cidade;
+    @Schema(description = "Nome do estado", example = "SP")
+    @NotBlank
+    private String estado;
+    @Schema(description = "CEP da região onde se encontra a residência", example = "01001000")
+    @NotBlank
+    @Size(min = 8, max = 8)
+    private String cep;
+    @Schema(description = "Tipo de cesta que o endereço pode receber atualmente", example = "Kit")
+    @NotBlank
+    private String tipoCesta;
+    @Schema(description = "Data de entrada no projeto ASA", example = "2025-02-10")
+    @NotNull
+    @PastOrPresent
     private LocalDate dataEntrada;
+    @Schema(description = "Tipo de obtenção da moradia", example = "Alugada")
     private String moradia;
-    private TipoMoradia tipoMoradia;
-    private Status status;
+    @Schema(description = "Nome do tipo da moradia", example = "Apartamento")
+    private String tipoMoradia;
+    @Schema(description = "Controle para saber se ainda está participando da ASA", example = "Aberto")
+    @NotBlank
+    private String status;
 
     public EnderecoRequestDto() {
     }
 
-    public EnderecoRequestDto(String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, String moradia, TipoMoradia tipoMoradia, Status status) {
+    public EnderecoRequestDto(String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, String moradia, String tipoMoradia, String status) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -62,43 +86,43 @@ public class EnderecoRequestDto {
         this.complemento = complemento;
     }
 
-    public Bairro getBairro() {
+    public String getBairro() {
         return bairro;
     }
 
-    public void setBairro(Bairro bairro) {
+    public void setBairro(String bairro) {
         this.bairro = bairro;
     }
 
-    public Cidade getCidade() {
+    public String getCidade() {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public void setCidade(String cidade) {
         this.cidade = cidade;
     }
 
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public Cep getCep() {
+    public String getCep() {
         return cep;
     }
 
-    public void setCep(Cep cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 
-    public TipoCesta getTipoCesta() {
+    public String getTipoCesta() {
         return tipoCesta;
     }
 
-    public void setTipoCesta(TipoCesta tipoCesta) {
+    public void setTipoCesta(String tipoCesta) {
         this.tipoCesta = tipoCesta;
     }
 
@@ -118,19 +142,19 @@ public class EnderecoRequestDto {
         this.moradia = moradia;
     }
 
-    public TipoMoradia getTipoMoradia() {
+    public String getTipoMoradia() {
         return tipoMoradia;
     }
 
-    public void setTipoMoradia(TipoMoradia tipoMoradia) {
+    public void setTipoMoradia(String tipoMoradia) {
         this.tipoMoradia = tipoMoradia;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

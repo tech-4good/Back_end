@@ -9,6 +9,8 @@ import tech4good.tech4good_api.core.application.dto.endereco.EnderecoRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoResponseDto;
 import tech4good.tech4good_api.core.application.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
+import tech4good.tech4good_api.core.domain.endereco.valueobjects.*;
+import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
 
 public class EnderecoMapper {
 
@@ -37,20 +39,30 @@ public class EnderecoMapper {
         if (dto == null) {
             return null;
         }
+
+        // Convertendo as strings para value objects primeiro
+        Bairro bairro = Bairro.of(dto.getBairro());
+        Cidade cidade = Cidade.of(dto.getCidade());
+        Estado estado = Estado.valueOf(dto.getEstado());
+        Cep cep = Cep.valueOf(dto.getCep());
+        TipoCesta tipoCesta = TipoCesta.fromString(dto.getTipoCesta());
+        TipoMoradia tipoMoradia = TipoMoradia.of(dto.getTipoMoradia());
+        Status status = Status.fromString(dto.getStatus());
+
         return new CadastrarEnderecoCommand(
-            dto.getLogradouro(),
-            dto.getNumero(),
-            dto.getComplemento(),
-            dto.getBairro(),
-            dto.getCidade(),
-            dto.getEstado(),
-            dto.getCep(),
-            dto.getTipoCesta(),
-            dto.getDataEntrada(),
-            null,
-            dto.getMoradia(),
-            dto.getTipoMoradia(),
-            dto.getStatus()
+            dto.getLogradouro(),      // String
+            dto.getNumero(),          // String
+            dto.getComplemento(),     // String
+            bairro,                   // Bairro
+            cidade,                   // Cidade
+            estado,                   // Estado
+            cep,                      // Cep
+            tipoCesta,                // TipoCesta
+            dto.getDataEntrada(),     // LocalDate
+            null,                     // LocalDate (dataSaida)
+            dto.getMoradia(),         // String
+            tipoMoradia,              // TipoMoradia
+            status                    // Status
         );
     }
 
@@ -115,8 +127,8 @@ public class EnderecoMapper {
             endereco.getDataEntrada(),
             endereco.getDataSaida(),
             endereco.getMoradia(),
-            endereco.getTipoMoradia(),
-            endereco.getStatus()
+            endereco.getTipoMoradia(),  // Mantém como value object
+            endereco.getStatus()        // Mantém como value object
         );
     }
 
