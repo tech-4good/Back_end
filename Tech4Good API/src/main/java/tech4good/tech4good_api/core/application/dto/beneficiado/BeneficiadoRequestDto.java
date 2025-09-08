@@ -70,13 +70,17 @@ public class BeneficiadoRequestDto {
     @PositiveOrZero(message = "Quantidade de dependentes deve ser zero ou positiva")
     private Integer quantidadeDependentes;
 
+    @Schema(description = "ID da foto do beneficiado", example = "1", required = false)
+    @Positive(message = "ID da foto deve ser positivo")
+    private Integer fotoId;
+
     public BeneficiadoRequestDto() {
     }
 
     public BeneficiadoRequestDto(String cpf, String nome, String rg, LocalDate dataNascimento, String naturalidade,
                                 String telefone, String estadoCivil, String escolaridade, String profissao,
                                 Double rendaMensal, String empresa, String cargo, String religiao,
-                                Integer enderecoId, Integer quantidadeDependentes) {
+                                Integer enderecoId, Integer quantidadeDependentes, Integer fotoId) {
         this.cpf = cpf;
         this.nome = nome;
         this.rg = rg;
@@ -92,6 +96,7 @@ public class BeneficiadoRequestDto {
         this.religiao = religiao;
         this.enderecoId = enderecoId;
         this.quantidadeDependentes = quantidadeDependentes;
+        this.fotoId = fotoId;
     }
 
     // Getters e setters
@@ -213,5 +218,13 @@ public class BeneficiadoRequestDto {
 
     public void setQuantidadeDependentes(Integer quantidadeDependentes) {
         this.quantidadeDependentes = quantidadeDependentes;
+    }
+
+    public Integer getFotoId() {
+        return fotoId;
+    }
+
+    public void setFotoId(Integer fotoId) {
+        this.fotoId = fotoId;
     }
 }

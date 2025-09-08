@@ -24,6 +24,7 @@ public record CadastrarBeneficiadoCommand(
     String cargo,
     Religiao religiao,
     Integer enderecoId,  // Alterado de Endereco para Integer
-    Integer quantidadeDependentes
+    Integer quantidadeDependentes,
+    Integer fotoId
 ) {
 }

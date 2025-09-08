@@ -6,5 +6,6 @@ public record CadastrarBeneficiadoSimplesCommand(
         String cpf,
         String nome,
         LocalDate dataNascimento,
-        Integer enderecoId
+        Integer enderecoId,
+        Integer fotoId
 ) {}

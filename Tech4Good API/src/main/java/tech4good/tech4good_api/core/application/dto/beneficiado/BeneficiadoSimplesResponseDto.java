@@ -22,14 +22,18 @@ public class BeneficiadoSimplesResponseDto {
     @Schema(description = "Informações resumidas do endereço onde reside")
     private EnderecoSummarizedDto endereco;
 
+    @Schema(description = "ID da foto do beneficiado", example = "1")
+    private Integer fotoId;
+
     public BeneficiadoSimplesResponseDto() {}
 
-    public BeneficiadoSimplesResponseDto(Integer id, String cpf, String nome, LocalDate dataNascimento, EnderecoSummarizedDto endereco) {
+    public BeneficiadoSimplesResponseDto(Integer id, String cpf, String nome, LocalDate dataNascimento, EnderecoSummarizedDto endereco, Integer fotoId) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.endereco = endereco;
+        this.fotoId = fotoId;
     }
 
     public Integer getId() {
@@ -70,5 +74,13 @@ public class BeneficiadoSimplesResponseDto {
 
     public void setEndereco(EnderecoSummarizedDto endereco) {
         this.endereco = endereco;
+    }
+
+    public Integer getFotoId() {
+        return fotoId;
+    }
+
+    public void setFotoId(Integer fotoId) {
+        this.fotoId = fotoId;
     }
 }

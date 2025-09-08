@@ -10,13 +10,13 @@ import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoJ
 public class BeneficiadoBeanConfig {
 
     @Bean
-    public CadastrarBeneficiadoUseCase cadastrarBeneficiadoUseCase(BeneficiadoJpaAdapter adapter, EnderecoJpaAdapter enderecoJpaAdapter) {
-        return new CadastrarBeneficiadoUseCase(adapter, enderecoJpaAdapter);
+    public CadastrarBeneficiadoUseCase cadastrarBeneficiadoUseCase(BeneficiadoJpaAdapter adapter, EnderecoJpaAdapter enderecoJpaAdapter, tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileJpaAdapter fileJpaAdapter) {
+        return new CadastrarBeneficiadoUseCase(adapter, enderecoJpaAdapter, fileJpaAdapter);
     }
 
     @Bean
-    public AtualizarBeneficiadoUseCase atualizarBeneficiadoUseCase(BeneficiadoJpaAdapter adapter, EnderecoJpaAdapter enderecoJpaAdapter) {
-        return new AtualizarBeneficiadoUseCase(adapter, enderecoJpaAdapter);
+    public AtualizarBeneficiadoUseCase atualizarBeneficiadoUseCase(BeneficiadoJpaAdapter adapter, EnderecoJpaAdapter enderecoJpaAdapter, tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileJpaAdapter fileJpaAdapter) {
+        return new AtualizarBeneficiadoUseCase(adapter, enderecoJpaAdapter, fileJpaAdapter);
     }
 
     @Bean
@@ -30,8 +30,8 @@ public class BeneficiadoBeanConfig {
     }
 
     @Bean
-    public CadastrarBeneficiadoSimplesUseCase cadastrarBeneficiadoSimplesUseCase(BeneficiadoJpaAdapter BeneficiadoAdapter, EnderecoJpaAdapter enderecoAdapter) {
-        return new CadastrarBeneficiadoSimplesUseCase(BeneficiadoAdapter, enderecoAdapter);
+    public CadastrarBeneficiadoSimplesUseCase cadastrarBeneficiadoSimplesUseCase(BeneficiadoJpaAdapter BeneficiadoAdapter, EnderecoJpaAdapter enderecoAdapter, tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileJpaAdapter fileJpaAdapter) {
+        return new CadastrarBeneficiadoSimplesUseCase(BeneficiadoAdapter, enderecoAdapter, fileJpaAdapter);
     }
 
     @Bean

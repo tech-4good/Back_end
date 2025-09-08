@@ -19,13 +19,17 @@ public class BeneficiadoSimplesRequestDto {
     @Schema(description = "ID do endereço cadastrado", example = "1")
     private Integer enderecoId;
 
+    @Schema(description = "ID da foto do beneficiado", example = "1")
+    private Integer fotoId;
+
     public BeneficiadoSimplesRequestDto() {}
 
-    public BeneficiadoSimplesRequestDto(String cpf, String nome, LocalDate dataNascimento, Integer enderecoId) {
+    public BeneficiadoSimplesRequestDto(String cpf, String nome, LocalDate dataNascimento, Integer enderecoId, Integer fotoId) {
         this.cpf = cpf;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.enderecoId = enderecoId;
+        this.fotoId = fotoId;
     }
 
     public String getCpf() {
@@ -58,5 +62,13 @@ public class BeneficiadoSimplesRequestDto {
 
     public void setEnderecoId(Integer enderecoId) {
         this.enderecoId = enderecoId;
+    }
+
+    public Integer getFotoId() {
+        return fotoId;
+    }
+
+    public void setFotoId(Integer fotoId) {
+        this.fotoId = fotoId;
     }
 }

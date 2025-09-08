@@ -16,5 +16,6 @@ public record AtualizarBeneficiadoCommand(
         String cargo,
         Religiao religiao,
         Integer quantidadeDependentes,
-        Integer enderecoId
+        Integer enderecoId,
+        Integer fotoId
 ) {}

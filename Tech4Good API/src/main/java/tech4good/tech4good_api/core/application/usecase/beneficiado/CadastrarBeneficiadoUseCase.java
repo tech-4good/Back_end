@@ -2,19 +2,23 @@ package tech4good.tech4good_api.core.application.usecase.beneficiado;
 
 import tech4good.tech4good_api.core.adapter.BeneficiadoGateway;
 import tech4good.tech4good_api.core.adapter.EnderecoGateway;
+import tech4good.tech4good_api.core.adapter.FileGateway;
 import tech4good.tech4good_api.core.application.command.beneficiado.CadastrarBeneficiadoCommand;
 import tech4good.tech4good_api.core.application.exception.EntidadeNaoEncontradaException;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
+import tech4good.tech4good_api.core.domain.file.File;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado.BeneficiadoMapper;
 
 public class CadastrarBeneficiadoUseCase {
     private final BeneficiadoGateway gateway;
     private final EnderecoGateway enderecoGateway;
+    private final FileGateway fileGateway;
 
-    public CadastrarBeneficiadoUseCase(BeneficiadoGateway gateway, EnderecoGateway enderecoGateway) {
+    public CadastrarBeneficiadoUseCase(BeneficiadoGateway gateway, EnderecoGateway enderecoGateway, FileGateway fileGateway) {
         this.gateway = gateway;
         this.enderecoGateway = enderecoGateway;
+        this.fileGateway = fileGateway;
     }
 
     public Beneficiado executar(CadastrarBeneficiadoCommand command) {
@@ -31,6 +35,15 @@ public class CadastrarBeneficiadoUseCase {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Endereço não encontrado com ID: " + command.enderecoId()));
 
             beneficiadoParaRegistrar.setEndereco(endereco);
+        }
+
+        // Se tiver fotoId, busca a foto e associa ao beneficiado
+        if (command.fotoId() != null) {
+            File foto = fileGateway.loadEntity(command.fotoId());
+            if (foto == null) {
+                throw new EntidadeNaoEncontradaException("Foto não encontrada com ID: " + command.fotoId());
+            }
+            beneficiadoParaRegistrar.setFotoBeneficiado(foto);
         }
 
         return gateway.save(beneficiadoParaRegistrar);

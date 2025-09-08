@@ -32,7 +32,8 @@ public class BeneficiadoMapper {
                 dto.getCargo(),
                 new Religiao(dto.getReligiao()),        // Converte String para Religiao
                 dto.getEnderecoId(),                    // Agora usa o enderecoId do DTO
-                dto.getQuantidadeDependentes()
+                dto.getQuantidadeDependentes(),
+                dto.getFotoId()                         // Adiciona o fotoId
         );
     }
 
@@ -147,7 +148,8 @@ public class BeneficiadoMapper {
             dto.getCargo(),
             dto.getReligiao(),
             dto.quantidadeDependentes(),
-            dto.getEnderecoId()
+            dto.getEnderecoId(),
+            dto.getFotoId()
         );
     }
 
@@ -156,7 +158,8 @@ public class BeneficiadoMapper {
             dto.getCpf(),
             dto.getNome(),
             dto.getDataNascimento(),
-            dto.getEnderecoId()
+            dto.getEnderecoId(),
+            dto.getFotoId()
         );
     }
 
@@ -169,7 +172,8 @@ public class BeneficiadoMapper {
                 beneficiado.getCpf() != null ? beneficiado.getCpf().toString() : null,
                 beneficiado.getNome(),
                 beneficiado.getDataNascimento(),
-                beneficiado.getEndereco() != null ? EnderecoMapper.toSummarizedDto(beneficiado.getEndereco()) : null
+                beneficiado.getEndereco() != null ? EnderecoMapper.toSummarizedDto(beneficiado.getEndereco()) : null,
+                beneficiado.getFotoBeneficiado() != null ? beneficiado.getFotoBeneficiado().getId() : null
         );
     }
 

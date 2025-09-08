@@ -42,7 +42,10 @@ public class BeneficiadoAtualizarRequestDto {
     @Schema(description = "ID do endereço onde reside", example = "1")
     private Integer enderecoId;
 
-    public BeneficiadoAtualizarRequestDto(String naturalidade, Telefone telefone, EstadoCivil estadoCivil, String escolaridade, String profissao, Renda rendaMensal, String empresa, String cargo, Religiao religiao, Integer quantidadeDependentes, Integer enderecoId) {
+    @Schema(description = "ID da foto do beneficiado", example = "1")
+    private Integer fotoId;
+
+    public BeneficiadoAtualizarRequestDto(String naturalidade, Telefone telefone, EstadoCivil estadoCivil, String escolaridade, String profissao, Renda rendaMensal, String empresa, String cargo, Religiao religiao, Integer quantidadeDependentes, Integer enderecoId, Integer fotoId) {
         this.naturalidade = naturalidade;
         this.telefone = telefone;
         this.estadoCivil = estadoCivil;
@@ -54,6 +57,7 @@ public class BeneficiadoAtualizarRequestDto {
         this.religiao = religiao;
         this.quantidadeDependentes = quantidadeDependentes;
         this.enderecoId = enderecoId;
+        this.fotoId = fotoId;
     }
 
     public String getNaturalidade() {
@@ -98,5 +102,9 @@ public class BeneficiadoAtualizarRequestDto {
 
     public Integer quantidadeDependentes() {
         return quantidadeDependentes;
+    }
+
+    public Integer getFotoId() {
+        return fotoId;
     }
 }
