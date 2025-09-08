@@ -4,6 +4,7 @@ import tech4good.tech4good_api.core.application.command.entrega.*;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaRequestDto;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaResponseDto;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaUpdateDto;
+import tech4good.tech4good_api.core.application.dto.entrega.EntregaUpdateResponseDto;
 import tech4good.tech4good_api.core.domain.entrega.Entrega;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado.BeneficiadoMapper;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Cesta.CestaMapper;
@@ -73,10 +74,18 @@ public class EntregaMapper {
             domain.getId(),
             domain.getDataRetirada(),
             domain.getProximaRetirada(),
-            EnderecoMapper.toResponseDto(domain.getEndereco()),
+            EnderecoMapper.toSummarizedDto(domain.getEndereco()),
             CestaMapper.toResponseDto(domain.getCesta()),
             VoluntarioMapper.toResponseDto(domain.getVoluntario()),
-            BeneficiadoMapper.toResponseDto(domain.getBeneficiado())
+            BeneficiadoMapper.toSummarizedDto(domain.getBeneficiado())
+        );
+    }
+
+    public static EntregaUpdateResponseDto toUpdateResponseDto(Entrega domain) {
+        return new EntregaUpdateResponseDto(
+            domain.getId(),
+            domain.getDataRetirada(),
+            domain.getProximaRetirada()
         );
     }
 }

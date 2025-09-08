@@ -182,4 +182,17 @@ public class BeneficiadoMapper {
             beneficiado.getNome()
         );
     }
+
+    public static BeneficiadoSummarizedDto toSummarizedDto(Beneficiado beneficiado) {
+        if (beneficiado == null) {
+            return null;
+        }
+        return new BeneficiadoSummarizedDto(
+            beneficiado.getId(),
+            beneficiado.getCpf() != null ? beneficiado.getCpf().toString() : null,
+            beneficiado.getNome(),
+            beneficiado.getTelefone() != null ? beneficiado.getTelefone().toString() : null,
+            beneficiado.getQuantidadeDependentes()
+        );
+    }
 }

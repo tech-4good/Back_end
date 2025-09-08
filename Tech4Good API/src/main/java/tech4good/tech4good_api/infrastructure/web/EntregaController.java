@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaRequestDto;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaResponseDto;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaUpdateDto;
+import tech4good.tech4good_api.core.application.dto.entrega.EntregaUpdateResponseDto;
 import tech4good.tech4good_api.core.application.usecase.entrega.*;
 import tech4good.tech4good_api.core.domain.entrega.Entrega;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega.EntregaMapper;
@@ -68,12 +69,12 @@ public class EntregaController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<EntregaResponseDto> atualizar(
+    public ResponseEntity<EntregaUpdateResponseDto> atualizar(
             @PathVariable Integer id,
             @RequestBody EntregaUpdateDto dto) {
         var command = EntregaMapper.toUpdateCommand(dto);
         Entrega entregaAtualizada = atualizarEntregaUseCase.executar(id, command);
-        EntregaResponseDto entregaDto = EntregaMapper.toResponseDto(entregaAtualizada);
+        EntregaUpdateResponseDto entregaDto = EntregaMapper.toUpdateResponseDto(entregaAtualizada);
         return ResponseEntity.ok(entregaDto);
     }
 
