@@ -39,7 +39,10 @@ public class FilaEsperaMapper {
         if (filaEspera == null) return null;
         Beneficiado beneficiado = filaEspera.getBeneficiado();
         BeneficiadoSummarizedResponseDto beneficiadoDto = beneficiado != null ?
-            new BeneficiadoSummarizedResponseDto(beneficiado.getCpf(), beneficiado.getNome()) : null;
+            new BeneficiadoSummarizedResponseDto(
+                beneficiado.getCpf() != null ? beneficiado.getCpf().toString() : null,
+                beneficiado.getNome()
+            ) : null;
         return new FilaEsperaResponseDto(
             filaEspera.getId(),
             filaEspera.getDataEntradaFila(),

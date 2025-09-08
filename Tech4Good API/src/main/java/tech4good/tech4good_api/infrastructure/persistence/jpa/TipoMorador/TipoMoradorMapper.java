@@ -3,13 +3,15 @@ package tech4good.tech4good_api.infrastructure.persistence.jpa.TipoMorador;
 import tech4good.tech4good_api.core.application.command.tipomorador.AtualizarTipoMoradorCommand;
 import tech4good.tech4good_api.core.application.command.tipomorador.BuscarTipoMoradorPorIdCommand;
 import tech4good.tech4good_api.core.application.command.tipomorador.CadastrarTipoMoradorCommand;
- import tech4good.tech4good_api.core.application.command.tipomorador.RemoverTipoMoradorCommand;
+import tech4good.tech4good_api.core.application.command.tipomorador.RemoverTipoMoradorCommand;
 import tech4good.tech4good_api.core.application.dto.auxiliares.BeneficiadoSummarizedResponseDto;
 import tech4good.tech4good_api.core.application.dto.auxiliares.EnderecoSummarizedFilhoBeneficiadoResponseDto;
 import tech4good.tech4good_api.core.application.dto.tipomorador.TipoMoradorRequestDto;
 import tech4good.tech4good_api.core.application.dto.tipomorador.TipoMoradorResponseDto;
 import tech4good.tech4good_api.core.application.dto.tipomorador.TipoMoradorUpdateDto;
 import tech4good.tech4good_api.core.domain.tipomorador.TipoMorador;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado.BeneficiadoMapper;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoMapper;
 
 public class TipoMoradorMapper {
 
@@ -75,7 +77,16 @@ public class TipoMoradorMapper {
         entity.setQuantidadeGestante(tipoMorador.getQuantidadeGestante());
         entity.setQuantidadeDeficiente(tipoMorador.getQuantidadeDeficiente());
         entity.setQuantidadeOutros(tipoMorador.getQuantidadeOutros());
-        // As relações serão setadas pelo JPA Adapter
+
+        // Usar os mappers existentes para converter as relações
+        if (tipoMorador.getBeneficiado() != null) {
+            entity.setBeneficiado(BeneficiadoMapper.toEntity(tipoMorador.getBeneficiado()));
+        }
+
+        if (tipoMorador.getEndereco() != null) {
+            entity.setEndereco(EnderecoMapper.toEntity(tipoMorador.getEndereco()));
+        }
+
         return entity;
     }
 
@@ -90,8 +101,8 @@ public class TipoMoradorMapper {
                 entity.getQuantidadeGestante(),
                 entity.getQuantidadeDeficiente(),
                 entity.getQuantidadeOutros(),
-                entity.getBeneficiado() != null ? convertBeneficiadoEntityToDomain(entity.getBeneficiado()) : null,
-                entity.getEndereco() != null ? convertEnderecoEntityToDomain(entity.getEndereco()) : null
+                entity.getBeneficiado() != null ? BeneficiadoMapper.toDomain(entity.getBeneficiado()) : null,
+                entity.getEndereco() != null ? EnderecoMapper.toDomainFromEntity(entity.getEndereco()) : null
         );
     }
 
@@ -103,15 +114,15 @@ public class TipoMoradorMapper {
                 tipoMorador.getEndereco().getLogradouro(),
                 tipoMorador.getEndereco().getNumero(),
                 tipoMorador.getEndereco().getComplemento(),
-                tipoMorador.getEndereco().getBairro(),
-                tipoMorador.getEndereco().getCidade(),
-                tipoMorador.getEndereco().getEstado(),
-                tipoMorador.getEndereco().getCep()
+                tipoMorador.getEndereco().getBairro() != null ? tipoMorador.getEndereco().getBairro().getValue() : null,
+                tipoMorador.getEndereco().getCidade() != null ? tipoMorador.getEndereco().getCidade().getValue() : null,
+                tipoMorador.getEndereco().getEstado() != null ? tipoMorador.getEndereco().getEstado().name() : null,
+                tipoMorador.getEndereco().getCep() != null ? tipoMorador.getEndereco().getCep().getValue() : null
         ) : null;
 
         BeneficiadoSummarizedResponseDto beneficiadoDto = tipoMorador.getBeneficiado() != null
                 ? new BeneficiadoSummarizedResponseDto(
-                tipoMorador.getBeneficiado().getCpf(),
+                tipoMorador.getBeneficiado().getCpf() != null ? tipoMorador.getBeneficiado().getCpf().toString() : null,
                 tipoMorador.getBeneficiado().getNome()
         ) : null;
 
@@ -155,48 +166,5 @@ public class TipoMoradorMapper {
                 dto.getQuantidadeDeficiente(),
                 dto.getQuantidadeOutros()
         );
-    }
-
-    // Métodos auxiliares para conversão das entidades relacionadas
-    private static tech4good.tech4good_api.core.domain.beneficiado.Beneficiado convertBeneficiadoEntityToDomain(tech4good.tech4good_api.infrastructure.persistence.jpa.Beneficiado.BeneficiadoEntity entity) {
-        // Conversão simplificada para evitar dependência circular
-        return new tech4good.tech4good_api.core.domain.beneficiado.Beneficiado(
-                entity.getId(),
-                entity.getCpf() != null ? tech4good.tech4good_api.core.domain.shared.valueobject.Cpf.valueOf(entity.getCpf()) : null,
-                entity.getNome(),
-                entity.getRg() != null ? tech4good.tech4good_api.core.domain.beneficiado.valueobject.Rg.valueOf(entity.getRg()) : null,
-                entity.getDataNascimento(),
-                entity.getNaturalidade(),
-                entity.getTelefone() != null ? tech4good.tech4good_api.core.domain.shared.valueobject.Telefone.valueOf(entity.getTelefone()) : null,
-                entity.getEstadoCivil(),
-                entity.getEscolaridade(),
-                entity.getProfissao(),
-                entity.getRendaMensal() != null ? tech4good.tech4good_api.core.domain.beneficiado.valueobject.Renda.valueOf(entity.getRendaMensal()) : null,
-                entity.getEmpresa(),
-                entity.getCargo(),
-                entity.getReligiao() != null ? tech4good.tech4good_api.core.domain.beneficiado.valueobject.Religiao.valueOf(entity.getReligiao()) : null,
-                null, // Evitar referência circular
-                entity.getQuantidadeDependentes(),
-                null  // Simplificar por enquanto
-        );
-    }
-
-    private static tech4good.tech4good_api.core.domain.endereco.Endereco convertEnderecoEntityToDomain(tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoEntity entity) {
-        var endereco = new tech4good.tech4good_api.core.domain.endereco.Endereco();
-        endereco.setId(entity.getIdEndereco());
-        endereco.setLogradouro(entity.getLogradouro());
-        endereco.setNumero(entity.getNumero());
-        endereco.setComplemento(entity.getComplemento());
-        endereco.setBairro(entity.getBairro());
-        endereco.setCidade(entity.getCidade());
-        endereco.setEstado(entity.getEstado());
-        endereco.setCep(entity.getCep());
-        endereco.setTipoCesta(entity.getTipoCesta());
-        endereco.setDataEntrada(entity.getDataEntrada());
-        endereco.setDataSaida(entity.getDataSaida());
-        endereco.setMoradia(entity.getMoradia());
-        endereco.setTipoMoradia(entity.getTipoMoradia());
-        endereco.setStatus(entity.getStatus());
-        return endereco;
     }
 }

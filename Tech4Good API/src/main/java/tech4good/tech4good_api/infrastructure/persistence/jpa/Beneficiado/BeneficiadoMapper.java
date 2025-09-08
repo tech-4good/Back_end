@@ -178,7 +178,7 @@ public class BeneficiadoMapper {
             return null;
         }
         return new BeneficiadoSummarizedResponseDto(
-            beneficiado.getCpf(),
+            beneficiado.getCpf() != null ? beneficiado.getCpf().toString() : null,
             beneficiado.getNome()
         );
     }

@@ -8,7 +8,6 @@ import tech4good.tech4good_api.core.application.exception.EntidadeNaoEncontradaE
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 import tech4good.tech4good_api.core.domain.endereco.Endereco;
 import tech4good.tech4good_api.core.domain.tipomorador.TipoMorador;
-import tech4good.tech4good_api.infrastructure.persistence.jpa.TipoMorador.TipoMoradorMapper;
 
 public class CadastrarTipoMoradorUseCase {
 
@@ -23,17 +22,29 @@ public class CadastrarTipoMoradorUseCase {
     }
 
     public TipoMorador execute(CadastrarTipoMoradorCommand command) {
+        // Buscar endereco (retorna Optional)
         Endereco endereco = enderecoGateway.findById(command.enderecoId())
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Endereco de id %d nao encontrado".formatted(command.enderecoId())));
 
+        // Buscar beneficiado (retorna objeto diretamente ou null)
         Beneficiado beneficiado = beneficiadoGateway.findById(command.beneficiadoId());
         if (beneficiado == null) {
             throw new EntidadeNaoEncontradaException("Beneficiado de id %d nao encontrado".formatted(command.beneficiadoId()));
         }
 
-        TipoMorador tipoMorador = TipoMoradorMapper.toDomain(command);
-        tipoMorador.setBeneficiado(beneficiado);
-        tipoMorador.setEndereco(endereco);
+        // Criar o TipoMorador diretamente com os objetos relacionados válidos
+        TipoMorador tipoMorador = new TipoMorador(
+                null, // id será gerado pelo banco
+                command.quantidadeCrianca(),
+                command.quantidadeAdolescente(),
+                command.quantidadeJovem(),
+                command.quantidadeIdoso(),
+                command.quantidadeGestante(),
+                command.quantidadeDeficiente(),
+                command.quantidadeOutros(),
+                beneficiado,
+                endereco
+        );
 
         return gateway.save(tipoMorador);
     }

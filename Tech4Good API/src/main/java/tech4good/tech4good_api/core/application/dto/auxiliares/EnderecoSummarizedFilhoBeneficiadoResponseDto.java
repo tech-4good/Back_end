@@ -1,10 +1,6 @@
 package tech4good.tech4good_api.core.application.dto.auxiliares;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech4good.tech4good_api.core.domain.endereco.valueobjects.Bairro;
-import tech4good.tech4good_api.core.domain.endereco.valueobjects.Cep;
-import tech4good.tech4good_api.core.domain.endereco.valueobjects.Cidade;
-import tech4good.tech4good_api.core.domain.endereco.valueobjects.Estado;
 
 @Schema(description = "Objeto de resposta para auxiliar entre filhos e endereços")
 public class EnderecoSummarizedFilhoBeneficiadoResponseDto {
@@ -18,15 +14,15 @@ public class EnderecoSummarizedFilhoBeneficiadoResponseDto {
     @Schema(description = "Complemento do número da residência", example = "A")
     private String complemento;
     @Schema(description = "Nome do bairro", example = "São Miguel Paulista")
-    private Bairro bairro;
+    private String bairro;
     @Schema(description = "Nome da cidade", example = "São Paulo")
-    private Cidade cidade;
+    private String cidade;
     @Schema(description = "Nome do estado", example = "São Paulo")
-    private Estado estado;
+    private String estado;
     @Schema(description = "CEP da região onde se encontra a residência", example = "08356723")
-    private Cep cep;
+    private String cep;
 
-    public EnderecoSummarizedFilhoBeneficiadoResponseDto(Integer idEndereco, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep) {
+    public EnderecoSummarizedFilhoBeneficiadoResponseDto(Integer idEndereco, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep) {
         this.idEndereco = idEndereco;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -40,35 +36,35 @@ public class EnderecoSummarizedFilhoBeneficiadoResponseDto {
     public EnderecoSummarizedFilhoBeneficiadoResponseDto() {
     }
 
-    public Cep getCep() {
+    public String getCep() {
         return cep;
     }
 
-    public void setCep(Cep cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public Cidade getCidade() {
+    public String getCidade() {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public void setCidade(String cidade) {
         this.cidade = cidade;
     }
 
-    public Bairro getBairro() {
+    public String getBairro() {
         return bairro;
     }
 
-    public void setBairro(Bairro bairro) {
+    public void setBairro(String bairro) {
         this.bairro = bairro;
     }
 

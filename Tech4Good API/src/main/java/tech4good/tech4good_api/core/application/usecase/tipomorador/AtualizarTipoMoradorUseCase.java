@@ -4,7 +4,6 @@ import tech4good.tech4good_api.core.adapter.TipoMoradorGateway;
 import tech4good.tech4good_api.core.application.command.tipomorador.AtualizarTipoMoradorCommand;
 import tech4good.tech4good_api.core.application.exception.EntidadeNaoEncontradaException;
 import tech4good.tech4good_api.core.domain.tipomorador.TipoMorador;
-import tech4good.tech4good_api.infrastructure.persistence.jpa.TipoMorador.TipoMoradorMapper;
 
 public class AtualizarTipoMoradorUseCase {
 
@@ -18,11 +17,15 @@ public class AtualizarTipoMoradorUseCase {
         TipoMorador tipoMoradorExistente = gateway.findById(command.id())
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("TipoMorador de id %d não encontrado".formatted(command.id())));
 
-        TipoMorador tipoMoradorAtualizado = TipoMoradorMapper.toDomain(command);
-        // Manter as relações do objeto existente
-        tipoMoradorAtualizado.setBeneficiado(tipoMoradorExistente.getBeneficiado());
-        tipoMoradorAtualizado.setEndereco(tipoMoradorExistente.getEndereco());
+        // Atualizar apenas os campos modificáveis, mantendo as relações existentes
+        tipoMoradorExistente.setQuantidadeCrianca(command.quantidadeCrianca());
+        tipoMoradorExistente.setQuantidadeAdolescente(command.quantidadeAdolescente());
+        tipoMoradorExistente.setQuantidadeJovem(command.quantidadeJovem());
+        tipoMoradorExistente.setQuantidadeIdoso(command.quantidadeIdoso());
+        tipoMoradorExistente.setQuantidadeGestante(command.quantidadeGestante());
+        tipoMoradorExistente.setQuantidadeDeficiente(command.quantidadeDeficiente());
+        tipoMoradorExistente.setQuantidadeOutros(command.quantidadeOutros());
 
-        return gateway.save(tipoMoradorAtualizado);
+        return gateway.save(tipoMoradorExistente);
     }
 }

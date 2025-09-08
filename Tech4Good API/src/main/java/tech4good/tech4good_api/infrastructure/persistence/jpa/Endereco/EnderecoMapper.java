@@ -180,10 +180,10 @@ public class EnderecoMapper {
             endereco.getLogradouro(),
             endereco.getNumero(),
             endereco.getComplemento(),
-            endereco.getBairro(),
-            endereco.getCidade(),
-            endereco.getEstado(),
-            endereco.getCep()
+            endereco.getBairro() != null ? endereco.getBairro().getValue() : null,
+            endereco.getCidade() != null ? endereco.getCidade().getValue() : null,
+            endereco.getEstado() != null ? endereco.getEstado().name() : null,
+            endereco.getCep() != null ? endereco.getCep().getValue() : null
         );
     }
 
