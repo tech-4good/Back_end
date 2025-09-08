@@ -12,11 +12,22 @@ public class AtualizarFilaEsperaUseCase {
     }
 
     public FilaEspera executar(AtualizarFilaEsperaCommand command) {
-        FilaEspera fila = new FilaEspera();
-        fila.setId(command.id());
-        fila.setDataEntradaFila(command.dataEntradaFila());
-        fila.setDataSaidaFila(command.dataSaidaFila());
-        fila.setBeneficiado(command.beneficiado());
-        return gateway.atualizar(fila);
+        FilaEspera filaExistente = gateway.buscarPorId(command.id());
+        if (filaExistente == null) {
+            throw new RuntimeException("Fila de espera não encontrada com ID: " + command.id());
+        }
+
+        // Atualizar apenas os campos fornecidos no command
+        if (command.dataEntradaFila() != null) {
+            filaExistente.setDataEntradaFila(command.dataEntradaFila());
+        }
+        if (command.dataSaidaFila() != null) {
+            filaExistente.setDataSaidaFila(command.dataSaidaFila());
+        }
+        if (command.beneficiado() != null) {
+            filaExistente.setBeneficiado(command.beneficiado());
+        }
+
+        return gateway.atualizar(filaExistente);
     }
 }

@@ -56,11 +56,12 @@ public class FilaEsperaController {
         @ApiResponse(responseCode = "401", description = "Não autorizado")
     })
     @PostMapping
-    public ResponseEntity<Void> cadastrar(@RequestBody @Valid FilaEsperaRequestDto dto) {
+    public ResponseEntity<FilaEsperaResponseDto> cadastrar(@RequestBody @Valid FilaEsperaRequestDto dto) {
         Beneficiado beneficiado = beneficiadoGateway.findById(dto.getBeneficiadoId());
         CadastrarFilaEsperaCommand command = FilaEsperaMapper.toCadastrarCommand(dto, beneficiado);
-        cadastrarFilaEsperaUseCase.executar(command);
-        return ResponseEntity.status(201).build();
+        FilaEspera filaEsperaCadastrada = cadastrarFilaEsperaUseCase.executar(command);
+        FilaEsperaResponseDto responseDto = FilaEsperaMapper.toResponseDto(filaEsperaCadastrada);
+        return ResponseEntity.status(201).body(responseDto);
     }
 
     @GetMapping
@@ -86,7 +87,7 @@ public class FilaEsperaController {
         return ResponseEntity.status(200).body(response);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<FilaEsperaResponseDto> atualizar(
         @PathVariable Integer id,
         @RequestBody @Valid FilaEsperaUpdateDto dto
