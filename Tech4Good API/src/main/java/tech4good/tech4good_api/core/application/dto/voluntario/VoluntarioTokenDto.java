@@ -6,14 +6,16 @@ public class VoluntarioTokenDto {
     private String nome;
     private String email;
     private String token;
+    private Integer administrador;
 
     public VoluntarioTokenDto() {}
 
-    public VoluntarioTokenDto(Integer userId, String nome, String email, String token) {
+    public VoluntarioTokenDto(Integer userId, String nome, String email, String token, Integer administrador) {
         this.userId = userId;
         this.nome = nome;
         this.email = email;
         this.token = token;
+        this.administrador = administrador;
     }
 
     public Integer getUserId() {
@@ -46,5 +48,13 @@ public class VoluntarioTokenDto {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Integer getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Integer administrador) {
+        this.administrador = administrador;
     }
 }

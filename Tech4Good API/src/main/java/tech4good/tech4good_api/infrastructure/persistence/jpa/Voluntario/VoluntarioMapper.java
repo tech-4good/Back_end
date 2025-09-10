@@ -157,7 +157,8 @@ public class VoluntarioMapper {
             voluntario.getId(),
             voluntario.getNome(),
             voluntario.getEmail() != null ? voluntario.getEmail().toString() : null,
-            token
+            token,
+            voluntario.getAdministrador()
         );
     }
 }
