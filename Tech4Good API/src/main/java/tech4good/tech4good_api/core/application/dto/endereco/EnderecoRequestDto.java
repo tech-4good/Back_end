@@ -11,8 +11,7 @@ public class EnderecoRequestDto {
     @NotBlank
     private String logradouro;
     @Schema(description = "Número da residência", example = "234")
-    @NotNull
-    @Positive
+    @NotBlank(message = "Número é obrigatório")
     private String numero;
     @Schema(description = "Complemento do número da residência", example = "A")
     private String complemento;
@@ -36,6 +35,8 @@ public class EnderecoRequestDto {
     @NotNull
     @PastOrPresent
     private LocalDate dataEntrada;
+    @Schema(description = "Data de saída do projeto ASA", example = "2025-12-25")
+    private LocalDate dataSaida;
     @Schema(description = "Tipo de obtenção da moradia", example = "Alugada")
     private String moradia;
     @Schema(description = "Nome do tipo da moradia", example = "Apartamento")
@@ -47,7 +48,7 @@ public class EnderecoRequestDto {
     public EnderecoRequestDto() {
     }
 
-    public EnderecoRequestDto(String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, String moradia, String tipoMoradia, String status) {
+    public EnderecoRequestDto(String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, String tipoMoradia, String status) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -57,6 +58,7 @@ public class EnderecoRequestDto {
         this.cep = cep;
         this.tipoCesta = tipoCesta;
         this.dataEntrada = dataEntrada;
+        this.dataSaida = dataSaida;
         this.moradia = moradia;
         this.tipoMoradia = tipoMoradia;
         this.status = status;
@@ -132,6 +134,14 @@ public class EnderecoRequestDto {
 
     public void setDataEntrada(LocalDate dataEntrada) {
         this.dataEntrada = dataEntrada;
+    }
+
+    public LocalDate getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(LocalDate dataSaida) {
+        this.dataSaida = dataSaida;
     }
 
     public String getMoradia() {

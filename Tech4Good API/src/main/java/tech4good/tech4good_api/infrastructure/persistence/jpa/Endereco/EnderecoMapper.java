@@ -61,7 +61,7 @@ public class EnderecoMapper {
             cep,                      // Cep
             tipoCesta,                // TipoCesta
             dto.getDataEntrada(),     // LocalDate
-            null,                     // LocalDate (dataSaida)
+            dto.getDataSaida(),       // LocalDate (CORRIGIDO - agora usa o valor do DTO)
             dto.getMoradia(),         // String
             tipoMoradia,              // TipoMoradia
             status                    // Status
