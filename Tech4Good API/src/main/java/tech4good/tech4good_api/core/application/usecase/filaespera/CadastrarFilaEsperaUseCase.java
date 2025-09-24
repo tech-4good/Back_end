@@ -18,3 +18,5 @@ public class CadastrarFilaEsperaUseCase {
         return gateway.salvar(fila);
     }
 }
+
+
