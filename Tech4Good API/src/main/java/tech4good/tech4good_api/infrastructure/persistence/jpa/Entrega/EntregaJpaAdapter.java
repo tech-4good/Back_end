@@ -1,12 +1,12 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tech4good.tech4good_api.core.adapter.EntregaGateway;
 import tech4good.tech4good_api.core.domain.entrega.Entrega;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EntregaJpaAdapter implements EntregaGateway {
@@ -37,21 +37,19 @@ public class EntregaJpaAdapter implements EntregaGateway {
     }
 
     @Override
-    public List<Entrega> findAll() {
-        return repository.findAll().stream()
-                .map(EntregaMapper::toDomain)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public void deleteById(Integer id) {
         repository.deleteById(id);
     }
 
     @Override
-    public List<Entrega> findByFiltro(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim) {
-        return repository.findByFiltro(idBeneficiado, dataInicio, dataFim).stream()
-                .map(EntregaMapper::toDomain)
-                .collect(Collectors.toList());
+    public Page<Entrega> findAllWithPagination(Pageable pageable) {
+        Page<EntregaEntity> entitiesPage = repository.findAllWithPagination(pageable);
+        return entitiesPage.map(EntregaMapper::toDomain);
+    }
+
+    @Override
+    public Page<Entrega> findByFiltroWithPagination(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
+        Page<EntregaEntity> entitiesPage = repository.findByFiltroWithPagination(idBeneficiado, dataInicio, dataFim, pageable);
+        return entitiesPage.map(EntregaMapper::toDomain);
     }
 }

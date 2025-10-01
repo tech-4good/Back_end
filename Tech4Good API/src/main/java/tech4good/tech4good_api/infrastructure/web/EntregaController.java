@@ -2,9 +2,15 @@ package tech4good.tech4good_api.infrastructure.web;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech4good.tech4good_api.core.application.dto.common.PagedResponseDto;
+import tech4good.tech4good_api.core.application.dto.common.PagedResponseMapper;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaRequestDto;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaResponseDto;
 import tech4good.tech4good_api.core.application.dto.entrega.EntregaUpdateDto;
@@ -14,7 +20,6 @@ import tech4good.tech4good_api.core.domain.entrega.Entrega;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega.EntregaMapper;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Tag(name = "Controller - Entrega", description = "Operações relacionadas às doações das cestas básicas ou kits.")
 @RestController
@@ -25,21 +30,21 @@ public class EntregaController {
     private final CadastrarEntregaUseCase cadastrarEntregaUseCase;
     private final AtualizarEntregaUseCase atualizarEntregaUseCase;
     private final BuscarEntregaPorIdUseCase buscarEntregaPorIdUseCase;
-    private final ListarEntregasUseCase listarEntregasUseCase;
     private final RemoverEntregaPorIdUseCase removerEntregaPorIdUseCase;
+    private final ListarEntregasUseCase listarEntregasUseCase;
     private final ListarHistoricoEntregasUseCase listarHistoricoEntregasUseCase;
 
     public EntregaController(CadastrarEntregaUseCase cadastrarEntregaUseCase,
                            AtualizarEntregaUseCase atualizarEntregaUseCase,
                            BuscarEntregaPorIdUseCase buscarEntregaPorIdUseCase,
-                           ListarEntregasUseCase listarEntregasUseCase,
                            RemoverEntregaPorIdUseCase removerEntregaPorIdUseCase,
+                           ListarEntregasUseCase listarEntregasUseCase,
                            ListarHistoricoEntregasUseCase listarHistoricoEntregasUseCase) {
         this.cadastrarEntregaUseCase = cadastrarEntregaUseCase;
         this.atualizarEntregaUseCase = atualizarEntregaUseCase;
         this.buscarEntregaPorIdUseCase = buscarEntregaPorIdUseCase;
-        this.listarEntregasUseCase = listarEntregasUseCase;
         this.removerEntregaPorIdUseCase = removerEntregaPorIdUseCase;
+        this.listarEntregasUseCase = listarEntregasUseCase;
         this.listarHistoricoEntregasUseCase = listarHistoricoEntregasUseCase;
     }
 
@@ -60,12 +65,29 @@ public class EntregaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EntregaResponseDto>> listar() {
-        List<Entrega> entregas = listarEntregasUseCase.executar();
-        List<EntregaResponseDto> entregaListagem = entregas.stream().map(EntregaMapper::toResponseDto).toList();
-        return entregas.isEmpty() ?
-                ResponseEntity.noContent().build() :
-                ResponseEntity.ok(entregaListagem);
+    public ResponseEntity<PagedResponseDto<EntregaResponseDto>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "dataRetirada") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDirection
+    ) {
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("desc")
+            ? Sort.Direction.DESC
+            : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        Page<Entrega> entregasPage = listarEntregasUseCase.executar(pageable);
+
+        if (entregasPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        PagedResponseDto<EntregaResponseDto> response = PagedResponseMapper.toPagedResponseDto(
+            entregasPage,
+            EntregaMapper::toResponseDto
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{id}")
@@ -86,19 +108,33 @@ public class EntregaController {
     }
 
     @GetMapping("/historico/{idBeneficiado}")
-    public ResponseEntity<List<EntregaResponseDto>> listarHistoricoEntregas(
+    public ResponseEntity<PagedResponseDto<EntregaResponseDto>> listarHistoricoEntregas(
             @PathVariable Integer idBeneficiado,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "dataRetirada") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDirection
     ) {
-        var command = EntregaMapper.toHistoricoCommand(idBeneficiado, dataInicio, dataFim);
-        List<Entrega> entregas = listarHistoricoEntregasUseCase.executar(command);
-        if (entregas.isEmpty()) {
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("desc")
+            ? Sort.Direction.DESC
+            : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        Page<Entrega> entregasPage = listarHistoricoEntregasUseCase.executar(
+            idBeneficiado, dataInicio, dataFim, pageable
+        );
+
+        if (entregasPage.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        List<EntregaResponseDto> resposta = entregas.stream()
-                .map(EntregaMapper::toResponseDto)
-                .toList();
-        return ResponseEntity.ok(resposta);
+
+        PagedResponseDto<EntregaResponseDto> response = PagedResponseMapper.toPagedResponseDto(
+            entregasPage,
+            EntregaMapper::toResponseDto
+        );
+
+        return ResponseEntity.ok(response);
     }
 }
