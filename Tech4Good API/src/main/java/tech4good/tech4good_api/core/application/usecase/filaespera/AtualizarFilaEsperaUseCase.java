@@ -31,3 +31,4 @@ public class AtualizarFilaEsperaUseCase {
         return gateway.atualizar(filaExistente);
     }
 }
+

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech4good.tech4good_api.core.application.command.filaespera.*;
@@ -24,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/fila-espera")
 @SecurityRequirement(name = "Bearer")
+@Slf4j
 public class FilaEsperaController {
 
     private final CadastrarFilaEsperaUseCase cadastrarFilaEsperaUseCase;
@@ -49,17 +51,24 @@ public class FilaEsperaController {
         this.beneficiadoGateway = beneficiadoGateway;
     }
 
-    @Operation(summary = "Cadastrar na fila de espera", description = "Adiciona um beneficiado à fila de espera")
+    @Operation(summary = "Cadastrar na fila de espera", description = "Adiciona um beneficiado à fila de espera e envia mensagem para RabbitMQ")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Beneficiado adicionado à fila de espera com sucesso"),
+        @ApiResponse(responseCode = "201", description = "Beneficiado adicionado à fila de espera com sucesso e mensagem enviada"),
         @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
         @ApiResponse(responseCode = "401", description = "Não autorizado")
     })
     @PostMapping
     public ResponseEntity<FilaEsperaResponseDto> cadastrar(@RequestBody @Valid FilaEsperaRequestDto dto) {
+        log.info("Iniciando cadastro na fila de espera para beneficiado ID: {}", dto.getBeneficiadoId());
+
         Beneficiado beneficiado = beneficiadoGateway.findById(dto.getBeneficiadoId());
         CadastrarFilaEsperaCommand command = FilaEsperaMapper.toCadastrarCommand(dto, beneficiado);
+
         FilaEspera filaEsperaCadastrada = cadastrarFilaEsperaUseCase.executar(command);
+
+        log.info("Beneficiado {} cadastrado na fila de espera com sucesso! Mensagem enviada para RabbitMQ.",
+                 beneficiado.getNome());
+
         FilaEsperaResponseDto responseDto = FilaEsperaMapper.toResponseDto(filaEsperaCadastrada);
         return ResponseEntity.status(201).body(responseDto);
     }
@@ -98,10 +107,17 @@ public class FilaEsperaController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Remover da fila de espera", description = "Remove um beneficiado da fila de espera e envia mensagem para RabbitMQ")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Integer id) {
+        log.info("Iniciando remoção da fila de espera para ID: {}", id);
+
         RemoverFilaEsperaCommand command = FilaEsperaMapper.toRemoverCommand(id);
+
         removerFilaEsperaUseCase.executar(command);
+
+        log.info("Beneficiado removido da fila de espera com sucesso! Mensagem enviada para RabbitMQ.");
+
         return ResponseEntity.noContent().build();
     }
 }
