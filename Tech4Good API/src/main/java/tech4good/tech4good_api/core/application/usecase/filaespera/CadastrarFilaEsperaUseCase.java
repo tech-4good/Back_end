@@ -19,7 +19,6 @@ public class CadastrarFilaEsperaUseCase {
         fila.setDataEntradaFila(command.dataEntradaFila());
         fila.setBeneficiado(command.beneficiado());
 
-        // Salva no banco de dados
         FilaEspera filaSalva = gateway.salvar(fila);
 
         // Envia mensagem para o RabbitMQ

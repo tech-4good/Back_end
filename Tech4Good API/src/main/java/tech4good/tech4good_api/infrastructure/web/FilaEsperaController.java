@@ -18,7 +18,6 @@ import tech4good.tech4good_api.core.domain.filaespera.FilaEspera;
 import tech4good.tech4good_api.core.domain.beneficiado.Beneficiado;
 import tech4good.tech4good_api.core.adapter.BeneficiadoGateway;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.FilaEspera.FilaEsperaMapper;
-import tech4good.tech4good_api.infrastructure.integration.messaging.FilaEsperaMessageProducer;
 
 import java.util.List;
 
@@ -35,7 +34,6 @@ public class FilaEsperaController {
     private final AtualizarFilaEsperaUseCase atualizarFilaEsperaUseCase;
     private final RemoverFilaEsperaUseCase removerFilaEsperaUseCase;
     private final BeneficiadoGateway beneficiadoGateway;
-    private final FilaEsperaMessageProducer messageProducer;
 
     public FilaEsperaController(
         CadastrarFilaEsperaUseCase cadastrarFilaEsperaUseCase,
@@ -43,8 +41,7 @@ public class FilaEsperaController {
         BuscarFilaEsperaPorIdUseCase buscarFilaEsperaPorIdUseCase,
         AtualizarFilaEsperaUseCase atualizarFilaEsperaUseCase,
         RemoverFilaEsperaUseCase removerFilaEsperaUseCase,
-        BeneficiadoGateway beneficiadoGateway,
-        FilaEsperaMessageProducer messageProducer
+        BeneficiadoGateway beneficiadoGateway
     ) {
         this.cadastrarFilaEsperaUseCase = cadastrarFilaEsperaUseCase;
         this.listarFilaEsperaUseCase = listarFilaEsperaUseCase;
@@ -52,7 +49,6 @@ public class FilaEsperaController {
         this.atualizarFilaEsperaUseCase = atualizarFilaEsperaUseCase;
         this.removerFilaEsperaUseCase = removerFilaEsperaUseCase;
         this.beneficiadoGateway = beneficiadoGateway;
-        this.messageProducer = messageProducer;
     }
 
     @Operation(summary = "Cadastrar na fila de espera", description = "Adiciona um beneficiado à fila de espera e envia mensagem para RabbitMQ")
@@ -118,40 +114,10 @@ public class FilaEsperaController {
 
         RemoverFilaEsperaCommand command = FilaEsperaMapper.toRemoverCommand(id);
 
-        // Este método já envia a mensagem automaticamente através do use case
         removerFilaEsperaUseCase.executar(command);
 
         log.info("Beneficiado removido da fila de espera com sucesso! Mensagem enviada para RabbitMQ.");
 
         return ResponseEntity.noContent().build();
-    }
-
-    /**
-     * Endpoint para testar o envio de mensagem manualmente (apenas para testes)
-     */
-    @Operation(summary = "Testar mensageria", description = "Endpoint para testar o envio de mensagens da fila de espera")
-    @PostMapping("/{id}/test-message")
-    public ResponseEntity<String> testarMensagem(@PathVariable Integer id) {
-        try {
-            BuscarFilaEsperaPorIdCommand command = FilaEsperaMapper.toBuscarPorIdCommand(id);
-            FilaEspera filaEspera = buscarFilaEsperaPorIdUseCase.executar(command);
-
-            if (filaEspera == null) {
-                return ResponseEntity.status(404).body("Fila de espera não encontrada");
-            }
-
-            // Testa envio manual da mensagem
-            messageProducer.enviarEventoEntradaFila(filaEspera);
-
-            return ResponseEntity.ok(String.format(
-                "Mensagem de teste enviada com sucesso para beneficiado: %s",
-                filaEspera.getBeneficiado().getNome()
-            ));
-
-        } catch (Exception e) {
-            log.error("Erro ao testar mensagem: {}", e.getMessage());
-            return ResponseEntity.internalServerError()
-                .body("Erro ao enviar mensagem de teste: " + e.getMessage());
-        }
     }
 }
