@@ -9,6 +9,20 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: 211004
+          MYSQL_DATABASE: tech4good
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
 
       # 1. Checkout do código
