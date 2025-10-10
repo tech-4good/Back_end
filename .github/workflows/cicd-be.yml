@@ -41,12 +41,12 @@ jobs:
       # 3. Execução dos testes automatizados do projeto
       - name: BE - Executar Testes automatizados
         run: mvn clean test      
-        working-directory: ./Tech4Good API
+        working-directory: ./Tech4Good_API
 
       # 4. Geração do .jar
       - name: BE - Gerar Artefato .JAR
         run: mvn package -DskipTests=true # -DskipTests=true pq os testes foram executados no passo anterior
-        working-directory: ./Tech4Good API
+        working-directory: ./Tech4Good_API
 
       # 5. Dando o mesmo nome sempre ao .jar
       - name: BE - Renomear JAR para app.jar # ou o nome que preferir parta o jar
@@ -61,7 +61,7 @@ jobs:
           mv $JAR_NAME target/app.jar
           
           echo "Renomeado para: target/app.jar"
-        working-directory: ./Tech4Good API
+        working-directory: ./Tech4Good_API
 
       # 6. Deploy (Transferência de arquivos e execução de comandos remotos)
       - name: BE - Copiar arquivos e Deploy (Usando SSH com rsync)
@@ -74,7 +74,7 @@ jobs:
           # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
           ARGS: "-rltgoDzvO --delete" 
           # SOURCE: O que será copiado. Apenas o .jar gerado no build
-          SOURCE: './Tech4Good API/target/app.jar'
+          SOURCE: './Tech4Good_API/target/app.jar'
           
 
       # 7. Fazendo o envio do jar da ec2 pública para a privada
