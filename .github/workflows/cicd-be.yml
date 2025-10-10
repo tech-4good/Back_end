@@ -74,7 +74,7 @@ jobs:
           # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
           ARGS: "-rltgoDzvO --delete" 
           # SOURCE: O que será copiado. Apenas o .jar gerado no build
-          SOURCE: "./Tech4Good API/target/app.jar"
+          SOURCE: './Tech4Good API/target/app.jar'
           
 
       # 7. Fazendo o envio do jar da ec2 pública para a privada
