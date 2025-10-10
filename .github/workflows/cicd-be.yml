@@ -18,7 +18,7 @@ jobs:
           distribution: 'corretto' # ou a distribuição que preferir
           java-version: '21'
           cache: 'maven' # Configura cache do Maven para acelerar builds futuros
-          project: Tech4Good API # Caminho para o arquivo pom.xml do projeto
+          project: Tech4Good API/pom.xml # Caminho para o arquivo pom.xml do projeto
 
       # 6. Execução dos testes automatizados do projeto
       - name: BE - Executar Testes automatizados
