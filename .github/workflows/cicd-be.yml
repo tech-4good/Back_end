@@ -11,26 +11,30 @@ jobs:
 
     steps:
 
-       # 5. Configuração do ambiente Java/Maven
+      # 1. Checkout do código
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+       # 2. Configuração do ambiente Java/Maven
       - name: BE - Configurar JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'corretto' # ou a distribuição que preferir
           java-version: '21'
           cache: 'maven' # Configura cache do Maven para acelerar builds futuros
-          project: Tech4Good API/pom.xml # Caminho para o arquivo pom.xml do projeto
+      
 
-      # 6. Execução dos testes automatizados do projeto
+      # 3. Execução dos testes automatizados do projeto
       - name: BE - Executar Testes automatizados
         run: mvn clean test      
         working-directory: ./Tech4Good API
 
-      # 7. Geração do .jar
+      # 4. Geração do .jar
       - name: BE - Gerar Artefato .JAR
         run: mvn package -DskipTests=true # -DskipTests=true pq os testes foram executados no passo anterior
         working-directory: ./Tech4Good API
 
-      # 7. Dando o mesmo nome sempre ao .jar
+      # 5. Dando o mesmo nome sempre ao .jar
       - name: BE - Renomear JAR para app.jar # ou o nome que preferir parta o jar
         run: |
           # Encontra o primeiro (e único) arquivo .jar gerado na pasta 'target'
@@ -45,7 +49,7 @@ jobs:
           echo "Renomeado para: target/app_loko.jar"
         working-directory: ./Tech4Good API
 
-      # 7. Deploy (Transferência de arquivos e execução de comandos remotos)
+      # 6. Deploy (Transferência de arquivos e execução de comandos remotos)
       - name: BE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
@@ -59,7 +63,7 @@ jobs:
           SOURCE: "./Tech4Good API/target/*.jar" 
           
 
-      # 8. Fazendo o envio do jar da ec2 pública para a privada
+      # 7. Fazendo o envio do jar da ec2 pública para a privada
       - name: BE - Executar Comando Shell na EC2
         uses: appleboy/ssh-action@v1.0.3 # Action popular para SSH
         with:
