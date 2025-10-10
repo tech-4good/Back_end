@@ -108,13 +108,17 @@ jobs:
 
                   
 
+
             # Garante que o diretório existe na EC2 privada
             ssh -i $ARQUIVO_PEM $USUARIO_IP 'sudo mkdir -p /usr/share/api/'
 
-            # enviando o arquivo .jar via scp para o ec2 privado
-            echo "Tentando enviar arquivo /home/${{ secrets.REMOTE_USER }}/backend/app.jar"
-            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/backend/app.jar $USUARIO_IP:/usr/share/api/app.jar
-            echo "Arquivo jar enviado ao ec2 privado"
+            # Envia o .jar para o home do usuário
+            echo "Tentando enviar arquivo /home/${{ secrets.REMOTE_USER }}/backend/app.jar para /home/ubuntu/app.jar"
+            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/backend/app.jar $USUARIO_IP:/home/ubuntu/app.jar
+
+            # Move com sudo para o destino final
+            ssh -i $ARQUIVO_PEM $USUARIO_IP 'sudo mv /home/ubuntu/app.jar /usr/share/api/app.jar && sudo chown root:root /usr/share/api/app.jar'
+            echo "Arquivo jar movido para /usr/share/api/app.jar"
 
             # reininciando o servico 'api' via docker compose
             ssh -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker compose restart api'            
