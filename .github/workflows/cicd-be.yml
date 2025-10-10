@@ -121,5 +121,5 @@ jobs:
             echo "Arquivo jar movido para /usr/share/api/app.jar"
 
             # reininciando o servico 'api' via docker compose
-            ssh -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker compose restart api'            
+            ssh -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker-compose restart api'            
             echo "servico reiniciado via docker compose"
