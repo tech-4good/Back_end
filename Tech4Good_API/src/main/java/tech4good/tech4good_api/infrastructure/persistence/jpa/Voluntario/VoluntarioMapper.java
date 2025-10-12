@@ -6,6 +6,7 @@ import tech4good.tech4good_api.core.application.command.voluntario.CadastrarVolu
 import tech4good.tech4good_api.core.application.command.voluntario.ListarVoluntarioPorIdCommand;
 import tech4good.tech4good_api.core.application.command.voluntario.RedefinirSenhaVoluntarioCommand;
 import tech4good.tech4good_api.core.application.command.voluntario.RemoverVoluntarioPorIdCommand;
+import tech4good.tech4good_api.core.application.command.voluntario.SolicitarRedefinicaoSenhaVoluntarioCommand;
 import tech4good.tech4good_api.core.application.dto.voluntario.AtualizarVoluntarioRequestDto;
 import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioListarDto;
 import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioLoginDto;
@@ -13,6 +14,7 @@ import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioRedefin
 import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioRequestDto;
 import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioResponseDto;
 import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioTokenDto;
+import tech4good.tech4good_api.core.application.dto.voluntario.VoluntarioSolicitarRedefinicaoSenhaDto;
 import tech4good.tech4good_api.core.domain.voluntario.Voluntario;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Cpf;
 import tech4good.tech4good_api.core.domain.shared.valueobject.Telefone;
@@ -159,6 +161,15 @@ public class VoluntarioMapper {
             voluntario.getEmail() != null ? voluntario.getEmail().toString() : null,
             token,
             voluntario.getAdministrador()
+        );
+    }
+
+    public static SolicitarRedefinicaoSenhaVoluntarioCommand toSolicitarRedefinicaoSenhaCommand(VoluntarioSolicitarRedefinicaoSenhaDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new SolicitarRedefinicaoSenhaVoluntarioCommand(
+            dto.getEmail()
         );
     }
 }

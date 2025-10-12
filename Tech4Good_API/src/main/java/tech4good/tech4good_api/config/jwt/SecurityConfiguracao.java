@@ -49,6 +49,7 @@ public class SecurityConfiguracao {
             "/v3/api-docs/**",
             "/actuator/*",
             "/voluntarios/login",
+            "/voluntarios/solicitar-redefinicao-senha",
             "/h2-console/**",
             "/error/**"
     };

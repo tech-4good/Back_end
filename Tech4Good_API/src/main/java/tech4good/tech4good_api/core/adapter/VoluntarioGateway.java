@@ -12,6 +12,5 @@ public interface VoluntarioGateway {
     List<Voluntario> listarTodos();
     Voluntario atualizar(AtualizarVoluntarioCommand command);
     void deletarPorId(Integer id);
-
     boolean existsById(Integer integer);
 }

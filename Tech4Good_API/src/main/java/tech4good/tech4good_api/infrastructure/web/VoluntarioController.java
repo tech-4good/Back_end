@@ -14,6 +14,7 @@ import tech4good.tech4good_api.core.application.command.voluntario.CadastrarVolu
 import tech4good.tech4good_api.core.application.command.voluntario.ListarVoluntarioPorIdCommand;
 import tech4good.tech4good_api.core.application.command.voluntario.RedefinirSenhaVoluntarioCommand;
 import tech4good.tech4good_api.core.application.command.voluntario.RemoverVoluntarioPorIdCommand;
+import tech4good.tech4good_api.core.application.command.voluntario.SolicitarRedefinicaoSenhaVoluntarioCommand;
 import tech4good.tech4good_api.core.application.dto.voluntario.*;
 import tech4good.tech4good_api.core.application.usecase.voluntario.*;
 import tech4good.tech4good_api.core.domain.voluntario.Voluntario;
@@ -33,6 +34,7 @@ public class VoluntarioController {
     private final AtualizarVoluntarioUseCase atualizarVoluntarioUseCase;
     private final RemoverVoluntarioPorIdUseCase removerVoluntarioPorIdUseCase;
     private final RedefinirSenhaVoluntarioUseCase redefinirSenhaVoluntarioUseCase;
+    private final SolicitarRedefinicaoSenhaVoluntarioUseCase solicitarRedefinicaoSenhaVoluntarioUseCase;
 
     public VoluntarioController(
         CadastrarVoluntarioUseCase cadastrarVoluntarioUseCase,
@@ -41,7 +43,8 @@ public class VoluntarioController {
         ListarVoluntariosUseCase listarVoluntariosUseCase,
         AtualizarVoluntarioUseCase atualizarVoluntarioUseCase,
         RemoverVoluntarioPorIdUseCase removerVoluntarioPorIdUseCase,
-        RedefinirSenhaVoluntarioUseCase redefinirSenhaVoluntarioUseCase
+        RedefinirSenhaVoluntarioUseCase redefinirSenhaVoluntarioUseCase,
+        SolicitarRedefinicaoSenhaVoluntarioUseCase solicitarRedefinicaoSenhaVoluntarioUseCase
     ) {
         this.cadastrarVoluntarioUseCase = cadastrarVoluntarioUseCase;
         this.autenticarVoluntarioUseCase = autenticarVoluntarioUseCase;
@@ -50,6 +53,7 @@ public class VoluntarioController {
         this.atualizarVoluntarioUseCase = atualizarVoluntarioUseCase;
         this.removerVoluntarioPorIdUseCase = removerVoluntarioPorIdUseCase;
         this.redefinirSenhaVoluntarioUseCase = redefinirSenhaVoluntarioUseCase;
+        this.solicitarRedefinicaoSenhaVoluntarioUseCase = solicitarRedefinicaoSenhaVoluntarioUseCase;
     }
 
     @Operation(summary = "Cadastrar voluntário", description = "Cria um novo voluntário no sistema")
@@ -119,6 +123,19 @@ public class VoluntarioController {
     public ResponseEntity<Void> redefinirSenha(@RequestBody @Valid VoluntarioRedefinirSenhaDto dto) {
         RedefinirSenhaVoluntarioCommand command = VoluntarioMapper.toRedefinirSenhaCommand(dto);
         redefinirSenhaVoluntarioUseCase.execute(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Solicitar redefinição de senha", description = "Envia mensagem para fila RabbitMQ para redefinição de senha do voluntário")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Mensagem enviada com sucesso para a fila"),
+        @ApiResponse(responseCode = "404", description = "Voluntário não encontrado com o email informado"),
+        @ApiResponse(responseCode = "400", description = "Email inválido")
+    })
+    @PostMapping("/solicitar-redefinicao-senha")
+    public ResponseEntity<Void> solicitarRedefinicaoSenha(@RequestBody @Valid VoluntarioSolicitarRedefinicaoSenhaDto dto) {
+        SolicitarRedefinicaoSenhaVoluntarioCommand command = VoluntarioMapper.toSolicitarRedefinicaoSenhaCommand(dto);
+        solicitarRedefinicaoSenhaVoluntarioUseCase.execute(command);
         return ResponseEntity.ok().build();
     }
 }

@@ -13,6 +13,8 @@ import tech4good.tech4good_api.core.application.usecase.voluntario.ListarVolunta
 import tech4good.tech4good_api.core.application.usecase.voluntario.ListarVoluntariosUseCase;
 import tech4good.tech4good_api.core.application.usecase.voluntario.RedefinirSenhaVoluntarioUseCase;
 import tech4good.tech4good_api.core.application.usecase.voluntario.RemoverVoluntarioPorIdUseCase;
+import tech4good.tech4good_api.core.application.usecase.voluntario.SolicitarRedefinicaoSenhaVoluntarioUseCase;
+import tech4good.tech4good_api.infrastructure.integration.messaging.VoluntarioMessageProducer;
 import tech4good.tech4good_api.infrastructure.persistence.jpa.Voluntario.VoluntarioJpaAdapter;
 
 @Configuration
@@ -58,5 +60,12 @@ public class VoluntarioBeanConfig {
     @Bean
     public RedefinirSenhaVoluntarioUseCase redefinirSenhaVoluntarioUseCase(VoluntarioJpaAdapter adapter, PasswordEncoder passwordEncoder) {
         return new RedefinirSenhaVoluntarioUseCase(adapter, passwordEncoder);
+    }
+
+    @Bean
+    public SolicitarRedefinicaoSenhaVoluntarioUseCase solicitarRedefinicaoSenhaVoluntarioUseCase(
+            VoluntarioJpaAdapter adapter,
+            VoluntarioMessageProducer messageProducer) {
+        return new SolicitarRedefinicaoSenhaVoluntarioUseCase(adapter, messageProducer);
     }
 }
