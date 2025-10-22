@@ -89,49 +89,113 @@ jobs:
           # Use o pipe '|' para comandos de múltiplas linhas
           script: |
             set -e
+            
+            echo "=========================================="
+            echo "🚀 Iniciando deploy do backend na EC2 privada"
+            echo "=========================================="
+            
             # criando um .pem temporário, baseado no secret do github
             ARQUIVO_PEM="/home/${{ secrets.REMOTE_USER }}/chavetmp.pem"
-            echo "Arquivo pem que sera criado: $ARQUIVO_PEM"
+            echo "📝 Criando arquivo PEM temporário: $ARQUIVO_PEM"
 
             # excluindo o arquivo .pem, caso exista
-            rm $ARQUIVO_PEM -f
-            echo "Arquivo .pem excluído"
+            rm -f $ARQUIVO_PEM
+            echo "✅ Arquivo .pem anterior removido (se existia)"
             
             echo "${{ secrets.EC2_SSH_KEY }}" > $ARQUIVO_PEM || true
-            echo "Arquivo pem criado"
             chmod 400 $ARQUIVO_PEM || true
-            echo "Permissões ao pem concedidas"
+            
+            # Verificar se o arquivo foi criado
+            if [ ! -f "$ARQUIVO_PEM" ]; then
+              echo "❌ ERRO: Arquivo PEM não foi criado!"
+              exit 1
+            fi
+            echo "✅ Arquivo PEM criado com permissões corretas"
+            
+            # Verificar tamanho do arquivo (debug)
+            ls -lh $ARQUIVO_PEM
 
-            # usuario e ip de destino:
+            # usuario e ip de destino
             USUARIO_IP=${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST_PRIVADO }}
-            echo "usuario@ip configurado: $USUARIO_IP"
-
-                  
-
+            echo "🌐 Target: $USUARIO_IP"
+            echo ""
+            
+            echo "🔍 Testando conectividade com a instância privada..."
+            # Testar conexão SSH com timeout de 30 segundos
+            if ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'echo "✅ Conexão SSH estabelecida com sucesso!"'; then
+              echo "✅ Conectividade OK"
+            else
+              echo "❌ ERRO: Não foi possível conectar à instância privada"
+              echo "   Verifique:"
+              echo "   1. Security Group permite SSH do web_sg"
+              echo "   2. Instância privada está rodando"
+              echo "   3. Chave SSH está configurada no authorized_keys"
+              exit 1
+            fi
+            echo ""
 
             # Garante que o diretório existe na EC2 privada
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mkdir -p /usr/share/api/'
+            echo "📁 Criando diretório /usr/share/api/ na instância privada..."
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mkdir -p /usr/share/api/'
 
+            echo "✅ Diretório criado"
+            echo ""
+            
             # Envia o .jar para o home do usuário
-            echo "Tentando enviar arquivo /home/${{ secrets.REMOTE_USER }}/backend/app.jar para /home/ubuntu/app.jar"
-            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/backend/app.jar $USUARIO_IP:/home/ubuntu/app.jar
+            echo "📦 Transferindo app.jar para a instância privada..."
+            echo "   Origem: /home/${{ secrets.REMOTE_USER }}/backend/app.jar"
+            echo "   Destino: /home/ubuntu/app.jar"
+            
+            if scp -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/backend/app.jar $USUARIO_IP:/home/ubuntu/app.jar; then
+              echo "✅ Arquivo transferido com sucesso"
+            else
+              echo "❌ ERRO: Falha ao transferir o arquivo JAR"
+              exit 1
+            fi
+            echo ""
 
             # Move com sudo para o destino final
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mv /home/ubuntu/app.jar /usr/share/api/app.jar && sudo chown root:root /usr/share/api/app.jar'
-            echo "Arquivo jar movido para /usr/share/api/app.jar"
+            echo "📂 Movendo JAR para /usr/share/api/..."
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mv /home/ubuntu/app.jar /usr/share/api/app.jar && sudo chown root:root /usr/share/api/app.jar'
+            echo "✅ JAR movido para /usr/share/api/app.jar"
+            echo ""
 
             # Para o container da API (se estiver rodando)
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml stop api || true'
-            echo "Container da API parado"
+            echo "🛑 Parando container da API..."
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml stop api || true'
+            echo "✅ Container parado"
+            echo ""
 
             # Remove o container antigo (força recriação)
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml rm -f api || true'
-            echo "Container antigo removido"
+            echo "🗑️  Removendo container antigo..."
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml rm -f api || true'
+            echo "✅ Container removido"
+            echo ""
 
             # Sobe o container da API novamente (garante que pegue o novo JAR)
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml up -d api'
-            echo "Container da API iniciado com o novo JAR"
+            echo "🚀 Iniciando container da API com o novo JAR..."
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml up -d api'
+            echo "✅ Container iniciado"
+            echo ""
 
+            # Aguarda container inicializar
+            echo "⏳ Aguardando 5 segundos para o container inicializar..."
+            sleep 5
+            
             # Verifica se o container está rodando
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep api-spring'
-            echo "Deploy do back-end concluído com sucesso!"
+            echo "🔍 Verificando se o container está rodando..."
+            if ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep api-spring'; then
+              echo "✅ Container está rodando!"
+            else
+              echo "⚠️  Container não encontrado, verificando logs..."
+              ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker-compose -f /home/ubuntu/compose.yaml logs api --tail=50'
+            fi
+            
+            echo ""
+            echo "=========================================="
+            echo "✅ Deploy do back-end concluído com sucesso!"
+            echo "=========================================="
+            
+            # Limpar arquivo PEM temporário por segurança
+            rm -f $ARQUIVO_PEM
+            echo "🧹 Arquivo PEM temporário removido"
