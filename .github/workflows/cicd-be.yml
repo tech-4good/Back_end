@@ -188,7 +188,7 @@ jobs:
 
             # Sobe o container da API novamente (garante que pegue o novo JAR)
             echo "🚀 Iniciando container da API com o novo JAR..."
-            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker run -d --name api-spring --restart unless-stopped -v /usr/share/api:/usr/share/api -p 8080:8080 --network tech4good-network -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/tech4good -e SPRING_DATASOURCE_USERNAME=tech4good -e SPRING_DATASOURCE_PASSWORD=tech4good123 amazoncorretto:21 sh -c "java -jar /usr/share/api/app.jar"'
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker run -d --name api-spring --restart unless-stopped --link mysql-db:mysql -v /usr/share/api:/usr/share/api -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/tech4good -e SPRING_DATASOURCE_USERNAME=tech4good -e SPRING_DATASOURCE_PASSWORD=tech4good123 amazoncorretto:21 sh -c "java -jar /usr/share/api/app.jar"'
             echo "✅ Container iniciado"
             echo ""
 
