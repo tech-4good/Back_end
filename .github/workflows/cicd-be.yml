@@ -70,11 +70,11 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: /home/${{ secrets.REMOTE_USER }}/backend
+          TARGET: /home/${{ secrets.REMOTE_USER }}/backend/
           # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
-          ARGS: "-rltgoDzvO --delete" 
+          ARGS: "-rltgoDzvO" 
           # SOURCE: O que será copiado. Apenas o .jar gerado no build
-          SOURCE: './Tech4Good_API/target/app.jar'
+          SOURCE: './Tech4Good_API/target/'
           
 
       # 7. Fazendo o envio do jar da ec2 pública para a privada
