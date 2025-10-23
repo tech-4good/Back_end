@@ -63,35 +63,21 @@ jobs:
           echo "Renomeado para: target/app.jar"
         working-directory: ./Tech4Good_API
 
-      # 6. Preparar diretório na Web1
-      - name: BE - Preparar diretório backend na Web1
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            # Remove arquivo ou diretório antigo
-            rm -rf /home/${{ secrets.REMOTE_USER }}/backend
-            # Cria diretório limpo
-            mkdir -p /home/${{ secrets.REMOTE_USER }}/backend
-            echo "✅ Diretório /home/${{ secrets.REMOTE_USER }}/backend preparado"
-
-      # 7. Deploy (Transferência de arquivos e execução de comandos remotos)
+      # 6. Deploy (Transferência de arquivos e execução de comandos remotos)
       - name: BE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: /home/${{ secrets.REMOTE_USER }}/backend/
+          TARGET: /home/${{ secrets.REMOTE_USER }}/backend
           # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
-          ARGS: "-rltgoDzvO" 
+          ARGS: "-rltgoDzvO --delete" 
           # SOURCE: O que será copiado. Apenas o .jar gerado no build
-          SOURCE: './Tech4Good_API/target/'
+          SOURCE: './Tech4Good_API/target/app.jar'
           
 
-      # 8. Fazendo o envio do jar da ec2 pública para a privada
+      # 7. Fazendo o envio do jar da ec2 pública para a privada
       - name: BE - Executar Comando Shell na EC2
         uses: appleboy/ssh-action@v1.0.3 # Action popular para SSH
         with:
@@ -103,120 +89,49 @@ jobs:
           # Use o pipe '|' para comandos de múltiplas linhas
           script: |
             set -e
-            
-            echo "=========================================="
-            echo "🚀 Iniciando deploy do backend na EC2 privada"
-            echo "=========================================="
-            
             # criando um .pem temporário, baseado no secret do github
             ARQUIVO_PEM="/home/${{ secrets.REMOTE_USER }}/chavetmp.pem"
-            echo "📝 Criando arquivo PEM temporário: $ARQUIVO_PEM"
+            echo "Arquivo pem que sera criado: $ARQUIVO_PEM"
 
             # excluindo o arquivo .pem, caso exista
-            rm -f $ARQUIVO_PEM
-            echo "✅ Arquivo .pem anterior removido (se existia)"
+            rm $ARQUIVO_PEM -f
+            echo "Arquivo .pem excluído"
             
             echo "${{ secrets.EC2_SSH_KEY }}" > $ARQUIVO_PEM || true
+            echo "Arquivo pem criado"
             chmod 400 $ARQUIVO_PEM || true
-            
-            # Verificar se o arquivo foi criado
-            if [ ! -f "$ARQUIVO_PEM" ]; then
-              echo "❌ ERRO: Arquivo PEM não foi criado!"
-              exit 1
-            fi
-            echo "✅ Arquivo PEM criado com permissões corretas"
-            
-            # Verificar tamanho do arquivo (debug)
-            ls -lh $ARQUIVO_PEM
+            echo "Permissões ao pem concedidas"
 
-            # usuario e ip de destino
+            # usuario e ip de destino:
             USUARIO_IP=${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST_PRIVADO }}
-            echo "🌐 Target: $USUARIO_IP"
-            echo ""
-            
-            echo "🔍 Testando conectividade com a instância privada..."
-            # Testar conexão SSH com timeout de 30 segundos
-            if ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'echo "✅ Conexão SSH estabelecida com sucesso!"'; then
-              echo "✅ Conectividade OK"
-            else
-              echo "❌ ERRO: Não foi possível conectar à instância privada"
-              echo "   Verifique:"
-              echo "   1. Security Group permite SSH do web_sg"
-              echo "   2. Instância privada está rodando"
-              echo "   3. Chave SSH está configurada no authorized_keys"
-              exit 1
-            fi
-            echo ""
+            echo "usuario@ip configurado: $USUARIO_IP"
 
-            # Copia compose-api.yaml para DB1 (se não existir ou estiver desatualizado)
-            echo "📄 Transferindo compose-api.yaml para DB1..."
-            scp -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/compose-api.yaml $USUARIO_IP:/home/ubuntu/compose-api.yaml
-            echo "✅ Compose copiado"
-            echo ""
+                  
+
 
             # Garante que o diretório existe na EC2 privada
-            echo "📁 Criando diretório /usr/share/api/ na instância privada..."
-            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mkdir -p /usr/share/api/'
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mkdir -p /usr/share/api/'
 
-            echo "✅ Diretório criado"
-            echo ""
-            
             # Envia o .jar para o home do usuário
-            echo "📦 Transferindo app.jar para a instância privada..."
-            echo "   Origem: /home/${{ secrets.REMOTE_USER }}/backend/app.jar"
-            echo "   Destino: /home/ubuntu/app.jar"
-            
-            if scp -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/backend/app.jar $USUARIO_IP:/home/ubuntu/app.jar; then
-              echo "✅ Arquivo transferido com sucesso"
-            else
-              echo "❌ ERRO: Falha ao transferir o arquivo JAR"
-              exit 1
-            fi
-            echo ""
+            echo "Tentando enviar arquivo /home/${{ secrets.REMOTE_USER }}/backend/app.jar para /home/ubuntu/app.jar"
+            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/backend/app.jar $USUARIO_IP:/home/ubuntu/app.jar
 
             # Move com sudo para o destino final
-            echo "📂 Movendo JAR para /usr/share/api/..."
-            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mv /home/ubuntu/app.jar /usr/share/api/app.jar && sudo chown root:root /usr/share/api/app.jar'
-            echo "✅ JAR movido para /usr/share/api/app.jar"
-            echo ""
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mv /home/ubuntu/app.jar /usr/share/api/app.jar && sudo chown root:root /usr/share/api/app.jar'
+            echo "Arquivo jar movido para /usr/share/api/app.jar"
 
-            # Verifica e garante que MySQL e RabbitMQ estão rodando
-            echo "🔍 Verificando containers MySQL e RabbitMQ..."
-            if ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep -E "(mysql-db|rabbitmq-tech4good)"'; then
-              echo "✅ Containers básicos já estão rodando"
-            else
-              echo "⚠️  Containers não encontrados, subindo via docker-compose..."
-              ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose-api.yaml up -d mysql rabbitmq'
-              echo "✅ MySQL e RabbitMQ iniciados"
-              echo "⏳ Aguardando MySQL inicializar..."
-              sleep 10
-            fi
-            echo ""
+            # Para o container da API (se estiver rodando)
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml stop api || true'
+            echo "Container da API parado"
 
-            # Reinicia o container da API com docker-compose (pega o JAR atualizado)
-            echo "� Reiniciando container da API via docker-compose..."
-            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose-api.yaml up -d --force-recreate api'
-            echo "✅ Container da API reiniciado"
-            echo ""
+            # Remove o container antigo (força recriação)
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml rm -f api || true'
+            echo "Container antigo removido"
 
-            # Aguarda container inicializar
-            echo "⏳ Aguardando 5 segundos para o container inicializar..."
-            sleep 5
-            
+            # Sobe o container da API novamente (garante que pegue o novo JAR)
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml up -d api'
+            echo "Container da API iniciado com o novo JAR"
+
             # Verifica se o container está rodando
-            echo "🔍 Verificando se o container está rodando..."
-            if ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep api-spring'; then
-              echo "✅ Container está rodando!"
-            else
-              echo "⚠️  Container não encontrado, verificando logs..."
-              ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker-compose -f /home/ubuntu/compose.yaml logs api --tail=50'
-            fi
-            
-            echo ""
-            echo "=========================================="
-            echo "✅ Deploy do back-end concluído com sucesso!"
-            echo "=========================================="
-            
-            # Limpar arquivo PEM temporário por segurança
-            rm -f $ARQUIVO_PEM
-            echo "🧹 Arquivo PEM temporário removido"
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep api-spring'
+            echo "Deploy do back-end concluído com sucesso!"
