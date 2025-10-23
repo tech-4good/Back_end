@@ -63,7 +63,19 @@ jobs:
           echo "Renomeado para: target/app.jar"
         working-directory: ./Tech4Good_API
 
-      # 6. Deploy (Transferência de arquivos e execução de comandos remotos)
+      # 6. Preparar diretório backend na Web1
+      - name: BE - Preparar diretório na Web1
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            rm -rf /home/${{ secrets.REMOTE_USER }}/backend
+            mkdir -p /home/${{ secrets.REMOTE_USER }}/backend
+            echo "✅ Diretório preparado"
+
+      # 7. Deploy (Transferência de arquivos e execução de comandos remotos)
       - name: BE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
@@ -75,8 +87,8 @@ jobs:
           SOURCE: './Tech4Good_API/target/'
           
 
-      # 7. Fazendo o envio do jar da ec2 pública para a privada
-      - name: BE - Executar Comando Shell na EC2
+      # 8. Deploy para DB1 (instância privada)
+      - name: BE - Deploy para DB1
         uses: appleboy/ssh-action@v1.0.3 # Action popular para SSH
         with:
           host: ${{ secrets.REMOTE_HOST }} 
