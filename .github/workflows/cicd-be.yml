@@ -176,19 +176,19 @@ jobs:
 
             # Para o container da API (se estiver rodando)
             echo "🛑 Parando container da API..."
-            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml stop api || true'
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker stop api-spring || true'
             echo "✅ Container parado"
             echo ""
 
             # Remove o container antigo (força recriação)
             echo "🗑️  Removendo container antigo..."
-            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml rm -f api || true'
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker rm api-spring || true'
             echo "✅ Container removido"
             echo ""
 
             # Sobe o container da API novamente (garante que pegue o novo JAR)
             echo "🚀 Iniciando container da API com o novo JAR..."
-            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml up -d api'
+            ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker run -d --name api-spring --restart unless-stopped -v /usr/share/api:/usr/share/api -p 8080:8080 --network tech4good-network -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/tech4good -e SPRING_DATASOURCE_USERNAME=tech4good -e SPRING_DATASOURCE_PASSWORD=tech4good123 amazoncorretto:21 sh -c "java -jar /usr/share/api/app.jar"'
             echo "✅ Container iniciado"
             echo ""
 
