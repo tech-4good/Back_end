@@ -70,11 +70,9 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: /home/${{ secrets.REMOTE_USER }}/backend
-          # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
-          ARGS: "-rltgoDzvO --delete" 
-          # SOURCE: O que será copiado. Apenas o .jar gerado no build
-          SOURCE: './Tech4Good_API/target/app.jar'
+          TARGET: /home/${{ secrets.REMOTE_USER }}/backend/
+          ARGS: "-rltgoDzvO" 
+          SOURCE: './Tech4Good_API/target/'
           
 
       # 7. Fazendo o envio do jar da ec2 pública para a privada
@@ -120,17 +118,9 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mv /home/ubuntu/app.jar /usr/share/api/app.jar && sudo chown root:root /usr/share/api/app.jar'
             echo "Arquivo jar movido para /usr/share/api/app.jar"
 
-            # Para o container da API (se estiver rodando)
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml stop api || true'
-            echo "Container da API parado"
-
-            # Remove o container antigo (força recriação)
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml rm -f api || true'
-            echo "Container antigo removido"
-
-            # Sobe o container da API novamente (garante que pegue o novo JAR)
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose.yaml up -d api'
-            echo "Container da API iniciado com o novo JAR"
+            # Reinicia o container da API via docker-compose (força usar o JAR atualizado)
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose-api.yaml up -d --force-recreate api'
+            echo "Container da API reiniciado com o novo JAR"
 
             # Verifica se o container está rodando
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep api-spring'
