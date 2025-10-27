@@ -64,16 +64,17 @@ jobs:
         working-directory: ./Tech4Good_API
 
       # 6. Preparar diretório backend na Web1
-      - name: BE - Preparar diretório na Web1
+      - name: BE - Preparar diretório backend na Web1
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            rm -rf /home/${{ secrets.REMOTE_USER }}/backend
+            sudo rm -rf /home/${{ secrets.REMOTE_USER }}/backend
             mkdir -p /home/${{ secrets.REMOTE_USER }}/backend
-            echo "✅ Diretório preparado"
+            chmod 755 /home/${{ secrets.REMOTE_USER }}/backend
+            echo "✅ Diretório backend preparado em /home/${{ secrets.REMOTE_USER }}/backend"
 
       # 7. Deploy (Transferência de arquivos e execução de comandos remotos)
       - name: BE - Copiar arquivos e Deploy (Usando SSH com rsync)
