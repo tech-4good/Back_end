@@ -131,19 +131,20 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mv /home/ubuntu/app.jar /usr/share/api/app.jar && sudo chown root:root /usr/share/api/app.jar'
             echo "Arquivo jar movido para /usr/share/api/app.jar"
 
-            # Copia compose-api.yaml da Web1 para DB1 (se existir na Web1)
-            if [ -f "/home/${{ secrets.REMOTE_USER }}/compose.yaml" ]; then
-              echo "Copiando compose-api.yaml da Web1 para DB1..."
-              scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/compose.yaml $USUARIO_IP:/home/ubuntu/compose-api.yaml
-              echo "✅ compose-api.yaml copiado para DB1"
+            # Copia compose-api.yaml da Web1 para DB1
+            echo "Copiando compose-api.yaml da Web1 para DB1..."
+            if [ -f "/home/${{ secrets.REMOTE_USER }}/compose-api.yaml" ]; then
+              scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/compose-api.yaml $USUARIO_IP:/home/ubuntu/compose-api.yaml
+              echo "✅ compose-api.yaml copiado da Web1 para DB1"
             else
-              echo "⚠️  compose.yaml não encontrado na Web1, verificando se já existe na DB1..."
+              echo "❌ ERRO: compose-api.yaml não encontrado na Web1 em /home/${{ secrets.REMOTE_USER }}/compose-api.yaml"
+              echo "Verifique se o Terraform criou o arquivo na Web1"
+              exit 1
             fi
             
             # Verifica se compose-api.yaml existe na DB1
             if ! ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'test -f /home/ubuntu/compose-api.yaml'; then
-              echo "❌ ERRO: compose-api.yaml não existe na DB1!"
-              echo "Verifique se o Terraform criou o arquivo ou se compose.yaml existe na Web1"
+              echo "❌ ERRO: Falha ao copiar compose-api.yaml para DB1!"
               exit 1
             fi
             echo "✅ compose-api.yaml confirmado na DB1"
