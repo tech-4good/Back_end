@@ -166,12 +166,14 @@ def main():
     print("Tech4Good - Consumer da Fila de Espera")
     print("=" * 60)
     
-    # Você pode personalizar as configurações aqui:
+    # Configurações para produção na AWS
+    # Use localhost se rodar na mesma máquina que o RabbitMQ
+    # Use 10.0.0.20 se rodar de outra instância (IP privado da DB1)
     consumer = FilaEsperaConsumer(
-        rabbitmq_host='localhost',  # Altere para o IP do seu RabbitMQ se necessário
+        rabbitmq_host='10.0.0.20',  # IP privado da DB1 onde RabbitMQ está rodando
         rabbitmq_port=5672,         # Porta padrão do RabbitMQ
-        rabbitmq_user='admin',      # Usuário do RabbitMQ (conforme docker-compose.yml)
-        rabbitmq_password='admin123',  # Senha do RabbitMQ (conforme docker-compose.yml)
+        rabbitmq_user='admin',      # Usuário do RabbitMQ (conforme compose-api.yaml)
+        rabbitmq_password='admin123',  # Senha do RabbitMQ (conforme compose-api.yaml)
         queue_name='tech4good.filaespera.queue'  # Nome da fila configurada no Java
     )
     
