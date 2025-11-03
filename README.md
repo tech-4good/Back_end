@@ -3,8 +3,8 @@ Repositório destinado para o desenvolvimento Back-end
 
 
 <<<<<<< HEAD
-<!-- Last Deploy: 30/10/2025 18:00:51 -->
+<!-- Last Deploy: 03/11/2025 16:56:08 -->
 =======
-<!-- Last Deploy: 30/10/2025 18:00:51 -->
-<!-- Last Deploy: 30/10/2025 18:00:51 -->
+<!-- Last Deploy: 03/11/2025 16:56:08 -->
+<!-- Last Deploy: 03/11/2025 16:56:08 -->
 >>>>>>> 424f86198abd3a69e8325f5d56083033d027302b
