@@ -16,6 +16,7 @@ import tech4good.tech4good_api.core.application.exception.ConflitoEntidadeExcept
 import tech4good.tech4good_api.core.application.exception.EntidadeNaoEncontradaException;
 import tech4good.tech4good_api.core.application.usecase.endereco.AtualizarEnderecoUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.CadastrarEnderecoUseCase;
+import tech4good.tech4good_api.core.application.usecase.endereco.DefinirStatusInicialEnderecoUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.ListarEnderecoPorIdUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.ListarEnderecosUseCase;
 import tech4good.tech4good_api.core.application.usecase.endereco.RemoverEnderecoPorIdUseCase;
@@ -39,8 +40,8 @@ class EnderecoUseCaseTest {
     @Mock
     private EnderecoGateway gateway;
 
-    @InjectMocks
-    private CadastrarEnderecoUseCase cadastrarUseCase;
+    @Mock
+    private DefinirStatusInicialEnderecoUseCase definirStatusInicialUseCase;
 
     @InjectMocks
     private ListarEnderecoPorIdUseCase listarPorIdUseCase;
@@ -54,12 +55,13 @@ class EnderecoUseCaseTest {
     @InjectMocks
     private RemoverEnderecoPorIdUseCase removerUseCase;
 
+    private CadastrarEnderecoUseCase cadastrarUseCase;
     private Endereco endereco;
     private CadastrarEnderecoCommand cadastrarCommand;
 
     @BeforeEach
     void setUp() {
-        cadastrarUseCase = new CadastrarEnderecoUseCase(gateway);
+        cadastrarUseCase = new CadastrarEnderecoUseCase(gateway, definirStatusInicialUseCase);
         listarPorIdUseCase = new ListarEnderecoPorIdUseCase(gateway);
         listarEnderecosUseCase = new ListarEnderecosUseCase(gateway);
         atualizarUseCase = new AtualizarEnderecoUseCase(gateway);
@@ -74,11 +76,11 @@ class EnderecoUseCaseTest {
         endereco.setCidade(Cidade.of("São Paulo"));
         endereco.setEstado(Estado.SP);
         endereco.setCep(Cep.valueOf("01001000"));
-        endereco.setTipoCesta(TipoCesta.KIT);
+        endereco.setTipoCesta(TipoCesta.BASICA);
         endereco.setDataEntrada(LocalDate.of(2025, 1, 10));
         endereco.setMoradia("Alugada");
         endereco.setTipoMoradia(TipoMoradia.of("Apartamento"));
-        endereco.setStatus(Status.ABERTO);
+        endereco.setStatus(Status.ATIVO);
 
         cadastrarCommand = new CadastrarEnderecoCommand(
                 "Avenida Marechal Tito",
@@ -88,12 +90,9 @@ class EnderecoUseCaseTest {
                 Cidade.of("São Paulo"),
                 Estado.SP,
                 Cep.valueOf("01001000"),
-                TipoCesta.KIT,
-                LocalDate.of(2025, 1, 10),
-                null,
+                TipoCesta.BASICA,
                 "Alugada",
-                TipoMoradia.of("Apartamento"),
-                Status.ABERTO
+                TipoMoradia.of("Apartamento")
         );
     }
 
@@ -101,12 +100,14 @@ class EnderecoUseCaseTest {
     @DisplayName("cadastrarEndereco() quando acionado com endereço válido, deve cadastrar corretamente")
     void cadastrarEnderecoComEnderecoValidoDeveCadastrarCorretamenteTest() {
         when(gateway.existsByCepAndNumero(anyString(), anyString())).thenReturn(false);
+        when(definirStatusInicialUseCase.executar(any(Endereco.class))).thenReturn(endereco);
         when(gateway.save(any(Endereco.class))).thenReturn(endereco);
 
         Endereco resultado = cadastrarUseCase.executar(cadastrarCommand);
 
         assertNotNull(resultado);
         verify(gateway, times(1)).existsByCepAndNumero(anyString(), anyString());
+        verify(definirStatusInicialUseCase, times(1)).executar(any(Endereco.class));
         verify(gateway, times(1)).save(any(Endereco.class));
     }
 
@@ -173,7 +174,7 @@ class EnderecoUseCaseTest {
     @Test
     @DisplayName("atualizarEndereco() quando acionado com ID válido, deve atualizar endereço")
     void atualizarEnderecoQuandoAcionadoComIdValidoDeveAtualizarEnderecoTest() {
-        AtualizarEnderecoCommand command = new AtualizarEnderecoCommand(1, Status.FECHADO);
+        AtualizarEnderecoCommand command = new AtualizarEnderecoCommand(1, Status.INATIVO);
         when(gateway.findById(1)).thenReturn(Optional.of(endereco));
         when(gateway.save(any(Endereco.class))).thenReturn(endereco);
 
@@ -187,7 +188,7 @@ class EnderecoUseCaseTest {
     @Test
     @DisplayName("atualizarEndereco() quando acionado com ID inválido, deve lançar EntidadeNaoEncontradaException")
     void atualizarEnderecoQuandoAcionadoComIdInvalidoDeveLancarExcecaoTest() {
-        AtualizarEnderecoCommand command = new AtualizarEnderecoCommand(999, Status.FECHADO);
+        AtualizarEnderecoCommand command = new AtualizarEnderecoCommand(999, Status.INATIVO);
         when(gateway.findById(999)).thenReturn(Optional.empty());
 
         assertThrows(EntidadeNaoEncontradaException.class, () -> atualizarUseCase.executar(command));

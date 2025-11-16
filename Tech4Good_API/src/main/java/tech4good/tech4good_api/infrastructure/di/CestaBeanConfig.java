@@ -4,20 +4,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech4good.tech4good_api.core.adapter.CestaGateway;
 import tech4good.tech4good_api.core.application.usecase.cesta.*;
-import tech4good.tech4good_api.infrastructure.persistence.jpa.Cesta.CestaJpaAdapter;
-import tech4good.tech4good_api.infrastructure.persistence.jpa.Cesta.CestaJpaRepository;
+import tech4good.tech4good_api.core.application.usecase.endereco.ProcessarFilaEsperaAoCadastrarCestaUseCase;
+import tech4good.tech4good_api.core.application.usecase.endereco.VerificarEnderecosInativosUseCase;
 
 @Configuration
 public class CestaBeanConfig {
 
     @Bean
-    public CestaGateway cestaGateway(CestaJpaRepository cestaJpaRepository) {
-        return new CestaJpaAdapter(cestaJpaRepository);
-    }
-
-    @Bean
-    public CadastrarCestaUseCase cadastrarCestaUseCase(CestaGateway cestaGateway) {
-        return new CadastrarCestaUseCase(cestaGateway);
+    public CadastrarCestaUseCase cadastrarCestaUseCase(
+            CestaGateway cestaGateway,
+            ProcessarFilaEsperaAoCadastrarCestaUseCase processarFilaUseCase,
+            VerificarEnderecosInativosUseCase verificarInativosUseCase) {
+        return new CadastrarCestaUseCase(cestaGateway, processarFilaUseCase, verificarInativosUseCase);
     }
 
     @Bean

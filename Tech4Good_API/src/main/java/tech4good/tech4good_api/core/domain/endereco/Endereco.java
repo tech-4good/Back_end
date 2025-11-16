@@ -17,11 +17,12 @@ public class Endereco {
     private TipoCesta tipoCesta;
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
+    private LocalDate dataEntradaFila;
     private String moradia;
     private TipoMoradia tipoMoradia;
     private Status status;
 
-    public Endereco(Integer id, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, TipoMoradia tipoMoradia, Status status) {
+    public Endereco(Integer id, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, LocalDate dataEntradaFila, String moradia, TipoMoradia tipoMoradia, Status status) {
 
         if (logradouro == null || logradouro.trim().isEmpty()) {
             throw new IllegalArgumentException("Logradouro é obrigatório.");
@@ -50,6 +51,7 @@ public class Endereco {
         this.tipoCesta = tipoCesta;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
+        this.dataEntradaFila = dataEntradaFila;
         this.moradia = moradia;
         this.tipoMoradia = tipoMoradia;
         this.status = status;
@@ -144,6 +146,14 @@ public class Endereco {
 
     public void setDataSaida(LocalDate dataSaida) {
         this.dataSaida = dataSaida;
+    }
+
+    public LocalDate getDataEntradaFila() {
+        return dataEntradaFila;
+    }
+
+    public void setDataEntradaFila(LocalDate dataEntradaFila) {
+        this.dataEntradaFila = dataEntradaFila;
     }
 
     public String getMoradia() {

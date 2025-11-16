@@ -1,13 +1,14 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Cesta;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import tech4good.tech4good_api.core.adapter.CestaGateway;
 import tech4good.tech4good_api.core.domain.cesta.Cesta;
+import tech4good.tech4good_api.core.domain.shared.valueobject.TipoCesta;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class CestaJpaAdapter implements CestaGateway {
 
     private final CestaJpaRepository cestaJpaRepository;
@@ -45,5 +46,11 @@ public class CestaJpaAdapter implements CestaGateway {
     @Override
     public void deleteById(Integer id) {
         cestaJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public Long countByTipo(TipoCesta tipo) {
+        // Retorna a SOMA de todas as quantidades de cestas do tipo, não a contagem de registros
+        return cestaJpaRepository.sumQuantidadeByTipo(tipo);
     }
 }

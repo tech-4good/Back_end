@@ -3,8 +3,6 @@ package tech4good.tech4good_api.core.application.dto.endereco;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
-import java.time.LocalDate;
-
 public class EnderecoRequestDto {
 
     @Schema(description = "Rua ou Avenida", example = "Avenida Marechal Tito")
@@ -31,24 +29,15 @@ public class EnderecoRequestDto {
     @Schema(description = "Tipo de cesta que o endereço pode receber atualmente", example = "Kit")
     @NotBlank
     private String tipoCesta;
-    @Schema(description = "Data de entrada no projeto ASA", example = "2025-02-10")
-    @NotNull
-    @PastOrPresent
-    private LocalDate dataEntrada;
-    @Schema(description = "Data de saída do projeto ASA", example = "2025-12-25")
-    private LocalDate dataSaida;
     @Schema(description = "Tipo de obtenção da moradia", example = "Alugada")
     private String moradia;
     @Schema(description = "Nome do tipo da moradia", example = "Apartamento")
     private String tipoMoradia;
-    @Schema(description = "Controle para saber se ainda está participando da ASA", example = "Aberto")
-    @NotBlank
-    private String status;
 
     public EnderecoRequestDto() {
     }
 
-    public EnderecoRequestDto(String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, String tipoMoradia, String status) {
+    public EnderecoRequestDto(String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, String tipoCesta, String moradia, String tipoMoradia) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -57,11 +46,8 @@ public class EnderecoRequestDto {
         this.estado = estado;
         this.cep = cep;
         this.tipoCesta = tipoCesta;
-        this.dataEntrada = dataEntrada;
-        this.dataSaida = dataSaida;
         this.moradia = moradia;
         this.tipoMoradia = tipoMoradia;
-        this.status = status;
     }
 
     public String getLogradouro() {
@@ -128,22 +114,6 @@ public class EnderecoRequestDto {
         this.tipoCesta = tipoCesta;
     }
 
-    public LocalDate getDataEntrada() {
-        return dataEntrada;
-    }
-
-    public void setDataEntrada(LocalDate dataEntrada) {
-        this.dataEntrada = dataEntrada;
-    }
-
-    public LocalDate getDataSaida() {
-        return dataSaida;
-    }
-
-    public void setDataSaida(LocalDate dataSaida) {
-        this.dataSaida = dataSaida;
-    }
-
     public String getMoradia() {
         return moradia;
     }
@@ -158,13 +128,5 @@ public class EnderecoRequestDto {
 
     public void setTipoMoradia(String tipoMoradia) {
         this.tipoMoradia = tipoMoradia;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

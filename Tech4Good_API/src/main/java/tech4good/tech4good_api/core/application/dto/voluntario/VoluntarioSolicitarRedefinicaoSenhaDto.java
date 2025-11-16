@@ -15,4 +15,3 @@ public class VoluntarioSolicitarRedefinicaoSenhaDto {
     @Email(message = "Email deve ser válido")
     private String email;
 }
-

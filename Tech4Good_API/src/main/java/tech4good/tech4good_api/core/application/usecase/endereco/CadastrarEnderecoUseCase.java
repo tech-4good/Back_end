@@ -9,9 +9,11 @@ import tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco.EnderecoM
 public class CadastrarEnderecoUseCase {
 
     private final EnderecoGateway gateway;
+    private final DefinirStatusInicialEnderecoUseCase definirStatusUseCase;
 
-    public CadastrarEnderecoUseCase(EnderecoGateway gateway) {
+    public CadastrarEnderecoUseCase(EnderecoGateway gateway, DefinirStatusInicialEnderecoUseCase definirStatusUseCase) {
         this.gateway = gateway;
+        this.definirStatusUseCase = definirStatusUseCase;
     }
 
     public Endereco executar(CadastrarEnderecoCommand command) {
@@ -19,6 +21,10 @@ public class CadastrarEnderecoUseCase {
             throw new ConflitoEntidadeException("O endereço já existe na base de dados");
         }
         Endereco endereco = EnderecoMapper.toDomain(command);
+
+        // Definir status inicial baseado na disponibilidade de cestas BÁSICAS
+        endereco = definirStatusUseCase.executar(endereco);
+
         return gateway.save(endereco);
     }
 }

@@ -48,6 +48,9 @@ public class EnderecoEntity {
     @Schema(description = "Data de saída no projeto ASA", example = "2025/06/22")
     @Column(name = "data_saida")
     private LocalDate dataSaida;
+    @Schema(description = "Data de entrada na fila de espera", example = "2025/03/15")
+    @Column(name = "data_entrada_fila")
+    private LocalDate dataEntradaFila;
     @Schema(description = "Tipo de obtenção da moradia", example = "Alugada")
     private String moradia;
     @Schema(description = "Nome do tipo da moradia", example = "Apartamento")
@@ -60,7 +63,7 @@ public class EnderecoEntity {
 
     public EnderecoEntity() {}
 
-    public EnderecoEntity(Integer idEndereco, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, String moradia, TipoMoradia tipoMoradia, Status status) {
+    public EnderecoEntity(Integer idEndereco, String logradouro, String numero, String complemento, Bairro bairro, Cidade cidade, Estado estado, Cep cep, TipoCesta tipoCesta, LocalDate dataEntrada, LocalDate dataSaida, LocalDate dataEntradaFila, String moradia, TipoMoradia tipoMoradia, Status status) {
         this.idEndereco = idEndereco;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -72,6 +75,7 @@ public class EnderecoEntity {
         this.tipoCesta = tipoCesta;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
+        this.dataEntradaFila = dataEntradaFila;
         this.moradia = moradia;
         this.tipoMoradia = tipoMoradia;
         this.status = status;
@@ -163,6 +167,14 @@ public class EnderecoEntity {
 
     public void setDataSaida(LocalDate dataSaida) {
         this.dataSaida = dataSaida;
+    }
+
+    public LocalDate getDataEntradaFila() {
+        return dataEntradaFila;
+    }
+
+    public void setDataEntradaFila(LocalDate dataEntradaFila) {
+        this.dataEntradaFila = dataEntradaFila;
     }
 
     public String getMoradia() {

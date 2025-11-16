@@ -29,11 +29,9 @@ public class EnderecoMapper {
         endereco.setEstado(command.estado());
         endereco.setCep(command.cep());
         endereco.setTipoCesta(command.tipoCesta());
-        endereco.setDataEntrada(command.dataEntrada());
-        endereco.setDataSaida(command.dataSaida());
         endereco.setMoradia(command.moradia());
         endereco.setTipoMoradia(command.tipoMoradia());
-        endereco.setStatus(command.status());
+        // dataEntrada, dataSaida, status e dataEntradaFila são definidos pelo DefinirStatusInicialEnderecoUseCase
         return endereco;
     }
 
@@ -49,7 +47,6 @@ public class EnderecoMapper {
         Cep cep = Cep.valueOf(dto.getCep());
         TipoCesta tipoCesta = TipoCesta.fromString(dto.getTipoCesta());
         TipoMoradia tipoMoradia = TipoMoradia.of(dto.getTipoMoradia());
-        Status status = Status.fromString(dto.getStatus());
 
         return new CadastrarEnderecoCommand(
             dto.getLogradouro(),      // String
@@ -60,11 +57,8 @@ public class EnderecoMapper {
             estado,                   // Estado
             cep,                      // Cep
             tipoCesta,                // TipoCesta
-            dto.getDataEntrada(),     // LocalDate
-            dto.getDataSaida(),       // LocalDate (CORRIGIDO - agora usa o valor do DTO)
             dto.getMoradia(),         // String
-            tipoMoradia,              // TipoMoradia
-            status                    // Status
+            tipoMoradia               // TipoMoradia
         );
     }
 
@@ -84,6 +78,7 @@ public class EnderecoMapper {
         entity.setTipoCesta(endereco.getTipoCesta());
         entity.setDataEntrada(endereco.getDataEntrada());
         entity.setDataSaida(endereco.getDataSaida());
+        entity.setDataEntradaFila(endereco.getDataEntradaFila());
         entity.setMoradia(endereco.getMoradia());
         entity.setTipoMoradia(endereco.getTipoMoradia());
         entity.setStatus(endereco.getStatus());
@@ -106,6 +101,7 @@ public class EnderecoMapper {
         endereco.setTipoCesta(entity.getTipoCesta());
         endereco.setDataEntrada(entity.getDataEntrada());
         endereco.setDataSaida(entity.getDataSaida());
+        endereco.setDataEntradaFila(entity.getDataEntradaFila());
         endereco.setMoradia(entity.getMoradia());
         endereco.setTipoMoradia(entity.getTipoMoradia());
         endereco.setStatus(entity.getStatus());
