@@ -1,5 +1,5 @@
 ﻿# Back_end
-Repositório destinado para o desenvolvimento Back-end
+Repositório destinado para o desenvolvimento Back-enD
 
 
 <<<<<<< HEAD
