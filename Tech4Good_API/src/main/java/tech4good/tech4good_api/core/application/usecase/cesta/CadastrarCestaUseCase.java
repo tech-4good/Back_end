@@ -23,13 +23,15 @@ public class CadastrarCestaUseCase {
     }
 
     public Cesta executar(CadastrarCestaCommand command) {
-        Cesta cesta = CestaMapper.toDomain(command);
-        Cesta cestaSalva = cestaGateway.save(cesta);
-
         // Primeiro: verificar e inativar endereços que completaram 4 meses
         verificarInativosUseCase.executar();
 
-        // Depois: processar fila de espera se for cesta BÁSICA, passando a quantidade correta
+        // Depois: salvar a cesta
+        Cesta cesta = CestaMapper.toDomain(command);
+        Cesta cestaSalva = cestaGateway.save(cesta);
+
+        // Por último: processar fila de espera se for cesta BÁSICA
+        // A quantidade passada é exatamente a quantidade de cestas NESTE cadastro
         processarFilaUseCase.executar(cestaSalva.getTipo(), cestaSalva.getQuantidadeCestas());
 
         return cestaSalva;

@@ -32,15 +32,12 @@ public class DefinirStatusInicialEnderecoUseCase {
      * @return Endereço com status definido
      */
     public Endereco executar(Endereco endereco) {
-        // Contar cestas BÁSICAS disponíveis
+        // Contar total de cestas BÁSICAS disponíveis (soma de todas as quantidades)
         Long totalCestasBasicas = cestaGateway.countByTipo(TipoCesta.BASICA);
 
-        // Contar endereços ATIVOS (antes de salvar o novo)
+        // Contar APENAS endereços ATIVOS (não conta os que estão na fila)
         Long totalEnderecosAtivos = enderecoGateway.countByStatus(Status.ATIVO);
 
-        // Verificar se há vaga disponível
-        // Exemplo: 2 cestas e 1 ativo → 2 > 1 = true (pode ativar o 2º)
-        //          2 cestas e 2 ativos → 2 > 2 = false (vai pra fila)
         boolean temVagaDisponivel = totalCestasBasicas > totalEnderecosAtivos;
 
         if (temVagaDisponivel) {
