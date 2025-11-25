@@ -265,14 +265,14 @@ class BeneficiadoUseCaseTest {
     void atualizarBeneficiadoQuandoAcionadoComIdValidoDeveAtualizarBeneficiadoTest() {
         AtualizarBeneficiadoCommand command = new AtualizarBeneficiadoCommand(
                 "São Paulo",
-                Telefone.valueOf("11987654321"),
-                EstadoCivil.CASADO,
+                Telefone.valueOf("11987654321").getValue(),
+                EstadoCivil.CASADO.getDescricao(),
                 "Superior Completo",
                 "Engenheira",
-                Renda.valueOf(5000.0),
+                Renda.valueOf(5000.0).getValue(),
                 "Empresa XYZ",
                 "Engenheira Civil",
-                Religiao.valueOf("Evangélico"),
+                Religiao.valueOf("Evangélico").getValue(),
                 2,
                 null,
                 null
@@ -301,7 +301,7 @@ class BeneficiadoUseCaseTest {
     void atualizarBeneficiadoQuandoAcionadoComIdInvalidoDeveLancarEntidadeNaoEncontradaExceptionTest() {
         AtualizarBeneficiadoCommand command = new AtualizarBeneficiadoCommand(
                 null,
-                Telefone.valueOf("11999999999"),
+                Telefone.valueOf("11999999999").getValue(),
                 null,
                 null,
                 "Professora",
