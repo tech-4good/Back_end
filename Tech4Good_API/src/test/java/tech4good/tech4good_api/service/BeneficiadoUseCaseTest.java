@@ -266,7 +266,7 @@ class BeneficiadoUseCaseTest {
         AtualizarBeneficiadoCommand command = new AtualizarBeneficiadoCommand(
                 "São Paulo",
                 Telefone.valueOf("11987654321").getValue(),
-                EstadoCivil.CASADO.getDescricao(),
+                EstadoCivil.CASADO.toString(),
                 "Superior Completo",
                 "Engenheira",
                 Renda.valueOf(5000.0).getValue(),
