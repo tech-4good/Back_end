@@ -8,14 +8,20 @@ import java.util.Collection;
 import java.util.List;
 
 public class VoluntarioDetalhesDto implements UserDetails {
+    private final Integer id;
     private final String nome;
     private final String email;
     private final String senha;
 
     public VoluntarioDetalhesDto(Voluntario voluntario) {
+        this.id = voluntario.getId();
         this.nome = voluntario.getNome();
         this.email = voluntario.getEmail() != null ? voluntario.getEmail().toString() : null;
         this.senha = voluntario.getSenha();
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getNome() {
@@ -42,7 +48,7 @@ public class VoluntarioDetalhesDto implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return id != null ? id.toString() : null;
     }
 
     @Override

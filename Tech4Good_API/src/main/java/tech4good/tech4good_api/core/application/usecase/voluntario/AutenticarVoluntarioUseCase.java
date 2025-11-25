@@ -27,17 +27,18 @@ public class AutenticarVoluntarioUseCase {
     }
 
     public VoluntarioTokenDto execute(AutenticarVoluntarioCommand command) {
-        final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
-                command.email(), command.senha()
-        );
-
-        final Authentication authentication = this.authenticationManager.authenticate(credentials);
-
+    
         Voluntario voluntarioAutenticado = voluntarioGateway.buscarPorEmail(command.email());
 
         if (voluntarioAutenticado == null) {
             throw new EntidadeNaoEncontradaException("Email do usuário não cadastrado");
         }
+
+        final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
+                voluntarioAutenticado.getId().toString(), command.senha()
+        );
+
+        final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
