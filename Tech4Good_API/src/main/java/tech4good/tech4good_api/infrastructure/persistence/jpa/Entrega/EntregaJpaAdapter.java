@@ -1,5 +1,6 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,12 +43,14 @@ public class EntregaJpaAdapter implements EntregaGateway {
     }
 
     @Override
+    @Cacheable(cacheNames = "historicoEntregas")
     public Page<Entrega> findAllWithPagination(Pageable pageable) {
         Page<EntregaEntity> entitiesPage = repository.findAllWithPagination(pageable);
         return entitiesPage.map(EntregaMapper::toDomain);
     }
 
     @Override
+    @Cacheable(cacheNames = "historicoEntregasFiltro")
     public Page<Entrega> findByFiltroWithPagination(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
         Page<EntregaEntity> entitiesPage = repository.findByFiltroWithPagination(idBeneficiado, dataInicio, dataFim, pageable);
         return entitiesPage.map(EntregaMapper::toDomain);
