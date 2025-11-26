@@ -1,8 +1,11 @@
 package tech4good.tech4good_api.core.domain.endereco.valueobjects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public class Cidade {
     private final String value;
 
+    @JsonCreator
     public Cidade(String value) {
         this.value = value;
     }
@@ -18,6 +21,7 @@ public class Cidade {
         return value;
     }
 
+    @JsonCreator
     @Override
     public String toString() {
         return value;
