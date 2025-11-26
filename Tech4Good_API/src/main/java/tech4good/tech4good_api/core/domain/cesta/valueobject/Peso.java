@@ -1,9 +1,13 @@
 package tech4good.tech4good_api.core.domain.cesta.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class Peso {
 
     private final Double value;
 
+    @JsonCreator
     public Peso(Double value) {
         this.value = value;
     }
@@ -32,6 +36,7 @@ public class Peso {
         return Objects.hash(value);
     }*/
 
+    @JsonValue
     @Override
     public String toString() {
         return value + " kg";

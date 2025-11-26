@@ -1,5 +1,7 @@
 package tech4good.tech4good_api.core.domain.shared.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.regex.Pattern;
 
 public class Cpf {
@@ -9,6 +11,7 @@ public class Cpf {
 
     private final String value;
 
+    @JsonCreator
     public Cpf(String value) {
         this.value = value;
     }
@@ -41,9 +44,14 @@ public class Cpf {
         return Objects.hash(value);
     }*/
 
+    @JsonValue
     @Override
     public String toString() {
         // RETORNA FORMATADO
         return value.replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+    }
+
+    public String getValue() {
+        return value;
     }
 }

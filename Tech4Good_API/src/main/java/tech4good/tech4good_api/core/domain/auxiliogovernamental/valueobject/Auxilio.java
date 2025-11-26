@@ -1,9 +1,13 @@
 package tech4good.tech4good_api.core.domain.auxiliogovernamental.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class Auxilio {
 
     private final String value;
 
+    @JsonCreator
     public Auxilio(String value) {
         this.value = value;
     }
@@ -19,6 +23,7 @@ public class Auxilio {
         return value;
     }
 
+    @JsonValue
     @Override
     public String toString() {
         return value;

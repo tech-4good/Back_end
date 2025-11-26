@@ -1,9 +1,13 @@
 package tech4good.tech4good_api.core.domain.beneficiado.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class Renda {
 
     private final Double value;
 
+    @JsonCreator
     public Renda(Double value) {
         this.value = value;
     }
@@ -24,6 +28,7 @@ public class Renda {
         return value;
     }
 
+    @JsonValue
     @Override
     public String toString() {
         return "R$ " + String.format("%.2f", value);
