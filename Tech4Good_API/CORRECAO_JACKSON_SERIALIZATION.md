@@ -90,10 +90,34 @@ Após a compilação, faça o deploy do novo JAR/WAR para sua plataforma na nuve
 ## 📦 Dependências
 A dependência `jackson-datatype-jsr310` já estava presente no `pom.xml`, apenas foi necessário configurá-la.
 
+## 🔧 Correção Adicional - Erro de Cache (LinkedHashMap)
+
+### Problema
+Ao recarregar a página várias vezes, ocorria o erro:
+```
+class java.util.LinkedHashMap cannot be cast to class org.springframework.data.domain.Page
+```
+
+### Causa
+O Redis estava serializando objetos `Page<Entrega>` sem informações de tipo, causando deserialização incorreta.
+
+### Solução
+Adicionado suporte a tipos polimórficos no `JacksonConfig`:
+```java
+BasicPolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
+        .allowIfBaseType(Object.class)
+        .build();
+
+mapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
+```
+
+Isso permite que o Jackson inclua informações de tipo (@class) na serialização JSON, garantindo deserialização correta do cache.
+
 ## 🎯 Resultado Esperado
 Após o deploy, a API deve:
 - ✅ Serializar corretamente objetos com `LocalDate`
 - ✅ Serializar todos os Value Objects (CPF, Telefone, RG, etc.)
 - ✅ Retornar JSON válido no endpoint de entregas
 - ✅ Funcionar corretamente com Redis cache
+- ✅ **Permitir múltiplos reloads da página sem erro de cast**
 
