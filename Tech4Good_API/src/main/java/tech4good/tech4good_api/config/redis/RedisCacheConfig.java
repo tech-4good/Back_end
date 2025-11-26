@@ -1,5 +1,6 @@
 package tech4good.tech4good_api.config.redis;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -15,9 +16,9 @@ import java.util.Map;
 public class RedisCacheConfig {
 
     @Bean
-    public RedisCacheManager redisCacheManager(RedisConnectionFactory cf) {
-        // Serializador que converte objetos em JSON
-        var json = new GenericJackson2JsonRedisSerializer();
+    public RedisCacheManager redisCacheManager(RedisConnectionFactory cf, ObjectMapper objectMapper) {
+        // Serializador que converte objetos em JSON usando o ObjectMapper configurado
+        var json = new GenericJackson2JsonRedisSerializer(objectMapper);
 
         // Configuração padrão para todos os caches
         var defaults = RedisCacheConfiguration.defaultCacheConfig()
