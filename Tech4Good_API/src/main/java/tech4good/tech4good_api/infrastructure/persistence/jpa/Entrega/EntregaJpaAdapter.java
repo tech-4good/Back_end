@@ -12,9 +12,15 @@ import java.time.LocalDate;
 @Service
 public class EntregaJpaAdapter implements EntregaGateway {
     private final EntregaJpaRepository repository;
+    private EntregaJpaAdapter self;
 
     public EntregaJpaAdapter(EntregaJpaRepository repository) {
         this.repository = repository;
+    }
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public void setSelf(EntregaJpaAdapter self) {
+        this.self = self;
     }
 
     @Override
@@ -43,21 +49,35 @@ public class EntregaJpaAdapter implements EntregaGateway {
     }
 
     @Override
-    @Cacheable(cacheNames = "historicoEntregas", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
     public Page<Entrega> findAllWithPagination(Pageable pageable) {
+        // Usa self para chamar método cacheado através do proxy
+        PageDTO<Entrega> dto = self.findAllWithPaginationDTO(pageable);
+        // Converte PageDTO de volta para Page
+        return dto.toPage();
+    }
+
+    @Cacheable(cacheNames = "historicoEntregas", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
+    public PageDTO<Entrega> findAllWithPaginationDTO(Pageable pageable) {
         Page<EntregaEntity> entitiesPage = repository.findAllWithPagination(pageable);
         Page<Entrega> entregaPage = entitiesPage.map(EntregaMapper::toDomain);
-        // Converte para PageDTO e de volta para permitir serialização no Redis
-        return PageDTO.fromPage(entregaPage).toPage();
+        // Retorna PageDTO que é serializável pelo Redis
+        return PageDTO.fromPage(entregaPage);
     }
 
     @Override
+    public Page<Entrega> findByFiltroWithPagination(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
+        // Usa self para chamar método cacheado através do proxy
+        PageDTO<Entrega> dto = self.findByFiltroWithPaginationDTO(idBeneficiado, dataInicio, dataFim, pageable);
+        // Converte PageDTO de volta para Page
+        return dto.toPage();
+    }
+
     @Cacheable(cacheNames = "historicoEntregasFiltro",
                key = "#idBeneficiado + '-' + #dataInicio + '-' + #dataFim + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
-    public Page<Entrega> findByFiltroWithPagination(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
+    public PageDTO<Entrega> findByFiltroWithPaginationDTO(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
         Page<EntregaEntity> entitiesPage = repository.findByFiltroWithPagination(idBeneficiado, dataInicio, dataFim, pageable);
         Page<Entrega> entregaPage = entitiesPage.map(EntregaMapper::toDomain);
-        // Converte para PageDTO e de volta para permitir serialização no Redis
-        return PageDTO.fromPage(entregaPage).toPage();
+        // Retorna PageDTO que é serializável pelo Redis
+        return PageDTO.fromPage(entregaPage);
     }
 }
