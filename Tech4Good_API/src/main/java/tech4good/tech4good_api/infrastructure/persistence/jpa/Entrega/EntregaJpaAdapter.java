@@ -43,16 +43,21 @@ public class EntregaJpaAdapter implements EntregaGateway {
     }
 
     @Override
-    @Cacheable(cacheNames = "historicoEntregas")
+    @Cacheable(cacheNames = "historicoEntregas", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
     public Page<Entrega> findAllWithPagination(Pageable pageable) {
         Page<EntregaEntity> entitiesPage = repository.findAllWithPagination(pageable);
-        return entitiesPage.map(EntregaMapper::toDomain);
+        Page<Entrega> entregaPage = entitiesPage.map(EntregaMapper::toDomain);
+        // Converte para PageDTO e de volta para permitir serialização no Redis
+        return PageDTO.fromPage(entregaPage).toPage();
     }
 
     @Override
-    @Cacheable(cacheNames = "historicoEntregasFiltro")
+    @Cacheable(cacheNames = "historicoEntregasFiltro",
+               key = "#idBeneficiado + '-' + #dataInicio + '-' + #dataFim + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
     public Page<Entrega> findByFiltroWithPagination(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
         Page<EntregaEntity> entitiesPage = repository.findByFiltroWithPagination(idBeneficiado, dataInicio, dataFim, pageable);
-        return entitiesPage.map(EntregaMapper::toDomain);
+        Page<Entrega> entregaPage = entitiesPage.map(EntregaMapper::toDomain);
+        // Converte para PageDTO e de volta para permitir serialização no Redis
+        return PageDTO.fromPage(entregaPage).toPage();
     }
 }
