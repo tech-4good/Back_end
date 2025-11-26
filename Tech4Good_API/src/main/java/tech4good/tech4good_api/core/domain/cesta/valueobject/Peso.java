@@ -19,6 +19,7 @@ public class Peso {
         return new Peso(valor);
     }
 
+    @JsonValue
     public Double getValue() {
         return value;
     }
@@ -36,7 +37,6 @@ public class Peso {
         return Objects.hash(value);
     }*/
 
-    @JsonValue
     @Override
     public String toString() {
         return value + " kg";

@@ -24,11 +24,11 @@ public class Renda {
         return new Renda(rendaFormatada);
     }
 
+    @JsonValue
     public Double getValue() {
         return value;
     }
 
-    @JsonValue
     @Override
     public String toString() {
         return "R$ " + String.format("%.2f", value);
