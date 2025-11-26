@@ -149,14 +149,14 @@ jobs:
             fi
             echo "✅ compose-api.yaml confirmado na DB1"
 
-            # Garante que MySQL e RabbitMQ estão rodando
-            echo "Verificando se MySQL e RabbitMQ estão rodando..."
-            if ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep -E "(mysql-db|rabbitmq-tech4good)"' | grep -q "Up"; then
-              echo "✅ MySQL e RabbitMQ já estão rodando"
+            # Garante que MySQL, RabbitMQ, Redis e RedisInsight estão rodando
+            echo "Verificando se MySQL, RabbitMQ, Redis e RedisInsight estão rodando..."
+            if ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep -E "(mysql-db|rabbitmq-tech4good|redis|redisinsight)"' | grep -q "Up"; then
+              echo "✅ MySQL, RabbitMQ, Redis e RedisInsight já estão rodando"
             else
-              echo "⚠️  MySQL ou RabbitMQ não estão rodando, subindo containers..."
-              ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose-api.yaml up -d mysql rabbitmq'
-              echo "✅ MySQL e RabbitMQ iniciados"
+              echo "⚠️  MySQL, RabbitMQ, Redis ou RedisInsight não estão rodando, subindo containers..."
+              ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose-api.yaml up -d mysql rabbitmq redis redisinsight'
+              echo "✅ MySQL, RabbitMQ, Redis e RedisInsight iniciados"
               echo "⏳ Aguardando 15 segundos para MySQL inicializar..."
               sleep 15
             fi
