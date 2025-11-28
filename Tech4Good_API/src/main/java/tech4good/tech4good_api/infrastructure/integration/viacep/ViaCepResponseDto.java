@@ -1,7 +1,9 @@
 package tech4good.tech4good_api.infrastructure.integration.viacep;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ViaCepResponseDto {
     private String logradouro;
     private String complemento;
