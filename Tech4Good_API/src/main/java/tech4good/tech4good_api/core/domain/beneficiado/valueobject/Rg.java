@@ -1,5 +1,8 @@
 package tech4good.tech4good_api.core.domain.beneficiado.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.regex.Pattern;
 
 public class Rg {
@@ -9,6 +12,7 @@ public class Rg {
 
     private final String value;
 
+    @JsonCreator
     public Rg(String value) {
         this.value = value;
     }
@@ -33,6 +37,7 @@ public class Rg {
     }
 
     // RETORNA FORMATADO
+    @JsonValue
     @Override
     public String toString() {
         return value.replaceFirst("(\\d{2})(\\d{3})(\\d{3})([0-9X])", "$1.$2.$3-$4");

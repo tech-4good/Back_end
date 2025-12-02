@@ -1,5 +1,6 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,15 @@ import java.time.LocalDate;
 @Service
 public class EntregaJpaAdapter implements EntregaGateway {
     private final EntregaJpaRepository repository;
+    private EntregaJpaAdapter self;
 
     public EntregaJpaAdapter(EntregaJpaRepository repository) {
         this.repository = repository;
+    }
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public void setSelf(EntregaJpaAdapter self) {
+        this.self = self;
     }
 
     @Override
@@ -43,13 +50,34 @@ public class EntregaJpaAdapter implements EntregaGateway {
 
     @Override
     public Page<Entrega> findAllWithPagination(Pageable pageable) {
+        // Usa self para chamar método cacheado através do proxy
+        PageDTO<Entrega> dto = self.findAllWithPaginationDTO(pageable);
+        // Converte PageDTO de volta para Page
+        return dto.toPage();
+    }
+
+    @Cacheable(cacheNames = "historicoEntregas", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
+    public PageDTO<Entrega> findAllWithPaginationDTO(Pageable pageable) {
         Page<EntregaEntity> entitiesPage = repository.findAllWithPagination(pageable);
-        return entitiesPage.map(EntregaMapper::toDomain);
+        Page<Entrega> entregaPage = entitiesPage.map(EntregaMapper::toDomain);
+        // Retorna PageDTO que é serializável pelo Redis
+        return PageDTO.fromPage(entregaPage);
     }
 
     @Override
     public Page<Entrega> findByFiltroWithPagination(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
+        // Usa self para chamar método cacheado através do proxy
+        PageDTO<Entrega> dto = self.findByFiltroWithPaginationDTO(idBeneficiado, dataInicio, dataFim, pageable);
+        // Converte PageDTO de volta para Page
+        return dto.toPage();
+    }
+
+    @Cacheable(cacheNames = "historicoEntregasFiltro",
+               key = "#idBeneficiado + '-' + #dataInicio + '-' + #dataFim + '-' + #pageable.pageNumber + '-' + #pageable.pageSize")
+    public PageDTO<Entrega> findByFiltroWithPaginationDTO(Integer idBeneficiado, LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
         Page<EntregaEntity> entitiesPage = repository.findByFiltroWithPagination(idBeneficiado, dataInicio, dataFim, pageable);
-        return entitiesPage.map(EntregaMapper::toDomain);
+        Page<Entrega> entregaPage = entitiesPage.map(EntregaMapper::toDomain);
+        // Retorna PageDTO que é serializável pelo Redis
+        return PageDTO.fromPage(entregaPage);
     }
 }

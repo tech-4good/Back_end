@@ -1,5 +1,7 @@
 package tech4good.tech4good_api.core.domain.shared.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.regex.Pattern;
 
 public class Telefone {
@@ -9,6 +11,7 @@ public class Telefone {
 
     private final String value;
 
+    @JsonCreator
     public Telefone(String value) {
         this.value = value;
     }
@@ -32,6 +35,7 @@ public class Telefone {
         return value;
     }
 
+    @JsonValue
     @Override
     public String toString() {
         if (value.length() == 11) {

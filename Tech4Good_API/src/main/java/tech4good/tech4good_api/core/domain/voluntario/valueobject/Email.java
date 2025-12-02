@@ -1,5 +1,7 @@
 package tech4good.tech4good_api.core.domain.voluntario.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.regex.Pattern;
 
 public class Email {
@@ -9,6 +11,7 @@ public class Email {
 
     private final String value;
 
+    @JsonCreator
     public Email(String value) {
         this.value = value;
     }
@@ -29,6 +32,7 @@ public class Email {
         // OU SEJA, NÃO UTILIZAREMOS SETTERS
     }
 
+    @JsonValue
     public String getValue() {
         return value;
     }

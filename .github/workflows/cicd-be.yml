@@ -131,31 +131,32 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo mv /home/ubuntu/app.jar /usr/share/api/app.jar && sudo chown root:root /usr/share/api/app.jar'
             echo "Arquivo jar movido para /usr/share/api/app.jar"
 
-            # Copia compose-api.yaml da Web1 para DB1 (se existir na Web1)
-            if [ -f "/home/${{ secrets.REMOTE_USER }}/compose.yaml" ]; then
-              echo "Copiando compose-api.yaml da Web1 para DB1..."
-              scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/compose.yaml $USUARIO_IP:/home/ubuntu/compose-api.yaml
-              echo "✅ compose-api.yaml copiado para DB1"
+            # Copia compose-api.yaml da Web1 para DB1
+            echo "Copiando compose-api.yaml da Web1 para DB1..."
+            if [ -f "/home/${{ secrets.REMOTE_USER }}/compose-api.yaml" ]; then
+              scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/compose-api.yaml $USUARIO_IP:/home/ubuntu/compose-api.yaml
+              echo "✅ compose-api.yaml copiado da Web1 para DB1"
             else
-              echo "⚠️  compose.yaml não encontrado na Web1, verificando se já existe na DB1..."
+              echo "❌ ERRO: compose-api.yaml não encontrado na Web1 em /home/${{ secrets.REMOTE_USER }}/compose-api.yaml"
+              echo "Verifique se o Terraform criou o arquivo na Web1"
+              exit 1
             fi
             
             # Verifica se compose-api.yaml existe na DB1
             if ! ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'test -f /home/ubuntu/compose-api.yaml'; then
-              echo "❌ ERRO: compose-api.yaml não existe na DB1!"
-              echo "Verifique se o Terraform criou o arquivo ou se compose.yaml existe na Web1"
+              echo "❌ ERRO: Falha ao copiar compose-api.yaml para DB1!"
               exit 1
             fi
             echo "✅ compose-api.yaml confirmado na DB1"
 
-            # Garante que MySQL e RabbitMQ estão rodando
-            echo "Verificando se MySQL e RabbitMQ estão rodando..."
-            if ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep -E "(mysql-db|rabbitmq-tech4good)"' | grep -q "Up"; then
-              echo "✅ MySQL e RabbitMQ já estão rodando"
+            # Garante que MySQL, RabbitMQ, Redis e RedisInsight estão rodando
+            echo "Verificando se MySQL, RabbitMQ, Redis e RedisInsight estão rodando..."
+            if ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker ps | grep -E "(mysql-db|rabbitmq-tech4good|redis|redisinsight)"' | grep -q "Up"; then
+              echo "✅ MySQL, RabbitMQ, Redis e RedisInsight já estão rodando"
             else
-              echo "⚠️  MySQL ou RabbitMQ não estão rodando, subindo containers..."
-              ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose-api.yaml up -d mysql rabbitmq'
-              echo "✅ MySQL e RabbitMQ iniciados"
+              echo "⚠️  MySQL, RabbitMQ, Redis ou RedisInsight não estão rodando, subindo containers..."
+              ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /home/ubuntu && sudo docker-compose -f compose-api.yaml up -d mysql rabbitmq redis redisinsight'
+              echo "✅ MySQL, RabbitMQ, Redis e RedisInsight iniciados"
               echo "⏳ Aguardando 15 segundos para MySQL inicializar..."
               sleep 15
             fi

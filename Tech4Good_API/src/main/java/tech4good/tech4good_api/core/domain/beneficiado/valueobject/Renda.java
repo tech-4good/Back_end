@@ -1,9 +1,13 @@
 package tech4good.tech4good_api.core.domain.beneficiado.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class Renda {
 
     private final Double value;
 
+    @JsonCreator
     public Renda(Double value) {
         this.value = value;
     }
@@ -20,6 +24,7 @@ public class Renda {
         return new Renda(rendaFormatada);
     }
 
+    @JsonValue
     public Double getValue() {
         return value;
     }

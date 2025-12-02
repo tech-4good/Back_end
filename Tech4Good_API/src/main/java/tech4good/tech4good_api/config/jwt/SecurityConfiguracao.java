@@ -65,6 +65,9 @@ public class SecurityConfiguracao {
                         .requestMatchers(URLS_PERMITIDAS).permitAll()
                         .requestMatchers(HttpMethod.POST, "/voluntarios/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/voluntarios").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/voluntarios/solicitar-redefinicao-senha").permitAll()
+            .requestMatchers(HttpMethod.POST, "/voluntarios/redefinir-senha").permitAll()
+            .requestMatchers(HttpMethod.PATCH, "/voluntarios/redefinir-senha").permitAll()
                         .requestMatchers("/voluntarios/**", "/beneficiados/**",
                                 "/enderecos/**", "/cestas/**", "/auxilio-governamentais/**",
                                 "/filhos-beneficiados/**", "/tipo-moradores/**",

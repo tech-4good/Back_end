@@ -29,13 +29,13 @@ public class VoluntarioRequestDto {
 
     public VoluntarioRequestDto() {}
 
-    public VoluntarioRequestDto(String nome, String cpf, String telefone, String senha, String email, Integer administrador) {
+    public VoluntarioRequestDto(String nome, String cpf, String telefone, String senha, String email) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.senha = senha;
         this.email = email;
-        this.administrador = administrador;
+        this.administrador = 0;
     }
 
     public String getNome() {

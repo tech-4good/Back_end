@@ -1,0 +1,14 @@
+spring:
+  cache:
+    type: redis
+    redis:
+      time-to-live: PT5M          # TTL padrão (5 minutos)
+      cache-null-values: false    # não armazena valores nulos
+      key-prefix: "app::"          # adiciona um prefixo antes de cada chave
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+logging:
+  level:
+    org.springframework.cache.interceptor.CacheInterceptor: TRACE  # mostra hits/misses no log

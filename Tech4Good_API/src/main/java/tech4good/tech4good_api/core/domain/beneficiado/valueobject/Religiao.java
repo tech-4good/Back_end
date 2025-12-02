@@ -1,9 +1,13 @@
 package tech4good.tech4good_api.core.domain.beneficiado.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class Religiao {
 
     private final String value;
 
+    @JsonCreator
     public Religiao(String value) {
         this.value = value;
     }
@@ -26,6 +30,7 @@ public class Religiao {
         return value;
     }
 
+    @JsonValue
     @Override
     public String toString() {
         return value;

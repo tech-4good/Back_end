@@ -18,20 +18,20 @@ import tech4good.tech4good_api.infrastructure.persistence.jpa.File.FileMapper;
 public class BeneficiadoMapper {
     public static CadastrarBeneficiadoCommand toCommand(BeneficiadoRequestDto dto) {
         return new CadastrarBeneficiadoCommand(
-                new Cpf(dto.getCpf()),                  // Converte String para Cpf
+                Cpf.valueOf(dto.getCpf()),              // Converte String para Cpf com validação
                 dto.getNome(),
-                new Rg(dto.getRg()),                    // Converte String para Rg
+                Rg.valueOf(dto.getRg()),                // Converte String para Rg com validação
                 dto.getDataNascimento(),
                 dto.getNaturalidade(),
-                new Telefone(dto.getTelefone()),        // Converte String para Telefone
+                Telefone.valueOf(dto.getTelefone()),    // Converte String para Telefone com validação
                 Enum.valueOf(EstadoCivil.class, dto.getEstadoCivil()),  // Converte String para enum EstadoCivil
                 dto.getEscolaridade(),
                 dto.getProfissao(),
-                new Renda(dto.getRendaMensal()),        // Converte Double para Renda
+                Renda.valueOf(dto.getRendaMensal()),    // Converte Double para Renda com validação
                 dto.getEmpresa(),
                 dto.getCargo(),
-                new Religiao(dto.getReligiao()),        // Converte String para Religiao
-                dto.getEnderecoId(),                    // Agora usa o enderecoId do DTO
+                Religiao.valueOf(dto.getReligiao()),    // Converte String para Religiao com validação
+                dto.getEnderecoId(),
                 dto.getQuantidadeDependentes(),
                 dto.getFotoId()                         // Adiciona o fotoId
         );
@@ -88,16 +88,16 @@ public class BeneficiadoMapper {
     public static Beneficiado toDomain(BeneficiadoEntity entity) {
         return new Beneficiado(
                 entity.getId(),
-                entity.getCpf() != null ? new Cpf(entity.getCpf()) : null,
+                entity.getCpf() != null ? Cpf.valueOf(entity.getCpf()) : null,
                 entity.getNome(),
-                entity.getRg() != null ? new Rg(entity.getRg()) : null,
+                entity.getRg() != null ? Rg.valueOf(entity.getRg()) : null,
                 entity.getDataNascimento(),
                 entity.getNaturalidade(),
-                entity.getTelefone() != null ? new Telefone(entity.getTelefone()) : null,
+                entity.getTelefone() != null ? Telefone.valueOf(entity.getTelefone()) : null,
                 entity.getEstadoCivil(),
                 entity.getEscolaridade(),
                 entity.getProfissao(),
-                entity.getRendaMensal() != null ? new Renda(entity.getRendaMensal()) : null,
+                entity.getRendaMensal() != null ? Renda.valueOf(entity.getRendaMensal()) : null,
                 entity.getEmpresa(),
                 entity.getCargo(),
                 entity.getReligiao() != null ? Religiao.valueOf(entity.getReligiao()) : null,

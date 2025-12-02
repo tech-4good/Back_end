@@ -1,5 +1,8 @@
 package tech4good.tech4good_api.core.domain.endereco.valueobjects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.regex.Pattern;
 
 public class Cep {
@@ -9,6 +12,7 @@ public class Cep {
 
     private final String value;
 
+    @JsonCreator
     public Cep(String value) {
         this.value = value;
     }
@@ -31,6 +35,7 @@ public class Cep {
         return value;
     }
 
+    @JsonValue
     @Override
     public String toString() {
         return value;
