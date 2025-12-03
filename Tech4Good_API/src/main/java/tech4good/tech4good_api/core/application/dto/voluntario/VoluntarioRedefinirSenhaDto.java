@@ -10,19 +10,14 @@ public class VoluntarioRedefinirSenhaDto {
     @Email(message = "Formato de e-mail inválido.")
     private String email;
 
-    @NotBlank(message = "A senha atual é obrigatória.")
-    @Size(min = 8, message = "A senha atual deve ter no mínimo 8 caracteres.")
-    private String senhaAtual;
-
     @NotBlank(message = "A nova senha é obrigatória.")
     @Size(min = 8, message = "A nova senha deve ter no mínimo 8 caracteres.")
     private String novaSenha;
 
     public VoluntarioRedefinirSenhaDto() {}
 
-    public VoluntarioRedefinirSenhaDto(String email, String senhaAtual, String novaSenha) {
+    public VoluntarioRedefinirSenhaDto(String email, String novaSenha) {
         this.email = email;
-        this.senhaAtual = senhaAtual;
         this.novaSenha = novaSenha;
     }
 
@@ -32,14 +27,6 @@ public class VoluntarioRedefinirSenhaDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenhaAtual() {
-        return senhaAtual;
-    }
-
-    public void setSenhaAtual(String senhaAtual) {
-        this.senhaAtual = senhaAtual;
     }
 
     public String getNovaSenha() {

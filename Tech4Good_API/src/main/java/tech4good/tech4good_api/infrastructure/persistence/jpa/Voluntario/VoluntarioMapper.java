@@ -75,7 +75,6 @@ public class VoluntarioMapper {
         }
         return new RedefinirSenhaVoluntarioCommand(
             dto.getEmail(),
-            dto.getSenhaAtual(),
             dto.getNovaSenha()
         );
     }
