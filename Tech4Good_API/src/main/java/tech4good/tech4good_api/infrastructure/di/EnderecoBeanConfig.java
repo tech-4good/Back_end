@@ -35,6 +35,11 @@ public class EnderecoBeanConfig {
     }
 
     @Bean
+    public AtualizarEnderecoDadosUseCase atualizarEnderecoDadosUseCase(EnderecoJpaAdapter adapter) {
+        return new AtualizarEnderecoDadosUseCase(adapter);
+    }
+
+    @Bean
     public RemoverEnderecoPorIdUseCase removerEnderecoPorIdUseCase(EnderecoJpaAdapter adapter) {
         return new RemoverEnderecoPorIdUseCase(adapter);
     }

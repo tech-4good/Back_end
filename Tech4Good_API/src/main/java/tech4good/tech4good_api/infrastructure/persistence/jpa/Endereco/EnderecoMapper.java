@@ -1,9 +1,11 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Endereco;
 
 import tech4good.tech4good_api.core.application.command.endereco.AtualizarEnderecoCommand;
+import tech4good.tech4good_api.core.application.command.endereco.AtualizarEnderecoDadosCommand;
 import tech4good.tech4good_api.core.application.command.endereco.BuscarApiCepEnderecoCommand;
 import tech4good.tech4good_api.core.application.command.endereco.CadastrarEnderecoCommand;
 import tech4good.tech4good_api.core.application.dto.endereco.AtualizarEnderecoRequestDto;
+import tech4good.tech4good_api.core.application.dto.endereco.AtualizarEnderecoDadosRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoApiCepDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoRequestDto;
 import tech4good.tech4good_api.core.application.dto.endereco.EnderecoResponseDto;
@@ -206,6 +208,24 @@ public class EnderecoMapper {
             endereco.getMoradia(),
             endereco.getTipoMoradia() != null ? endereco.getTipoMoradia().toString() : null,
             endereco.getStatus() != null ? endereco.getStatus().toString() : null
+        );
+    }
+
+    public static AtualizarEnderecoDadosCommand toAtualizarDadosCommand(Integer id, AtualizarEnderecoDadosRequestDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new AtualizarEnderecoDadosCommand(
+            id,
+            dto.getLogradouro(),
+            dto.getNumero(),
+            dto.getComplemento(),
+            dto.getBairro(),
+            dto.getCidade(),
+            dto.getEstado(),
+            dto.getCep(),
+            dto.getMoradia(),
+            dto.getTipoMoradia()
         );
     }
 }
