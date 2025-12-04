@@ -37,7 +37,7 @@ O Spring Security, ao construir a cadeia de filtros, associa um `AuthorizationFi
   .requestMatchers(
      "/voluntarios/**", "/beneficiados/**", "/enderecos/**", 
      "/cestas/**", "/auxilio-governamentais/**", "/filhos-beneficiados/**",
-     "/tipo-moradores/**", "/files/**", "/fila-espera/**", "/entregas/**",
+     "/tipo-moradores/**", "/files/**", "/entregas/**",
      "/beneficiado-has-auxilios/**"
   ).authenticated()
   .anyRequest().authenticated()

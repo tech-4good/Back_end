@@ -114,7 +114,7 @@ public class EnderecoController {
         return ResponseEntity.status(200).body(responseDto);
     }
 
-    @Operation(summary = "Atualizar status do endereço", description = "Atualiza apenas o status do endereço (para gerenciamento da fila de espera)")
+    @Operation(summary = "Atualizar status do endereço", description = "Atualiza apenas o status do endereço")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso"),
         @ApiResponse(responseCode = "404", description = "Endereço não encontrado"),

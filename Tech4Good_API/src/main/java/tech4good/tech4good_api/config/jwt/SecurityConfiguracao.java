@@ -71,7 +71,7 @@ public class SecurityConfiguracao {
                         .requestMatchers("/voluntarios/**", "/beneficiados/**",
                                 "/enderecos/**", "/cestas/**", "/auxilio-governamentais/**",
                                 "/filhos-beneficiados/**", "/tipo-moradores/**",
-                                "/files/**", "/fila-espera/**", "/entregas/**",
+                                "/files/**", "/entregas/**",
                                 "/beneficiado-has-auxilios/**").authenticated()
                         .anyRequest().authenticated()
                 )
