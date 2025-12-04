@@ -1,5 +1,6 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ public class EntregaJpaAdapter implements EntregaGateway {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"historicoEntregas", "historicoEntregasFiltro"}, allEntries = true)
     public Entrega save(Entrega entrega) {
         var entity = EntregaMapper.toEntity(entrega);
         var entitySalva = repository.save(entity);
@@ -44,6 +46,7 @@ public class EntregaJpaAdapter implements EntregaGateway {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"historicoEntregas", "historicoEntregasFiltro"}, allEntries = true)
     public void deleteById(Integer id) {
         repository.deleteById(id);
     }
