@@ -3,6 +3,7 @@ package tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,8 @@ public interface EntregaJpaRepository extends JpaRepository<EntregaEntity, Integ
 
     @Query("SELECT e FROM EntregaEntity e ORDER BY e.dataRetirada DESC, e.idEntrega DESC")
     Page<EntregaEntity> findAllWithPagination(Pageable pageable);
+
+    @Modifying
+    @Query("UPDATE EntregaEntity e SET e.voluntario = NULL WHERE e.voluntario.idVoluntario = :idVoluntario")
+    void setVoluntarioToNullByVoluntarioId(@Param("idVoluntario") Integer idVoluntario);
 }

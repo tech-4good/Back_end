@@ -1,10 +1,12 @@
 package tech4good.tech4good_api.infrastructure.persistence.jpa.Voluntario;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import tech4good.tech4good_api.core.adapter.VoluntarioGateway;
 import tech4good.tech4good_api.core.application.command.voluntario.AtualizarVoluntarioCommand;
 import tech4good.tech4good_api.core.application.exception.EntidadeNaoEncontradaException;
 import tech4good.tech4good_api.core.domain.voluntario.Voluntario;
+import tech4good.tech4good_api.infrastructure.persistence.jpa.Entrega.EntregaJpaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class VoluntarioJpaAdapter implements VoluntarioGateway {
 
     private final VoluntarioJpaRepository repository;
+    private final EntregaJpaRepository entregaRepository;
 
-    public VoluntarioJpaAdapter(VoluntarioJpaRepository repository) {
+    public VoluntarioJpaAdapter(VoluntarioJpaRepository repository, EntregaJpaRepository entregaRepository) {
         this.repository = repository;
+        this.entregaRepository = entregaRepository;
     }
 
     @Override
@@ -58,10 +62,13 @@ public class VoluntarioJpaAdapter implements VoluntarioGateway {
     }
 
     @Override
+    @Transactional
     public void deletarPorId(Integer id) {
         if (!repository.existsById(id)) {
             throw new EntidadeNaoEncontradaException("Voluntário não encontrado");
         }
+        // Setar voluntário como NULL em todas as entregas antes de deletar
+        entregaRepository.setVoluntarioToNullByVoluntarioId(id);
         repository.deleteById(id);
     }
 
