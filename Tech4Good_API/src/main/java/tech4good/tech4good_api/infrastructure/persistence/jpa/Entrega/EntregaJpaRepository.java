@@ -21,6 +21,6 @@ public interface EntregaJpaRepository extends JpaRepository<EntregaEntity, Integ
                                                    @Param("dataFim") LocalDate dataFim,
                                                    Pageable pageable);
 
-    @Query("SELECT e FROM EntregaEntity e ORDER BY e.dataRetirada DESC")
+    @Query("SELECT e FROM EntregaEntity e ORDER BY e.dataRetirada DESC, e.idEntrega DESC")
     Page<EntregaEntity> findAllWithPagination(Pageable pageable);
 }
