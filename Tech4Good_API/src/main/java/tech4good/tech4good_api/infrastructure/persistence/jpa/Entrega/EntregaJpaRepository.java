@@ -15,7 +15,7 @@ public interface EntregaJpaRepository extends JpaRepository<EntregaEntity, Integ
            "(:idBeneficiado IS NULL OR e.beneficiado.id = :idBeneficiado) " +
            "AND (:dataInicio IS NULL OR e.dataRetirada >= :dataInicio) " +
            "AND (:dataFim IS NULL OR e.dataRetirada <= :dataFim) " +
-           "ORDER BY e.dataRetirada DESC")
+           "ORDER BY e.dataRetirada DESC, e.idEntrega DESC")
     Page<EntregaEntity> findByFiltroWithPagination(@Param("idBeneficiado") Integer idBeneficiado,
                                                    @Param("dataInicio") LocalDate dataInicio,
                                                    @Param("dataFim") LocalDate dataFim,
